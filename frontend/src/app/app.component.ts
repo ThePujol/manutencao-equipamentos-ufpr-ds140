@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
+import { PaginaCadastroComponent } from './pagina-cadastro/pagina-cadastro.component';
+
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [PaginaCadastroComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
