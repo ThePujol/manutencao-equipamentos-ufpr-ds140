@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, FormControl, Validators,  ReactiveFormsModule} from '@angular/forms';
-import { InputTextComponent } from '../input-text/input-text.component';
+import { Component, OnInit } from '@angular/core';
+import {
+    FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators
+} from '@angular/forms';
 
-
+import { InputTextComponent } from '../../ui/input-text/input-text.component';
 
 @Component({
   selector: 'app-pagina-cadastro',
