@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-pagina-solicitacoes',
-  imports: [],
+  imports: [MatIconModule],
   templateUrl: './pagina-solicitacoes.component.html',
 })
 export class PaginaSolicitacoesComponent {
