@@ -1,1 +1,47 @@
-<p>Teste</p>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="flex bg-white shadow-lg rounded-2xl overflow-hidden ">
+
+    <div class="flex flex-col justify-center w-[675px] p-8">
+
+      <div>
+        <h1 class="text-2xl font-bold text-indigo-700 flex items-center gap-2">
+          <img class="w-[27px]" src="person.svg" alt="Icone Cadastro">
+          <span class="text-[34px]">Cadastro</span>
+        </h1>
+        <h2 class="font-light text-gray-500 mt-1">Preencha os campos abaixo para criar uma conta.</h2>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="mt-4">
+        <div class="grid grid-cols-2 gap-[15px] gap-y-[30px]">
+          <app-input-text FormControl="'nomeC'" [type]="'text'" [placeholder]="'Nome Completo'"></app-input-text>
+          <app-input-text FormControl="'email'" [type]="'email'"  [placeholder]="'E-mail'"></app-input-text>
+          <app-input-text FormControl="'cpf'" [type]="'text'"  [placeholder]="'CPF'"></app-input-text>
+          <app-input-text FormControl="'tel'" [type]="'tel'"  [placeholder]="'Telefone'"></app-input-text>
+          <app-input-text FormControl="'cep'" [type]="'text'"  [placeholder]="'CEP'"></app-input-text>
+          <app-input-text FormControl="'estado'" [type]="'text'"  [placeholder]="'Estado'"></app-input-text>
+          <app-input-text FormControl="'cidade'" [type]="'text'"  [placeholder]="'Cidade'"></app-input-text>
+          <app-input-text FormControl="'endereco'" [type]="'text'" [placeholder]="'Endereço'"></app-input-text>
+          <app-input-text FormControl="'numero'" [type]="'text'" [placeholder]="'Número'"></app-input-text>
+          <app-input-text FormControl="'complemento'" [type]="'text'"  [placeholder]="'Complemento'"></app-input-text>
+        </div>
+
+       <div class="flex justify-between">
+        <p class="text-sm text-gray-500 mt-4 text-center">
+          Já possui uma conta?
+          <a href="/login" class="text-indigo-600 hover:underline">
+            Faça o login
+          </a>
+        </p>
+        <button type="submit" class="cursor-pointer bg-indigo-700 text-white text-sm font-semibold w-[300px] p-2.5 rounded-lg mt-4 hover:bg-indigo-800 transition">
+          Confirmar
+        </button>
+       </div>
+      </form>
+    </div>
+
+    <div class="w-[531px]">
+      <img src="cadastro.svg" alt="Manutenção de Computadores" class="w-full h-full object-cover">
+    </div>
+
+  </div>
+</div>

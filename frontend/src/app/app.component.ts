@@ -8,5 +8,5 @@ import { PaginaCadastroComponent } from './pagina-cadastro/pagina-cadastro.compo
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'frontend';
+  title ="Cadastro de Usuário";
 }
