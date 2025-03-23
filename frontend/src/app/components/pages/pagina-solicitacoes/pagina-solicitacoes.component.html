@@ -1,0 +1,17 @@
+<main class="flex gap-10">
+    <app-sidebar-cliente nome="Guilherme" />
+
+    <section class="flex flex-col py-10 gap-[30px]">
+        <div>
+            <h1 class="text-[40px] font-semibold text-[#4931A9]">Suas solicitações</h1>
+            <h2 class="opacity-50 font-light">Aqui encontram-se todas as solicitações que você realizou.</h2>
+        </div>
+        
+        <div class="flex gap-2.5 flex-col">
+            <app-card-solicitacao data="10/03/2025" equipamento="Notebook com defeito" estado="Arrumada" [temBotao]="true" textoBotao="Pagar serviço" />
+            <app-card-solicitacao data="16/03/2025" equipamento="Iphone tela trincada" estado="Aprovada" />
+            <app-card-solicitacao data="21/03/2025" equipamento="Teclado mau contato" estado="Orçada" [temBotao]="true" textoBotao="Visualizar orçamento" />
+            <app-card-solicitacao data="22/03/2025" equipamento="Mouse sensor não funciona" estado="Aberta" [temBotao]="true" />
+        </div>
+    </section>
+</main>

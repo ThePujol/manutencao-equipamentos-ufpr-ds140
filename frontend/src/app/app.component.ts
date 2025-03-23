@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 
+import {
+    PaginaSolicitacoesComponent
+} from './components/pages/pagina-solicitacoes/pagina-solicitacoes.component';
 import { PaginaCadastroComponent } from './pagina-cadastro/pagina-cadastro.component';
 
 @Component({
   selector: 'app-root',
-  imports: [PaginaCadastroComponent],
+  imports: [PaginaSolicitacoesComponent, PaginaCadastroComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title ="Cadastro de Usuário";
+  title = 'app-manutencoes';
 }
