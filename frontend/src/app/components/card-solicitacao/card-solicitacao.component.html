@@ -1,0 +1,18 @@
+<div class="flex gap-5 w-fit items-center justify-center shadow-[0px_0px_5px_rgba(0,0,0,0.25)] p-2.5 rounded-md duration-150">
+    <div>
+        <label class="text-xs opacity-50 font-light">Data</label>
+        <p>{{ data }}</p>
+    </div>
+    <div>
+        <label class="text-xs opacity-50 font-light">Equipamento</label>
+        <p>{{ equipamento }}</p>
+    </div>
+    <div>
+        <label class="text-xs opacity-50 font-light">Estado</label>
+        <p>{{ estado }}</p>
+    </div>
+    
+    @if (temBotao) {
+        <button class="bg-[#4931A9] text-white px-[25px] py-2.5 rounded-md cursor-pointer hover:bg-[#3e2996] duration-150">{{ textoBotao }}</button>
+    }
+</div>

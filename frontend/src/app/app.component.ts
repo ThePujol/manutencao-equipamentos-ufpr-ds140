@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
-import { PaginaSolicitacoesComponent } from './pagina-solicitacoes/pagina-solicitacoes.component';
+import {
+    PaginaSolicitacoesComponent
+} from './components/pages/pagina-solicitacoes/pagina-solicitacoes.component';
 
 @Component({
   selector: 'app-root',
