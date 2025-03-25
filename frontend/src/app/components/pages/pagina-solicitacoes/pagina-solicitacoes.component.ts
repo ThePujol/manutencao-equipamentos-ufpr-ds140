@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { CardSolicitacaoComponent } from '../../card-solicitacao/card-solicitacao.component';
-import { SidebarClienteComponent } from '../../sidebar-cliente/sidebar-cliente.component';
+import { CardSolicitacaoComponent } from '../../ui/card-solicitacao/card-solicitacao.component';
+import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
 
 @Component({
   selector: 'app-pagina-solicitacoes',
