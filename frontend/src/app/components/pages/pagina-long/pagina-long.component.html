@@ -1,35 +1,52 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="inline-flex justify-start items-center">
-        <div
-            class="w-[538px] h-[664px] p-7 bg-white rounded-tl-3xl rounded-bl-3xl shadow-[0px_2px_20px_0px_rgba(0,0,0,0.15)] inline-flex flex-col justify-center items-center gap-7">
-            <div class="flex flex-col justify-center items-center">
-                <div class="inline-flex justify-start items-center gap-3">
-                    <div class="w-7 h-8 bg-indigo-800"></div>
-                    <div class="justify-start text-indigo-800 text-4xl font-semibold font-['Poppins']">Login</div>
-                </div>
-                <div class="justify-start text-black text-opacity-70 text-base font-['Poppins']">Bem-vindo(a) de volta.
-                </div>
-            </div>
-            <div class="flex flex-col justify-start items-start gap-2.5">
-                <div
-                    class="w-72 p-2.5 bg-white rounded-md shadow-[0px_0px_5px_0px_rgba(0,0,0,0.25)] outline outline-[0.50px] outline-offset-[-0.50px] outline-black outline-opacity-20 inline-flex justify-start items-center gap-2.5">
-                    <div class="justify-start text-black text-opacity-40 text-sm font-normal font-['Poppins']">Email
-                    </div>
-                </div>
-                <div
-                    class="w-72 p-2.5 rounded-md shadow-[0px_0px_5px_0px_rgba(0,0,0,0.25)] outline outline-[0.50px] outline-offset-[-0.50px] outline-black outline-opacity-20 inline-flex justify-start items-center gap-2.5">
-                    <div class="justify-start text-black text-opacity-40 text-sm font-normal font-['Poppins']">Senha
-                    </div>
-                </div>
-            </div>
-            <div data-tipo="Default"
-                class="w-72 p-2.5 bg-indigo-800 rounded-md shadow-[0px_0px_5px_0px_rgba(0,0,0,0.25)] inline-flex justify-center items-center gap-2.5">
-                <div class="justify-start text-white text-sm font-semibold font-['Poppins']">Confirmar</div>
-            </div>
-            <div class="justify-start"><span class="text-black text-opacity-50 text-xs font-normal font-['Poppins']">Não
-                    possui uma conta? </span><span
-                    class="text-indigo-800 text-xs font-normal font-['Poppins'] underline">Faça o cadastro.</span></div>
+<div class="w-full h-screen bg-[#EAEAEA] flex justify-center items-center">
+  
+    <!-- Container Principal (largura proporcional e limites agradáveis) -->
+    <div class="flex rounded-2xl overflow-hidden shadow-xl bg-white max-w-4xl w-full min-h-[600px] min-w-[1000px]">
+  
+      <!-- Formulário (metade esquerda, padding agradável) -->
+      <div class="flex-1 p-10 flex flex-col justify-center items-center gap-4">
+  
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-3xl font-bold text-[#4931A9] flex items-center gap-2">
+            <img src="personicone.svg" alt="">
+            <span class="material-icons"></span> Login
+          </span>
+          <p class="text-gray-500">Bem-vindo(a) de volta.</p>
         </div>
-        <img class="w-[531px] h-[664px] rounded-tr-3xl rounded-br-3xl" src="cadastro.svg" />
+  
+        <div class="flex flex-col gap-3 w-full max-w-xs">
+          <input
+            type="email"
+            placeholder="Email"
+            class="py-2 px-4 rounded-md border border-gray-300 outline-none focus:ring-1 ring-[#4931A9] placeholder:text-gray-400"
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            class="py-2 px-4 rounded-md border border-gray-300 outline-none focus:ring-1 ring-[#4931A9] placeholder:text-gray-400"
+          />
+          <button class="py-2 bg-[#4931A9] text-white font-semibold rounded-md hover:bg-[#3b2788] transition">
+            Confirmar
+          </button>
+        </div>
+  
+        <p class="text-sm text-gray-500">
+          Não possui uma conta?
+          <a href="#" class="text-[#4931A9] underline">Faça o cadastro.</a>
+        </p>
+        
+      </div>
+  
+      <!-- Imagem lateral (metade direita, escondida em telas menores) -->
+      <div class="hidden md:block flex-1">
+        <img 
+          src="cadastro.svg"
+          alt="Imagem lateral"
+          class="w-full h-full object-cover"
+        />
+      </div>
+  
     </div>
-</div>
+  
+  </div>
+  
