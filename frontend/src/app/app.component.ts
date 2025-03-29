@@ -11,10 +11,12 @@ import {
 import { 
     PaginaNovoComponent 
 } from "./components/pages/pagina-novo/pagina-novo.component";
+import { PaginaLongComponent } from "./components/pages/pagina-long/pagina-long.component";
+
 
 @Component({
   selector: 'app-root',
-  imports: [PaginaSolicitacoesComponent, PaginaCadastroComponent,PaginaNovoComponent],
+  imports: [PaginaSolicitacoesComponent, PaginaCadastroComponent, PaginaNovoComponent, PaginaLongComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
