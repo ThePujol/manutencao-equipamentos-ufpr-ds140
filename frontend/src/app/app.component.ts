@@ -3,16 +3,11 @@ import { Component } from '@angular/core';
 import {
     PaginaCadastroComponent
 } from './components/pages/pagina-cadastro/pagina-cadastro.component';
-
+import { PaginaLongComponent } from './components/pages/pagina-long/pagina-long.component';
+import { PaginaNovoComponent } from './components/pages/pagina-novo/pagina-novo.component';
 import {
     PaginaSolicitacoesComponent
 } from './components/pages/pagina-solicitacoes/pagina-solicitacoes.component';
-
-import { 
-    PaginaNovoComponent 
-} from "./components/pages/pagina-novo/pagina-novo.component";
-import { PaginaLongComponent } from "./components/pages/pagina-long/pagina-long.component";
-
 
 @Component({
   selector: 'app-root',
