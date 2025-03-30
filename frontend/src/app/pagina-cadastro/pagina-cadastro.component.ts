@@ -4,7 +4,6 @@ import {FormBuilder, FormGroup, FormControl, Validators,  ReactiveFormsModule} f
 import { InputTextComponent } from '../input-text/input-text.component';
 
 
-
 @Component({
   selector: 'app-pagina-cadastro',
   imports: [CommonModule, ReactiveFormsModule, InputTextComponent],
@@ -12,14 +11,13 @@ import { InputTextComponent } from '../input-text/input-text.component';
 })
 export class PaginaCadastroComponent {
   title ="Cadastro de Usuário";
+  submitted = false;
 
-  registerForm!: FormGroup;
+  cadastroForm!: FormGroup;
 
-  constructor(private fBuilder: FormBuilder) {}
-
-  ngOnInit(){
-    this.registerForm = this.fBuilder.group({
-      nomeC: ['', Validators.required],
+  constructor(private fBuilder: FormBuilder){
+    this.cadastroForm = this.fBuilder.group({
+      nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       cpf: ['', Validators.required],
       tel: ['', Validators.required],
@@ -32,10 +30,15 @@ export class PaginaCadastroComponent {
   });
   }
 
+  ngOnInit(): void {}
+
   onSubmit() {
-    if(this.registerForm.valid){
-      console.log(this.registerForm.value);
+    if(this.cadastroForm.valid){
+      console.log(this.cadastroForm.value);
+      this.submitted = true;
+      this.cadastroForm.reset();
+    } else {
+      console.log("Formulário inválido");
     }
-    console.log("O cadastro esta consistente")
   }
 }
