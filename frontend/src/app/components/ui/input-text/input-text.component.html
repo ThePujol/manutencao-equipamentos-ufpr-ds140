@@ -1,7 +1,15 @@
 <div class="flex flex-col w-full">
   <input
+    [formControl]="formControl"
     [type]="type"
+    required
     [placeholder]="placeholder"
-    class="border border-gray-900/15 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none">
+    class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
+  />
+  <div *ngIf="formControl.invalid && (formControl.dirty || formControl.touched)" class="mt-1">
+    <small class="text-red-500 text-xs">{{ getErr() }}</small>
+  </div>
 </div>
+
+
 
