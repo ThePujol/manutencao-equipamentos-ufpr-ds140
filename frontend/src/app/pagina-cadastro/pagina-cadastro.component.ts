@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit} from '@angular/core';
+import { Component} from '@angular/core';
 import {FormBuilder, FormGroup, FormControl, Validators,  ReactiveFormsModule} from '@angular/forms';
 import { InputTextComponent } from '../input-text/input-text.component';
 
