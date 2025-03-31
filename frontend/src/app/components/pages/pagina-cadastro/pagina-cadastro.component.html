@@ -30,10 +30,12 @@
         <div class="flex justify-between">
           <p class="text-sm text-gray-500 mt-4 text-center">
             Já possui uma conta?
-            <a href="/login" class="text-indigo-600 hover:underline">
+            <a routerLink="/login" class="cursor-pointer text-indigo-600 hover:underline">
               Faça o login
             </a>
           </p>
+
+
           <button type="submit" class="cursor-pointer bg-indigo-700 text-white text-sm font-semibold w-[300px] p-2.5 rounded-lg mt-4 hover:bg-indigo-800 transition-transform transform hover:-translate-y-1 active:-translate-y-0.5">
             Confirmar
           </button>
@@ -47,3 +49,5 @@
     </div>
   </div>
 </div>
+<router-outlet></router-outlet>
+

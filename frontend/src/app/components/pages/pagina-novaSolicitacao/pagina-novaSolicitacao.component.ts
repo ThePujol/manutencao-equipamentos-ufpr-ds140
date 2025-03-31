@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
 import { SidebarClienteComponent } from "../../ui/sidebar-cliente/sidebar-cliente.component";
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: '´app-pagina-novo',
-  templateUrl: './pagina-novo.component.html',
-  styleUrls: ['./pagina-novo.component.css'],
-  imports: [SidebarClienteComponent]
+  selector: '´app-pagina-novaSolicitacao',
+  templateUrl: './pagina-novaSolicitacao.component.html',
+  imports: [SidebarClienteComponent, RouterOutlet]
 })
-export class PaginaNovoComponent {
+export class PaginaNovaSolicitacaoComponent {
   // Modelo da solicitação com os campos necessários
   solicitacao = {
     descricaoEquipamento: '',
@@ -20,10 +17,9 @@ export class PaginaNovoComponent {
     estado: 'ABERTA'      // Estado padrão para novas solicitações
   };
 
-  // Função executada ao submeter o formulário
+
   onSubmit() {
-    // Aqui você pode implementar a lógica para enviar os dados para o backend,
-    // por exemplo, utilizando um serviço Angular para comunicação HTTP.
+
     console.log('Solicitação enviada:', this.solicitacao);
 
     // Exemplo de chamada a um serviço:

@@ -6,7 +6,7 @@
             <h1 class="text-[40px] font-semibold text-[#4931A9]">Suas solicitações</h1>
             <h2 class="opacity-50 font-light">Aqui encontram-se todas as solicitações que você realizou.</h2>
         </div>
-        
+
         <div class="flex gap-2.5 flex-col">
             <app-card-solicitacao data="10/03/2025" equipamento="Notebook com defeito" estado="Arrumada" [temBotao]="true" textoBotao="Pagar serviço" />
             <app-card-solicitacao data="16/03/2025" equipamento="Iphone tela trincada" estado="Aprovada" />
@@ -14,4 +14,5 @@
             <app-card-solicitacao data="22/03/2025" equipamento="Mouse sensor não funciona" estado="Aberta" [temBotao]="true" />
         </div>
     </section>
+    <router-outlet></router-outlet>
 </main>
