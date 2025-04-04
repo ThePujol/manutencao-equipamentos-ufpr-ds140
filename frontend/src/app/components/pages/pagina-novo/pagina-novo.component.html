@@ -13,8 +13,8 @@
       </h2>
     </div>
 
-    <!-- Formulário básico em HTML -->
-    <form action="/submit-solicitacao" method="POST" class="flex flex-col gap-4">
+    <!-- Formulário utilizando Angular -->
+    <form (ngSubmit)="onSubmit()" #solicitacaoForm="ngForm" class="flex flex-col gap-4">
       <!-- Campo: Descrição do Equipamento -->
       <div class="flex flex-col">
         <label for="descricaoEquipamento" class="font-medium">
@@ -26,6 +26,7 @@
           name="descricaoEquipamento"
           class="border rounded p-2"
           required
+          [(ngModel)]="solicitacao.descricaoEquipamento"
         />
       </div>
       
@@ -40,6 +41,7 @@
           name="categoriaEquipamento"
           class="border rounded p-2"
           required
+          [(ngModel)]="solicitacao.categoriaEquipamento"
         />
       </div>
       
@@ -54,6 +56,7 @@
           class="border rounded p-2"
           rows="4"
           required
+          [(ngModel)]="solicitacao.descricaoDefeito"
         ></textarea>
       </div>
       

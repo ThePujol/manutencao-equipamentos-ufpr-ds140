@@ -4,31 +4,54 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
+interface Solicitacao {
+  descricaoEquipamento: string;
+  categoriaEquipamento: string;
+  descricaoDefeito: string;
+  dataHora: Date;
+  estado: string;
+}
+
 @Component({
   selector: '´app-pagina-novo',
   templateUrl: './pagina-novo.component.html',
   styleUrls: ['./pagina-novo.component.css'],
-  imports: [SidebarClienteComponent]
+  standalone: true,
+  imports: [SidebarClienteComponent, FormsModule]
 })
+
+
+
 export class PaginaNovoComponent {
-  // Modelo da solicitação com os campos necessários
-  solicitacao = {
+  // Objeto para vinculação dos dados do formulário
+  solicitacao: Solicitacao = {
     descricaoEquipamento: '',
     categoriaEquipamento: '',
     descricaoDefeito: '',
-    dataHora: new Date(), // Registra a data/hora atual
-    estado: 'ABERTA'      // Estado padrão para novas solicitações
+    dataHora: new Date(),
+    estado: 'ABERTA'
   };
 
-  // Função executada ao submeter o formulário
-  onSubmit() {
-    // Aqui você pode implementar a lógica para enviar os dados para o backend,
-    // por exemplo, utilizando um serviço Angular para comunicação HTTP.
-    console.log('Solicitação enviada:', this.solicitacao);
+  // Array para simular o armazenamento das solicitações
+  solicitacoes: Solicitacao[] = [];
 
-    // Exemplo de chamada a um serviço:
-    // this.solicitacaoService.enviarSolicitacao(this.solicitacao).subscribe(response => {
-    //   // Tratar a resposta
-    // });
+  onSubmit(): void {
+    // Cria a nova solicitação com os dados atuais do formulário,
+    // atualizando a data/hora e o estado
+    const novaSolicitacao: Solicitacao = {
+      descricaoEquipamento: this.solicitacao.descricaoEquipamento,
+      categoriaEquipamento: this.solicitacao.categoriaEquipamento,
+      descricaoDefeito: this.solicitacao.descricaoDefeito,
+      dataHora: new Date(),
+      estado: 'ABERTA'
+    };
+
+    this.solicitacoes.push(novaSolicitacao);
+    console.log('Solicitação registrada:', novaSolicitacao);
+
+    // Reseta os campos do formulário
+    this.solicitacao.descricaoEquipamento = '';
+    this.solicitacao.categoriaEquipamento = '';
+    this.solicitacao.descricaoDefeito = '';
   }
 }
