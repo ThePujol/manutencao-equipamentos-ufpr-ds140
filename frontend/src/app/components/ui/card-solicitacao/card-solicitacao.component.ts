@@ -1,8 +1,11 @@
 import { Component, Input } from '@angular/core';
 
+import { MatDialog } from '@angular/material/dialog';
+import { PagamentoPopUpComponent } from '../pagamento-pop-up/pagamento-pop-up.component';
+
 @Component({
   selector: 'app-card-solicitacao',
-  imports: [],
+  imports: [PagamentoPopUpComponent],
   templateUrl: './card-solicitacao.component.html',
 })
 export class CardSolicitacaoComponent {
@@ -11,4 +14,12 @@ export class CardSolicitacaoComponent {
   @Input() estado: string = "Aberta";
   @Input() temBotao: boolean = false;
   @Input() textoBotao: string = "Visualizar serviço";
+
+  constructor(private dialog: MatDialog) {}
+
+  abrirPopup() {
+    this.dialog.open(PagamentoPopUpComponent, {
+      width: '400px',
+    });
+  }
 }
