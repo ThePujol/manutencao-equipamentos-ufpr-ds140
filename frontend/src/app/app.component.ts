@@ -1,17 +1,10 @@
 import { Component } from '@angular/core';
 
-import {
-    PaginaCadastroComponent
-} from './components/pages/pagina-cadastro/pagina-cadastro.component';
-import { PaginaLongComponent } from './components/pages/pagina-long/pagina-long.component';
-import { PaginaNovoComponent } from './components/pages/pagina-novo/pagina-novo.component';
-import {
-    PaginaSolicitacoesComponent
-} from './components/pages/pagina-solicitacoes/pagina-solicitacoes.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [PaginaSolicitacoesComponent, PaginaCadastroComponent, PaginaNovoComponent, PaginaLongComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

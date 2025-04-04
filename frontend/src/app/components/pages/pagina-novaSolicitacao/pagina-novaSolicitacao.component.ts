@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarClienteComponent } from "../../ui/sidebar-cliente/sidebar-cliente.component";
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
+
+import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
 
 interface Solicitacao {
   descricaoEquipamento: string;
@@ -14,16 +14,11 @@ interface Solicitacao {
 }
 
 @Component({
-  selector: '´app-pagina-novo',
-  templateUrl: './pagina-novo.component.html',
-  styleUrls: ['./pagina-novo.component.css'],
-  standalone: true,
-  imports: [CommonModule,SidebarClienteComponent, FormsModule]
+  selector: '´app-pagina-novaSolicitacao',
+  templateUrl: './pagina-novaSolicitacao.component.html',
+  imports: [SidebarClienteComponent, RouterOutlet, CommonModule, FormsModule]
 })
-
-
-
-export class PaginaNovoComponent {
+export class PaginaNovaSolicitacaoComponent {
   // Objeto para vinculação dos dados do formulário
   solicitacao: Solicitacao = {
     descricaoEquipamento: '',
@@ -35,6 +30,7 @@ export class PaginaNovoComponent {
 
   // Array para simular o armazenamento das solicitações
   solicitacoes: Solicitacao[] = [];
+
 
   onSubmit(): void {
     // Cria a nova solicitação com os dados atuais do formulário,
