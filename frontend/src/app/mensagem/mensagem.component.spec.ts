@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PaginaLoginComponent } from './pagina-login.component';
+import { MensagemComponent } from './mensagem.component';
 
-describe('PaginaLoginComponent', () => {
-  let component: PaginaLoginComponent;
-  let fixture: ComponentFixture<PaginaLoginComponent>;
+describe('MensagemComponent', () => {
+  let component: MensagemComponent;
+  let fixture: ComponentFixture<MensagemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaginaLoginComponent]
+      imports: [MensagemComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PaginaLoginComponent);
+    fixture = TestBed.createComponent(MensagemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -21,4 +21,3 @@ describe('PaginaLoginComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
