@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { SidebarClienteComponent } from "../../ui/sidebar-cliente/sidebar-cliente.component";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,7 +18,7 @@ interface Solicitacao {
   templateUrl: './pagina-novo.component.html',
   styleUrls: ['./pagina-novo.component.css'],
   standalone: true,
-  imports: [SidebarClienteComponent, FormsModule]
+  imports: [CommonModule,SidebarClienteComponent, FormsModule]
 })
 
 

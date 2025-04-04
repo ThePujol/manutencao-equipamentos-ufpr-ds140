@@ -26,8 +26,17 @@
           name="descricaoEquipamento"
           class="border rounded p-2"
           required
+          placeholder="Ex.: Notebook Dell Inspiron"
           [(ngModel)]="solicitacao.descricaoEquipamento"
+          #descricaoEquipamento="ngModel"
         />
+
+
+            <!-- Mensagem de erro dinâmica -->
+    <div *ngIf="descricaoEquipamento.invalid && descricaoEquipamento.touched" class="text-red-500 text-sm">
+      Este campo é obrigatório.
+    </div>
+    
       </div>
       
       <!-- Campo: Categoria do Equipamento -->
@@ -41,8 +50,13 @@
           name="categoriaEquipamento"
           class="border rounded p-2"
           required
+          placeholder="Ex.: Computador, Impressora, Monitor"
           [(ngModel)]="solicitacao.categoriaEquipamento"
+          #categoriaEquipamento="ngModel"
         />
+        <div *ngIf="categoriaEquipamento.invalid && categoriaEquipamento.touched" class="text-red-500 text-sm">
+          Este campo é obrigatório.
+        </div>
       </div>
       
       <!-- Campo: Descrição do Defeito -->
@@ -56,14 +70,20 @@
           class="border rounded p-2"
           rows="4"
           required
+          placeholder="Ex.: Tela piscando ou não liga"
           [(ngModel)]="solicitacao.descricaoDefeito"
+          #descricaoDefeito="ngModel"
         ></textarea>
+        <div *ngIf="descricaoDefeito.invalid && descricaoDefeito.touched" class="text-red-500 text-sm">
+          Este campo é obrigatório.
+        </div>
       </div>
       
       <!-- Botão de Envio -->
       <button
         type="submit"
-        class="bg-[#4931A9] text-white py-2 px-4 rounded"
+        class="cursor-pointer bg-[#4931A9] text-white py-2 px-4 rounded"
+        [disabled]="solicitacaoForm.invalid"
       >
         Enviar Solicitação
       </button>
