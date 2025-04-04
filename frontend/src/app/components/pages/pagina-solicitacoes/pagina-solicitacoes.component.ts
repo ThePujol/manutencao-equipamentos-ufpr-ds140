@@ -1,13 +1,18 @@
+import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 
-import { CardSolicitacaoComponent } from '../../card-solicitacao/card-solicitacao.component';
-import { SidebarClienteComponent } from '../../sidebar-cliente/sidebar-cliente.component';
+import { listaSolicitacoes } from '../../../db';
+import {
+    TabelaSolicitacoesComponent
+} from '../../tabelas/tabela-solicitacoes/tabela-solicitacoes.component';
+import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
 
 @Component({
   selector: 'app-pagina-solicitacoes',
-  imports: [CardSolicitacaoComponent, SidebarClienteComponent],
+  imports: [SidebarClienteComponent, MatIcon, TabelaSolicitacoesComponent, NgFor],
   templateUrl: './pagina-solicitacoes.component.html',
 })
 export class PaginaSolicitacoesComponent {
-
+  listaSolicitacoes = listaSolicitacoes;
 }
