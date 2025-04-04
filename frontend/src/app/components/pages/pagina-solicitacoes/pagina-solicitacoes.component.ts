@@ -1,6 +1,7 @@
 import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { RouterOutlet } from '@angular/router';
 
 import { listaSolicitacoes } from '../../../db';
 import {
@@ -10,7 +11,7 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 
 @Component({
   selector: 'app-pagina-solicitacoes',
-  imports: [SidebarClienteComponent, MatIcon, TabelaSolicitacoesComponent, NgFor],
+  imports: [SidebarClienteComponent, MatIcon, TabelaSolicitacoesComponent, NgFor, RouterOutlet],
   templateUrl: './pagina-solicitacoes.component.html',
 })
 export class PaginaSolicitacoesComponent {

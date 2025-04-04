@@ -5,10 +5,11 @@ import {
 } from '@angular/forms';
 
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-pagina-cadastro',
-  imports: [CommonModule, ReactiveFormsModule, InputTextComponent],
+  imports: [CommonModule, ReactiveFormsModule, InputTextComponent, RouterOutlet, RouterLink],
   templateUrl: './pagina-cadastro.component.html'
 })
 export class PaginaCadastroComponent {

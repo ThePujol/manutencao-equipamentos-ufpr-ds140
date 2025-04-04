@@ -13,8 +13,8 @@
       </h2>
     </div>
 
-    <!-- Formulário básico em HTML -->
-    <form action="/submit-solicitacao" method="POST" class="flex flex-col gap-4">
+    <!-- Formulário utilizando Angular -->
+    <form (ngSubmit)="onSubmit()" #solicitacaoForm="ngForm" class="flex flex-col gap-4">
       <!-- Campo: Descrição do Equipamento -->
       <div class="flex flex-col">
         <label for="descricaoEquipamento" class="font-medium">
@@ -26,9 +26,19 @@
           name="descricaoEquipamento"
           class="border rounded p-2"
           required
+          placeholder="Ex.: Notebook Dell Inspiron"
+          [(ngModel)]="solicitacao.descricaoEquipamento"
+          #descricaoEquipamento="ngModel"
         />
+
+
+            <!-- Mensagem de erro dinâmica -->
+    <div *ngIf="descricaoEquipamento.invalid && descricaoEquipamento.touched" class="text-red-500 text-sm">
+      Este campo é obrigatório.
+    </div>
+    
       </div>
-      
+
       <!-- Campo: Categoria do Equipamento -->
       <div class="flex flex-col">
         <label for="categoriaEquipamento" class="font-medium">
@@ -40,9 +50,15 @@
           name="categoriaEquipamento"
           class="border rounded p-2"
           required
+          placeholder="Ex.: Computador, Impressora, Monitor"
+          [(ngModel)]="solicitacao.categoriaEquipamento"
+          #categoriaEquipamento="ngModel"
         />
+        <div *ngIf="categoriaEquipamento.invalid && categoriaEquipamento.touched" class="text-red-500 text-sm">
+          Este campo é obrigatório.
+        </div>
       </div>
-      
+
       <!-- Campo: Descrição do Defeito -->
       <div class="flex flex-col">
         <label for="descricaoDefeito" class="font-medium">
@@ -54,16 +70,24 @@
           class="border rounded p-2"
           rows="4"
           required
+          placeholder="Ex.: Tela piscando ou não liga"
+          [(ngModel)]="solicitacao.descricaoDefeito"
+          #descricaoDefeito="ngModel"
         ></textarea>
+        <div *ngIf="descricaoDefeito.invalid && descricaoDefeito.touched" class="text-red-500 text-sm">
+          Este campo é obrigatório.
+        </div>
       </div>
-      
+
       <!-- Botão de Envio -->
       <button
         type="submit"
-        class="bg-[#4931A9] text-white py-2 px-4 rounded"
+        class="cursor-pointer bg-[#4931A9] text-white py-2 px-4 rounded"
+        [disabled]="solicitacaoForm.invalid"
       >
         Enviar Solicitação
       </button>
     </form>
   </section>
+  <router-outlet></router-outlet>
 </main>
