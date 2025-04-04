@@ -1,6 +1,6 @@
-<div class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+<div class="fixed inset-0 flex items-center justify-center z-50">
   <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
-    <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" (click)="close()">
+    <button class="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800" (click)="close()">
       ✖
     </button>
 
@@ -15,8 +15,8 @@
       </select>
     </div>
     <div class="mt-6 flex justify-end gap-3">
-      <button class="px-4 py-2 hover:text-gray-600" (click)="close()">Cancelar</button>
-      <button class="px-4 py-2bg-[#4931A9] text-white rounded-md cursor-pointer hover:bg-[#3e2996] duration-150" (click)="finalizarPgto()">
+      <button class="px-4 py-2 cursor-pointer hover:text-gray-600" (click)="close()">Cancelar</button>
+      <button class="px-4 py-2 bg-[#4931A9] text-white rounded-md cursor-pointer hover:bg-[#3e2996]" (click)="finalizarPgto()">
         Finalizar Pagamento
       </button>
     </div>
