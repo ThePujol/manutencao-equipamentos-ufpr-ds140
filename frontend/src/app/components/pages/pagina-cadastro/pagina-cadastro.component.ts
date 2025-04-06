@@ -5,7 +5,9 @@ import {
 } from '@angular/forms';
 
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+
+import { ViaCepService } from '../../../services/via-cep.service';
 
 @Component({
   selector: 'app-pagina-cadastro',
@@ -18,7 +20,12 @@ export class PaginaCadastroComponent {
 
   cadastroForm!: FormGroup;
 
-  constructor(private fBuilder: FormBuilder){
+  constructor(
+    private fBuilder: FormBuilder,
+    private router: Router,
+    private viaCepService: ViaCepService
+  ) {
+    // Inicializa o formulário
     this.cadastroForm = this.fBuilder.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -29,21 +36,44 @@ export class PaginaCadastroComponent {
       cep: ['', Validators.required],
       endereco: ['', Validators.required],
       numero: ['', Validators.required],
-      complemento: [''],
-  });
+      complemento: ['']
+    });
+
+    this.cadastroForm.get('cep')?.valueChanges.subscribe((cep: string | null) => {
+      if (!cep) return;
+
+      const cleanedCep = cep.replace(/\D/g, '');
+
+      if (cleanedCep.length === 8) {
+        this.viaCepService.buscar(cleanedCep).subscribe({
+          next: (data) => {
+            if (!data.erro) {
+              this.cadastroForm.patchValue({
+                endereco: data.logradouro,
+                cidade: data.localidade,
+                estado: data.uf,
+                complemento: data.complemento
+              });
+            } else {
+              console.warn('CEP não encontrado');
+            }
+          },
+          error: (err) => {
+            console.error('Erro ao buscar CEP:', err);
+          }
+        });
+      }
+    });
   }
 
   ngOnInit(): void {}
-
-  validarCampo() {
-
-  }
 
   onSubmit() {
     if(this.cadastroForm.valid){
       console.log(this.cadastroForm.value);
       this.submitted = true;
       this.cadastroForm.reset();
+      this.router.navigate(['/login']);
     } else {
       console.log("Formulário inválido");
     }

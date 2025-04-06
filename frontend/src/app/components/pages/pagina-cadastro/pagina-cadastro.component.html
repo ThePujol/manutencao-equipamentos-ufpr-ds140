@@ -9,10 +9,6 @@
         <h2 class="font-light text-gray-500 mt-1">Preencha os campos abaixo para criar uma conta.</h2>
       </div>
 
-      <div *ngIf="submitted" class="mt-4 text-green-600 text-lg">
-        Cadastro Realizado com sucesso!
-      </div>
-
       <form *ngIf="!submitted" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="mt-4">
         <div class="grid grid-cols-2 gap-[15px] gap-y-[30px]">
           <app-input-text [label]="'Nome Completo:'" controlName="nome" [type]="'text'" [placeholder]="'Ex: Davi Brito'" [required]= true></app-input-text>
