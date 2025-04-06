@@ -1,0 +1,24 @@
+<div class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
+    <button class="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800" (click)="close()">
+      ✖
+    </button>
+
+    <h2 class="text-xl font-semibold text-gray-900">Pagar serviço</h2>
+    <p class="text-gray-600 text-sm mt-1">Pague o orçamento e receba seu equipamento novinho em folha!</p>
+    <div class="mt-4">
+      <label class="block text-gray-700 font-medium mb-1">Método de pagamento</label>
+      <select [value]="pagMeio" (change)="atualizaPgto($event)" class="w-full border border-gray-300 rounded-lg p-2">
+        <option value="Cartão de Crédito">Cartão de Crédito</option>
+        <option value="Pix">Pix</option>
+        <option value="Boleto">Boleto</option>
+      </select>
+    </div>
+    <div class="mt-6 flex justify-end gap-3">
+      <button class="px-4 py-2 cursor-pointer hover:text-gray-600" (click)="close()">Cancelar</button>
+      <button class="px-4 py-2 bg-[#4931A9] text-white rounded-md cursor-pointer hover:bg-[#3e2996]" (click)="finalizarPgto()">
+        Finalizar Pagamento
+      </button>
+    </div>
+  </div>
+</div>
