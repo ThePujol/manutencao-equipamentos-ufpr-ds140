@@ -1,23 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
-    FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
-
-import { InputTextComponent } from '../../ui/input-text/input-text.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
+import { InputTextComponent } from '../../ui/input-text/input-text.component';
 import { ViaCepService } from '../../../services/via-cep.service';
 
 @Component({
   selector: 'app-pagina-cadastro',
-  imports: [CommonModule, ReactiveFormsModule, InputTextComponent, RouterOutlet, RouterLink],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    InputTextComponent,
+    RouterOutlet,
+    RouterLink
+  ],
   templateUrl: './pagina-cadastro.component.html'
 })
 export class PaginaCadastroComponent {
-  title ="Cadastro de Usuário";
+  title = 'Cadastro de Usuário';
   submitted = false;
-
+  cepNaoEncontrado = false;
   cadastroForm!: FormGroup;
 
   constructor(
@@ -25,7 +34,6 @@ export class PaginaCadastroComponent {
     private router: Router,
     private viaCepService: ViaCepService
   ) {
-    // Inicializa o formulário
     this.cadastroForm = this.fBuilder.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -38,8 +46,12 @@ export class PaginaCadastroComponent {
       numero: ['', Validators.required],
       complemento: ['']
     });
+  }
 
+  ngOnInit(): void {
     this.cadastroForm.get('cep')?.valueChanges.subscribe((cep: string | null) => {
+      this.cepNaoEncontrado = false;
+
       if (!cep) return;
 
       const cleanedCep = cep.replace(/\D/g, '');
@@ -54,28 +66,30 @@ export class PaginaCadastroComponent {
                 estado: data.uf,
                 complemento: data.complemento
               });
+              this.cadastroForm.get('cep')?.setErrors(null);
             } else {
-              console.warn('CEP não encontrado');
+              this.cepNaoEncontrado = true;
+              this.cadastroForm.get('cep')?.setErrors({ cepInvalido: true });
             }
           },
-          error: (err) => {
-            console.error('Erro ao buscar CEP:', err);
+          error: () => {
+            this.cepNaoEncontrado = true;
+            this.cadastroForm.get('cep')?.setErrors({ cepInvalido: true });
           }
         });
       }
     });
   }
 
-  ngOnInit(): void {}
-
   onSubmit() {
-    if(this.cadastroForm.valid){
+    if (this.cadastroForm.valid) {
       console.log(this.cadastroForm.value);
       this.submitted = true;
       this.cadastroForm.reset();
-      this.router.navigate(['/login']);
+
+        this.router.navigate(['/login']);
     } else {
-      console.log("Formulário inválido");
+      this.cadastroForm.markAllAsTouched();
     }
   }
 }
