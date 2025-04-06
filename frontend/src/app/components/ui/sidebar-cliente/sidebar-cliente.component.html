@@ -3,11 +3,11 @@
         <h1 class="text-[20px] font-semibold">Olá, {{ nome }}.</h1>
         <h2 class="opacity-50 text-sm">Selecione uma página.</h2>
     </div>
-    <a routerLink="/solicitacoes" class="px-[30px] py-2.5 font-semibold bg-[#331F80] w-full flex items-center gap-1">
-        <mat-icon>swap_horiz</mat-icon> <p>Solicitações</p>
+    <a href="" class="px-[30px] py-2.5 font-semibold bg-[#331F80] w-full flex items-center gap-1">
+        <mat-icon>build_outline</mat-icon> <a routerLink="/solicitacoes">Solicitações</a>
     </a>
-    <a routerLink="/nova-solicitacao" class="px-[30px] py-2.5 w-full hover:bg-[#3e2996] bg-[#331F80] duration-150 flex items-center gap-1">
-        <mat-icon>add</mat-icon> <p>Nova solicitação</p>
+    <a href="" class="px-[30px] py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-1">
+        <mat-icon>add_circle_outline</mat-icon> <a routerLink="/nova-solicitacao">Nova solicitação</a>
     </a>
     <router-outlet></router-outlet>
 </div>
