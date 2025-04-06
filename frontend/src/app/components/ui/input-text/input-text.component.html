@@ -1,14 +1,19 @@
 <div class="flex flex-col w-full">
+  <label
+  *ngIf="label"
+  class="mb-1 text-sm font-medium text-gray-700"
+>
+  {{ label }} <span *ngIf="required" class="text-red-500">*</span>
+</label>
   <input
     [formControl]="formControl"
     [type]="type"
     required
     [placeholder]="placeholder"
+    [mask]="mask"
+    [required]="required"
     class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
   />
-  <div *ngIf="formControl.invalid && (formControl.dirty || formControl.touched)" class="mt-1">
-    <small class="text-red-500 text-xs">{{ getErr() }}</small>
-  </div>
 </div>
 
 

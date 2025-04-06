@@ -15,16 +15,16 @@
 
       <form *ngIf="!submitted" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="mt-4">
         <div class="grid grid-cols-2 gap-[15px] gap-y-[30px]">
-          <app-input-text controlName="nome" [type]="'text'" [placeholder]="'Nome Completo'"></app-input-text>
-          <app-input-text controlName="email" [type]="'email'" [placeholder]="'E-mail'"></app-input-text>
-          <app-input-text controlName="cpf" [type]="'text'" [placeholder]="'CPF'"></app-input-text>
-          <app-input-text controlName="tel" [type]="'tel'" [placeholder]="'Telefone'"></app-input-text>
-          <app-input-text controlName="cep" [type]="'text'" [placeholder]="'CEP'"></app-input-text>
-          <app-input-text controlName="estado" [type]="'text'" [placeholder]="'Estado'"></app-input-text>
-          <app-input-text controlName="cidade" [type]="'text'" [placeholder]="'Cidade'"></app-input-text>
-          <app-input-text controlName="endereco" [type]="'text'" [placeholder]="'Endereço'"></app-input-text>
-          <app-input-text controlName="numero" [type]="'text'" [placeholder]="'Número'"></app-input-text>
-          <app-input-text controlName="complemento" [type]="'text'" [placeholder]="'Complemento'"></app-input-text>
+          <app-input-text [label]="'Nome Completo:'" controlName="nome" [type]="'text'" [placeholder]="'Ex: Davi Brito'" [required]= true></app-input-text>
+          <app-input-text [label]="'Email:'" controlName="email" [type]="'email'" [placeholder]="'Ex: email@teste.com'" [required]= true></app-input-text>
+          <app-input-text [label]="'CPF:'" controlName="cpf" [type]="'text'" [placeholder]="'Ex: 000.000.000-00'" [mask]="'000.000.000-00'" [required]= true></app-input-text>
+          <app-input-text [label]="'Telefone:'" controlName="tel" [type]="'tel'" [placeholder]="'Ex: (00) 00000-0000'" [mask]="'(00) 00000-0000'" [required]= true></app-input-text>
+          <app-input-text [label]="'CEP:'" controlName="cep" [type]="'text'" [placeholder]="'Ex: 00000-000'" [mask]="'00000-000'" [required]= true></app-input-text>
+          <app-input-text [label]="'Estado:'" controlName="estado" [type]="'text'" [placeholder]="'Ex: PR'" [mask]="'AA'" [required]= true></app-input-text>
+          <app-input-text [label]="'Cidade:'" controlName="cidade" [type]="'text'" [placeholder]="'Ex: Curitiba'" [required]= true></app-input-text>
+          <app-input-text [label]="'Endereco:'" controlName="endereco" [type]="'text'" [placeholder]="'Ex: Rua das Palmeiras'" [required]= true></app-input-text>
+          <app-input-text [label]="'Numero:'" controlName="numero" [type]="'text'" [placeholder]="'Ex: 100'" [required]= true></app-input-text>
+          <app-input-text [label]="'Complemento:'" controlName="complemento" [type]="'text'" [placeholder]="'Ex: 1'" [required]= false></app-input-text>
         </div>
 
         <div class="flex justify-between">

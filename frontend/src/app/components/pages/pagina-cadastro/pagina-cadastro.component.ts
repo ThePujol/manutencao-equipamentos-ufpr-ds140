@@ -29,11 +29,15 @@ export class PaginaCadastroComponent {
       cep: ['', Validators.required],
       endereco: ['', Validators.required],
       numero: ['', Validators.required],
-      complemento: ['', Validators.required],
+      complemento: [''],
   });
   }
 
   ngOnInit(): void {}
+
+  validarCampo() {
+
+  }
 
   onSubmit() {
     if(this.cadastroForm.valid){
