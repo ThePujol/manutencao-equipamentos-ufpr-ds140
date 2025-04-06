@@ -6,48 +6,59 @@
           <img class="w-[27px]" src="person.svg" alt="Ícone Cadastro">
           <span class="text-[34px]">Cadastro</span>
         </h1>
-        <h2 class="font-light text-gray-500 mt-1">Preencha os campos abaixo para criar uma conta.</h2>
-      </div>
-
-      <div *ngIf="submitted" class="mt-4 text-green-600 text-lg">
-        Cadastro Realizado com sucesso!
+        <h2 class="font-light text-gray-500 mt-1">
+          Preencha os campos abaixo para criar uma conta.
+        </h2>
       </div>
 
       <form *ngIf="!submitted" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="mt-4">
         <div class="grid grid-cols-2 gap-[15px] gap-y-[30px]">
-          <app-input-text controlName="nome" [type]="'text'" [placeholder]="'Nome Completo'"></app-input-text>
-          <app-input-text controlName="email" [type]="'email'" [placeholder]="'E-mail'"></app-input-text>
-          <app-input-text controlName="cpf" [type]="'text'" [placeholder]="'CPF'"></app-input-text>
-          <app-input-text controlName="tel" [type]="'tel'" [placeholder]="'Telefone'"></app-input-text>
-          <app-input-text controlName="cep" [type]="'text'" [placeholder]="'CEP'"></app-input-text>
-          <app-input-text controlName="estado" [type]="'text'" [placeholder]="'Estado'"></app-input-text>
-          <app-input-text controlName="cidade" [type]="'text'" [placeholder]="'Cidade'"></app-input-text>
-          <app-input-text controlName="endereco" [type]="'text'" [placeholder]="'Endereço'"></app-input-text>
-          <app-input-text controlName="numero" [type]="'text'" [placeholder]="'Número'"></app-input-text>
-          <app-input-text controlName="complemento" [type]="'text'" [placeholder]="'Complemento'"></app-input-text>
+          <app-input-text [label]="'Nome Completo:'" controlName="nome" [type]="'text'" [placeholder]="'Ex: Davi Brito'" [required]="true"></app-input-text>
+          <app-input-text [label]="'Email:'" controlName="email" [type]="'email'" [placeholder]="'Ex: email@teste.com'" [required]="true"></app-input-text>
+          <app-input-text [label]="'CPF:'" controlName="cpf" [type]="'text'" [placeholder]="'Ex: 000.000.000-00'" [mask]="'000.000.000-00'" [required]="true"></app-input-text>
+          <app-input-text [label]="'Telefone:'" controlName="tel" [type]="'tel'" [placeholder]="'Ex: (00) 00000-0000'" [mask]="'(00) 00000-0000'" [required]="true"></app-input-text>
+          <app-input-text [label]="'CEP:'" controlName="cep" [type]="'text'" [placeholder]="'Ex: 00000-000'" [mask]="'00000-000'" [required]="true"></app-input-text>
+          <app-input-text [label]="'Estado:'" controlName="estado" [type]="'text'" [placeholder]="'Ex: PR'" [mask]="'AA'" [required]="true"></app-input-text>
+          <app-input-text [label]="'Cidade:'" controlName="cidade" [type]="'text'" [placeholder]="'Ex: Curitiba'" [required]="true"></app-input-text>
+          <app-input-text [label]="'Endereco:'" controlName="endereco" [type]="'text'" [placeholder]="'Ex: Rua das Palmeiras'" [required]="true"></app-input-text>
+          <app-input-text [label]="'Numero:'" controlName="numero" [type]="'text'" [placeholder]="'Ex: 100'" [required]="true"></app-input-text>
+          <app-input-text [label]="'Complemento:'" controlName="complemento" [type]="'text'" [placeholder]="'Ex: 1'" [required]="false"></app-input-text>
         </div>
 
-        <div class="flex justify-between">
-          <p class="text-sm text-gray-500 mt-4 text-center">
+        <div class="mt-2 min-h-[42px] text-center flex flex-col justify-center items-center">
+          <div *ngIf="cepNaoEncontrado" class="text-red-600 text-sm">
+            ⚠️ CEP não encontrado. Verifique o valor informado.
+          </div>
+
+          <div *ngIf="cadastroForm.invalid && cadastroForm.touched" class="text-red-600 text-sm mt-1">
+            ⚠️ Preencha todos os campos obrigatórios corretamente.
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2 mt-2">
+          <div class="flex justify-center mt-4">
+            <button
+              type="submit"
+              [disabled]="cadastroForm.invalid"
+              class="justify-center cursor-pointer text-white text-sm font-semibold w-[300px] p-2.5 rounded-lg transition-transform transform hover:-translate-y-1 active:-translate-y-0.5
+                bg-indigo-700 hover:bg-indigo-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              Confirmar
+            </button>
+          </div>
+
+          <p class="text-sm text-gray-500 text-center">
             Já possui uma conta?
-            <a routerLink="/login" class="cursor-pointer text-indigo-600 hover:underline">
-              Faça o login
-            </a>
+            <a routerLink="/login" class="text-indigo-600 hover:underline">Faça o login</a>
           </p>
-
-
-          <button type="submit" class="cursor-pointer bg-indigo-700 text-white text-sm font-semibold w-[300px] p-2.5 rounded-lg mt-4 hover:bg-indigo-800 transition-transform transform hover:-translate-y-1 active:-translate-y-0.5">
-            Confirmar
-          </button>
-
         </div>
       </form>
     </div>
 
     <div class="w-[531px]">
-      <img src="cadastro.svg" alt="Manutenção de Computadores" class="w-full h-full object-cover">
+      <img src="cadastro.svg" alt="Ilustração de Cadastro" class="w-full h-full object-cover">
     </div>
   </div>
 </div>
-<router-outlet></router-outlet>
 
+<router-outlet></router-outlet>

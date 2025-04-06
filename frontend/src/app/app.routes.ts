@@ -6,11 +6,6 @@ import { PaginaNovaSolicitacaoComponent } from './components/pages/pagina-novaSo
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'cadastro',
-    pathMatch: 'full',
-  },
-  {
     path:'login',
     component: PaginaLoginComponent,
     title: 'Login',
@@ -29,5 +24,10 @@ export const routes: Routes = [
     path: 'nova-solicitacao',
     component: PaginaNovaSolicitacaoComponent,
     title: 'Nova Solicitação',
+  },
+  {
+    path:'**',
+    redirectTo: 'cadastro',
+    pathMatch: 'full',
   }
 ];
