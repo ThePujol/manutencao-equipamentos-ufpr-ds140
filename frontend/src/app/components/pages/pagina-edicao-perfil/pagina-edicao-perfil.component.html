@@ -1,0 +1,63 @@
+<div class="flex">
+
+  <app-sidebar-cliente></app-sidebar-cliente>
+  <router-outlet></router-outlet>
+
+  <div class="flex flex-1 min-h-screen bg-white p-10">
+    <div class="flex bg-white shadow-lg rounded-2xl overflow-hidden w-full max-w-[1200px] mx-auto">
+
+      <div class="w-1/2 p-10">
+        <h1 class="text-3xl font-bold text-[#4931A9] flex items-center gap-2 mb-1">
+          <span class="material-icons text-4xl">edit</span>
+          Seu perfil
+        </h1>
+        <p class="text-gray-500 mb-6">Consulte ou edite as informações do seu perfil.</p>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-4">
+          <app-input-text label="Nome" controlName="nome" placeholder="Davi Brito" />
+          <app-input-text label="Email" controlName="email" placeholder="davibrito@gmail.com" />
+          <app-input-text label="CPF" controlName="cpf" mask="000.000.000-00" placeholder="000.000.000-00" />
+          <app-input-text label="Telefone" controlName="tel" mask="(00) 00000-0000" placeholder="(00) 00000-0000" />
+          <app-input-text label="CEP" controlName="cep" mask="00000-000" placeholder="00000-000" />
+          <app-input-text label="Estado" controlName="estado" placeholder="Bahia" />
+          <app-input-text label="Cidade" controlName="cidade" placeholder="Xique-xique" />
+          <app-input-text label="Complemento" controlName="complemento" placeholder="Apto 2" />
+          <app-input-text class="col-span-2" label="Endereço" controlName="endereco" placeholder="Rua Coronel Manoel Teixeira" />
+          <app-input-text label="Número" controlName="numero" placeholder="91" />
+
+          <div class="col-span-2 border-2 border-dashed border-gray-300 rounded-xl mt-2 p-6 flex flex-col items-center justify-center text-sm text-gray-500">
+            <span class="material-icons text-3xl mb-2">image</span>
+            <p class="mb-1">Carregue uma foto de perfil</p>
+            <p class="text-xs text-gray-400 mb-2">PNG ou JPG</p>
+            <input
+              type="file"
+              accept="image/png, image/jpeg"
+              (change)="onImageSelected($event)"
+              class="hidden"
+              id="upload"
+            />
+            <label
+              for="upload"
+              class="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-1 rounded-md transition"
+            >
+              Procurar arquivo
+            </label>
+          </div>
+
+          <div class="col-span-2 flex justify-between mt-4">
+            <button type="button" class="px-6 py-2 rounded-lg border border-[#4931A9] text-[#4931A9] font-medium">
+              Cancelar
+            </button>
+            <button type="submit" class="px-6 py-2 rounded-lg bg-[#4931A9] text-white font-medium">
+              Salvar alterações
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="w-1/2 bg-white flex items-center justify-center p-10">
+        <img src="ilust-perfil.svg" alt="Ilustração perfil" class="max-w-[400px]" />
+      </div>
+    </div>
+  </div>
+</div>
