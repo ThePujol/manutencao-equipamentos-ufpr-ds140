@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ViaCepService } from '../../../services/via-cep.service';
@@ -18,7 +18,7 @@ import { RouterOutlet } from '@angular/router';
   ],
   templateUrl: './pagina-edicao-perfil.component.html',
 })
-export class PaginaEdicaoPerfilComponent implements OnInit {
+export class PaginaEdicaoPerfilComponent {
   private fb = inject(FormBuilder);
   private viaCepService = inject(ViaCepService);
 
@@ -39,6 +39,19 @@ export class PaginaEdicaoPerfilComponent implements OnInit {
   cepInvalido = false;
 
   ngOnInit(): void {
+
+    this.form.patchValue({
+      nome:'Davi Brito',
+      email: 'davi.brito@email.com',
+      cpf: '123.456.789-00',
+      tel:'(11) 91234-5678',
+      cep: '47400-000',
+      estado: 'BA',
+      cidade: 'Xique-Xique',
+      endereco: 'Rua Coronel Manoel Teixeira',
+      numero: '91',
+      complemento: 'Apto 02'
+    })
     this.form.get('cep')?.valueChanges.subscribe((cep: string | null) => {
       this.cepInvalido = false;
 
