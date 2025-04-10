@@ -1,13 +1,24 @@
-<div class="flex flex-col items-start justify-start w-[283px] bg-[#4931A9] text-white h-[100vh]">
-    <div class="px-[30px] pt-10 pb-2.5">
-        <h1 class="text-[20px] font-semibold">Olá, {{ nome }}.</h1>
-        <h2 class="opacity-50 text-sm">Selecione uma página.</h2>
+<div class="flex flex-col items-start justify-between w-[283px] bg-[#4931A9] text-white h-full p-1.5 pt-2.5">
+    <div class="flex gap-1 flex-col w-full">
+        <a routerLink="/" class="flex items-center p-2.5 pb-8 gap-4 cursor-pointer opacity-70 hover:opacity-100 duration-150">
+            <img src="logo-branco.png" alt="Logo" class=" w-[30px]">
+            <p class="text-white font-bold">repair.io</p>
+        </a>
+    
+        <div class="flex p-2.5 gap-4 items-center">
+            <img src="https://p2.trrsf.com/image/fget/cf/774/0/images.terra.com/2025/04/10/667026534-davi-brito.jpg" alt="Davi Brito" class="rounded-full w-[42px] h-[42px]">
+            <div>
+                <h1 class="text-[20px] font-semibold">Olá, {{ nome }}.</h1>
+                <h2 class="opacity-50 text-sm">Selecione uma página.</h2>
+            </div>
+        </div>
+        <a routerLink="/solicitacoes" routerLinkActive="bg-[#331F80] font-semibold" [routerLinkActiveOptions]="{exact: true}" class="rounded-md px-[30px] py-2.5 hover:bg-[#3e2996] w-full flex items-center gap-1">
+            <mat-icon>build_outline</mat-icon> <p>Solicitações</p>
+        </a>
+        <a routerLink="/nova-solicitacao" routerLinkActive="bg-[#331F80] font-semibold" class="rounded-md px-[30px] py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-1">
+            <mat-icon>add_circle_outline</mat-icon> <p>Nova solicitação</p>
+        </a>
     </div>
-    <a routerLink="/solicitacoes" class="px-[30px] py-2.5 font-semibold bg-[#331F80] w-full flex items-center gap-1">
-        <mat-icon>build_outline</mat-icon> <p>Solicitações</p>
-    </a>
-    <a routerLink="/nova-solicitacao" class="px-[30px] py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-1">
-        <mat-icon>add_circle_outline</mat-icon> <p>Nova solicitação</p>
-    </a>
+
     <router-outlet></router-outlet>
 </div>

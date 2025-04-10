@@ -1,8 +1,6 @@
-<main class="flex gap-10">
-  <!-- Sidebar reutilizado -->
+<main class="flex gap-10 h-full">
   <app-sidebar-cliente nome="Guilherme"></app-sidebar-cliente>
 
-  <!-- Área principal da página -->
   <section class="flex flex-col py-10 gap-[30px]">
     <div>
       <h1 class="text-[40px] font-semibold text-[#4931A9]">
@@ -13,9 +11,7 @@
       </h2>
     </div>
 
-    <!-- Formulário utilizando Angular -->
     <form (ngSubmit)="onSubmit()" #solicitacaoForm="ngForm" class="flex flex-col gap-4">
-      <!-- Campo: Descrição do Equipamento -->
       <div class="flex flex-col">
         <label for="descricaoEquipamento" class="font-medium">
           Descrição do Equipamento
@@ -31,15 +27,12 @@
           #descricaoEquipamento="ngModel"
         />
 
-
-            <!-- Mensagem de erro dinâmica -->
     <div *ngIf="descricaoEquipamento.invalid && descricaoEquipamento.touched" class="text-red-500 text-sm">
       Este campo é obrigatório.
     </div>
     
       </div>
 
-      <!-- Campo: Categoria do Equipamento -->
       <div class="flex flex-col">
         <label for="categoriaEquipamento" class="font-medium">
           Categoria do Equipamento
@@ -59,7 +52,6 @@
         </div>
       </div>
 
-      <!-- Campo: Descrição do Defeito -->
       <div class="flex flex-col">
         <label for="descricaoDefeito" class="font-medium">
           Descrição do Defeito
@@ -79,7 +71,6 @@
         </div>
       </div>
 
-      <!-- Botão de Envio -->
       <button
         type="submit"
         class="cursor-pointer bg-[#4931A9] text-white py-2 px-4 rounded"
