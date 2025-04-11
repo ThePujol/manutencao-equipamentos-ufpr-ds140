@@ -1,0 +1,51 @@
+<main class="flex gap-10">
+    <!-- Usando o Sidebar existente; para funcionários, você pode passar "Funcionário" no nome -->
+    <app-sidebar-cliente nome="Funcionário"></app-sidebar-cliente>
+  
+    <!-- Área principal: Página Inicial do Funcionário (RF11) -->
+    <section class="flex flex-col py-10 gap-[30px] w-full">
+      <div>
+        <h1 class="text-[40px] font-semibold text-[#4931A9]">
+          Solicitações Abertas
+        </h1>
+        <h2 class="opacity-50 font-light text-[18px]">
+          Solicitações que requerem atenção imediata.
+        </h2>
+      </div>
+  
+      <!-- Tabela simples com as solicitações -->
+      <div class="bg-white shadow rounded-lg">
+        <table class="w-full text-left">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="p-3">Data/Hora</th>
+              <th class="p-3">Cliente</th>
+              <th class="p-3">Produto (max 30 caracteres)</th>
+              <th class="p-3">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let solicitacao of solicitacoesAbertas">
+              <td class="p-3">{{ solicitacao.dataHora}}</td>
+              <td class="p-3">{{ solicitacao.nomeCliente }}</td>
+              <td class="p-3">
+                {{ solicitacao.descricaoProduto }}
+                <span *ngIf="solicitacao.descricaoProduto.length > 30">...</span>
+              </td>
+              <td class="p-3">
+                <button (click)="efetuarOrcamento(solicitacao)"
+                        class="bg-[#4931A9] text-white py-1 px-3 rounded">
+                  Efetuar Orçamento
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3 text-sm text-gray-900/70 font-light">
+        Exibindo 1-{{ solicitacoesAbertas.length }} itens de {{ solicitacoesAbertas.length }} itens.
+      </p>
+    </section>
+    <!-- Remova o <router-outlet> daqui, pois não é necessário nesta página -->
+  </main>
+  
