@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 
 import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
@@ -16,7 +17,7 @@ interface Solicitacao {
 @Component({
   selector: '´app-pagina-novaSolicitacao',
   templateUrl: './pagina-novaSolicitacao.component.html',
-  imports: [SidebarClienteComponent, RouterOutlet, CommonModule, FormsModule]
+  imports: [SidebarClienteComponent, RouterOutlet, CommonModule, FormsModule, MatIcon]
 })
 export class PaginaNovaSolicitacaoComponent {
   // Objeto para vinculação dos dados do formulário
