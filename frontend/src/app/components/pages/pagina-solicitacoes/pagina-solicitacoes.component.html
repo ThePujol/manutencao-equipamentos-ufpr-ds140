@@ -1,39 +1,68 @@
 <main class="flex gap-10 h-full">
-    <app-sidebar-cliente nome="Guilherme" />
+	<app-sidebar-cliente nome="Guilherme" />
 
-    <section class="flex flex-col py-10 gap-[30px] pr-10 w-full">
-        <div>
-            <h1 class="text-[40px] font-semibold text-[#4931A9]">Suas solicitações</h1>
-            <h2 class="opacity-50 font-light text-[18px]">Aqui encontram-se todas as solicitações que você realizou.</h2>
-        </div>
+	<section class="flex flex-col py-10 gap-[30px] pr-10 w-full">
+		<div>
+			<h1 class="text-[40px] font-semibold text-[#4931A9]">Suas solicitações</h1>
+			<h2 class="opacity-50 font-light text-[18px]">Aqui encontram-se todas as solicitações que você realizou.</h2>
+		</div>
 
-        <div class="flex justify-between w-full items-center">
-            <div>
-                <mat-icon class="text-gray-900/15 absolute w-[18px] h-[18px] mt-[11px] ml-3 opacity-40">search</mat-icon>
-                <input class="focus:outline-none border-1 border-gray-900/15 p-2.5 pl-10 w-[351px] rounded-md rounded-r-none" type="text" placeholder="Pesquise uma solicitação...">
-                <button class="w-[125px] bg-[#4931A9] outline-1 outline-[#4931A9] cursor-pointer hover:bg-[#3e2996] duration-150 text-white rounded-md rounded-l-none p-2.5">Pesquisar</button>
-            </div>
-            <div>
-                <label for="estado" class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30">Estado</label>
-                <select name="estado" id="estado" class="focus:outline-none outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit">
-                    <option value="todos">Todos</option>
-                    <option value="orcada">Orçada</option>
-                    <option value="aprovada">Aprovada</option>
-                    <option value="rejeitada">Rejeitada</option>
-                    <option value="arrumada">Arrumada</option>
-                </select>
-                <input type="date" value="22-01-2023" class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30">
-            </div>
-        </div>
+		<div class="flex justify-between w-full items-center">
+			<div>
+				<mat-icon class="text-gray-900/15 absolute w-[18px] h-[18px] mt-[11px] ml-3 opacity-40">search</mat-icon>
+				<input
+					class="focus:outline-none border-1 border-gray-900/15 p-2.5 pl-10 w-[351px] rounded-md rounded-r-none"
+					type="text"
+					placeholder="Pesquise uma solicitação..."
+				/>
+				<button
+					class="w-[125px] bg-[#4931A9] outline-1 outline-[#4931A9] cursor-pointer hover:bg-[#3e2996] duration-150 text-white rounded-md rounded-l-none p-2.5"
+				>
+					Pesquisar
+				</button>
+			</div>
+			<div>
+				<label
+					for="estado"
+					class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30"
+					>Estado</label
+				>
+				<select
+					name="estado"
+					id="estado"
+					class="focus:outline-none outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
+				>
+					<option value="todos">Todos</option>
+					<option value="orcada">Orçada</option>
+					<option value="aprovada">Aprovada</option>
+					<option value="rejeitada">Rejeitada</option>
+					<option value="arrumada">Arrumada</option>
+				</select>
+				<input
+					type="date"
+					value="22-01-2023"
+					class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
+				/>
+			</div>
+		</div>
 
-        <!-- Tabela -->
-        <div class="flex flex-col">
-            <app-tabela-solicitacoes tipo="header" />
-            <ul *ngFor="let solicitacao of listaSolicitacoes">
-                <app-tabela-solicitacoes tipo="regular" [dataSolicitacao]="solicitacao.dataSolicitacao" [descricao]="solicitacao.descricao" [estado]="solicitacao.estado" [funcionario]="solicitacao.funcionario" [categoria]="solicitacao.categoria" />
-            </ul>
-            <p class="mt-3 text-sm text-gray-900/70 font-light">Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.</p>
-        </div>
-    </section>
-    <router-outlet></router-outlet>
+		<!-- Tabela -->
+		<div class="flex flex-col">
+			<app-tabela-solicitacoes tipo="header" />
+			<ul *ngFor="let solicitacao of listaSolicitacoes">
+				<app-tabela-solicitacoes
+					tipo="regular"
+					[dataSolicitacao]="solicitacao.dataSolicitacao"
+					[descricao]="solicitacao.descricaoEquipamento"
+					[estado]="solicitacao.estado"
+					[funcionario]="solicitacao.funcionario"
+					[categoria]="solicitacao.categoria"
+				/>
+			</ul>
+			<p class="mt-3 text-sm text-gray-900/70 font-light">
+				Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
+			</p>
+		</div>
+	</section>
+	<router-outlet></router-outlet>
 </main>
