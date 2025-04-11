@@ -1,90 +1,89 @@
 <main class="flex gap-10 h-full">
-  <app-sidebar-cliente nome="Guilherme"></app-sidebar-cliente>
+	<app-sidebar-cliente nome="Guilherme"></app-sidebar-cliente>
 
-  <section class="flex flex-col py-10 gap-[30px]">
-    <div>
-      <h1 class="text-[40px] font-semibold text-[#4931A9]">
-        <mat-icon>add_circle_outline</mat-icon>
-        Nova Solicitação
-      </h1>
-      <h2 class="opacity-50 font-light">
-        Crie uma nova solicitação de manutenção para o seu equipamento.
-      </h2>
-    </div>
+	<section class="flex flex-col py-10 gap-[30px]">
+		<div>
+			<h1 class="text-[40px] font-semibold text-[#4931A9]">
+				<mat-icon>add_circle_outline</mat-icon>
+				Nova Solicitação
+			</h1>
+			<h2 class="opacity-50 font-light">Crie uma nova solicitação de manutenção para o seu equipamento.</h2>
+		</div>
 
-    <form (ngSubmit)="onSubmit()" #solicitacaoForm="ngForm" class="flex flex-col gap-4 p-8 rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.25)] max-w-[500px]">
-      <div>
-        <h2 class="flex items-center gap-2 text-xl font-semibold text-[#4931A9]"> <mat-icon>info_outline</mat-icon> Especificações do equipamento</h2>
-        <p class="font-light text-sm opacity-50 text-wrap">Descreva os atributos do seu equipamento danificado para que possamos analisá-lo de maneira eficiente.</p>
-      </div>
+		<form
+			(ngSubmit)="onSubmit()"
+			#solicitacaoForm="ngForm"
+			class="flex flex-col gap-4 p-8 rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.25)] max-w-[500px]"
+		>
+			<div>
+				<h2 class="flex items-center gap-2 text-xl font-semibold text-[#4931A9]">
+					<mat-icon>info_outline</mat-icon> Especificações do equipamento
+				</h2>
+				<p class="font-light text-sm opacity-50 text-wrap">
+					Descreva os atributos do seu equipamento danificado para que possamos analisá-lo de maneira eficiente.
+				</p>
+			</div>
 
-      <div class="flex flex-col">
-        <label for="descricaoEquipamento" class="font-medium">
-          Descrição do equipamento
-        </label>
-        <input
-          type="text"
-          id="descricaoEquipamento"
-          name="descricaoEquipamento"
-          class="border rounded p-2"
-          required
-          placeholder="Ex.: Notebook Dell Inspiron"
-          [(ngModel)]="solicitacao.descricaoEquipamento"
-          #descricaoEquipamento="ngModel"
-        />
+			<div class="flex flex-col">
+				<label for="descricaoEquipamento" class="font-medium"> Descrição do equipamento </label>
+				<input
+					type="text"
+					id="descricaoEquipamento"
+					name="descricaoEquipamento"
+					class="border rounded p-2"
+					required
+					placeholder="Ex.: Notebook Dell Inspiron"
+					[(ngModel)]="solicitacao.descricaoEquipamento"
+					#descricaoEquipamento="ngModel"
+				/>
 
-    <div *ngIf="descricaoEquipamento.invalid && descricaoEquipamento.touched" class="text-red-500 text-sm">
-      Este campo é obrigatório.
-    </div>
-    
-      </div>
+				<div *ngIf="descricaoEquipamento.invalid && descricaoEquipamento.touched" class="text-red-500 text-sm">
+					Este campo é obrigatório.
+				</div>
+			</div>
 
-      <div class="flex flex-col">
-        <label for="categoriaEquipamento" class="font-medium">
-          Categoria do Equipamento
-        </label>
-        <input
-          type="text"
-          id="categoriaEquipamento"
-          name="categoriaEquipamento"
-          class="border rounded p-2"
-          required
-          placeholder="Ex.: Computador, Impressora, Monitor"
-          [(ngModel)]="solicitacao.categoriaEquipamento"
-          #categoriaEquipamento="ngModel"
-        />
-        <div *ngIf="categoriaEquipamento.invalid && categoriaEquipamento.touched" class="text-red-500 text-sm">
-          Este campo é obrigatório.
-        </div>
-      </div>
+			<div class="flex flex-col">
+				<label for="categoriaEquipamento" class="font-medium"> Categoria do Equipamento </label>
+				<input
+					type="text"
+					id="categoriaEquipamento"
+					name="categoriaEquipamento"
+					class="border rounded p-2"
+					required
+					placeholder="Ex.: Computador, Impressora, Monitor"
+					[(ngModel)]="solicitacao.categoriaEquipamento"
+					#categoriaEquipamento="ngModel"
+				/>
+				<div *ngIf="categoriaEquipamento.invalid && categoriaEquipamento.touched" class="text-red-500 text-sm">
+					Este campo é obrigatório.
+				</div>
+			</div>
 
-      <div class="flex flex-col">
-        <label for="descricaoDefeito" class="font-medium">
-          Descrição do Defeito
-        </label>
-        <input
-          id="descricaoDefeito"
-          name="descricaoDefeito"
-          class="border rounded p-2"
-          type="text"
-          required
-          placeholder="Ex.: Tela piscando ou não liga"
-          [(ngModel)]="solicitacao.descricaoDefeito"
-          #descricaoDefeito="ngModel"
-        />
-        <div *ngIf="descricaoDefeito.invalid && descricaoDefeito.touched" class="text-red-500 text-sm">
-          Este campo é obrigatório.
-        </div>
-      </div>
+			<div class="flex flex-col">
+				<label for="descricaoDefeito" class="font-medium"> Descrição do Defeito </label>
+				<input
+					id="descricaoDefeito"
+					name="descricaoDefeito"
+					class="border rounded p-2"
+					type="text"
+					required
+					placeholder="Ex.: Tela piscando ou não liga"
+					[(ngModel)]="solicitacao.descricaoDefeito"
+					#descricaoDefeito="ngModel"
+				/>
+				<div *ngIf="descricaoDefeito.invalid && descricaoDefeito.touched" class="text-red-500 text-sm">
+					Este campo é obrigatório.
+				</div>
+			</div>
 
-      <button
-        type="submit"
-        class="cursor-pointer bg-[#4931A9] text-white py-2 px-4 rounded"
-        [disabled]="solicitacaoForm.invalid"
-      >
-        Solicitar manutenção
-      </button>
-    </form>
-  </section>
-  <router-outlet></router-outlet>
+			<button
+				type="submit"
+				class="cursor-pointer bg-[#4931A9] text-white py-2 px-4 rounded"
+				[disabled]="solicitacaoForm.invalid"
+			>
+				Solicitar manutenção
+			</button>
+		</form>
+	</section>
+	<router-outlet></router-outlet>
 </main>
