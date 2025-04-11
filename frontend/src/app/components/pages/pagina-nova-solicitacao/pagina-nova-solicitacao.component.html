@@ -1,0 +1,82 @@
+<main class="flex gap-10 h-full w-full items-center">
+	<app-sidebar-cliente nome="Guilherme" class="h-full"></app-sidebar-cliente>
+
+	<section class="flex flex-col py-10 gap-[30px] h-full">
+		<div>
+			<h1 class="flex gap-4 items-center text-[40px] font-semibold text-[#4931A9]">
+				<mat-icon class="transform-[scale(1.5)]">add_circle_outline</mat-icon>
+				Nova Solicitação
+			</h1>
+			<h2 class="opacity-50 font-light">Crie uma nova solicitação de manutenção para o seu equipamento.</h2>
+		</div>
+
+		<form
+			(ngSubmit)="onSubmit()"
+			#solicitacaoForm="ngForm"
+			class="flex flex-col justify-between h-[550px] p-8 rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.25)] max-w-[500px]"
+			[formGroup]="novaSolicitacaoForm"
+		>
+			<div>
+				<h2 class="flex items-center gap-2 text-xl font-semibold text-[#4931A9]">
+					<mat-icon>info_outline</mat-icon> Especificações do equipamento
+				</h2>
+				<p class="font-light text-sm opacity-50 text-wrap">
+					Descreva os atributos do seu equipamento danificado para que possamos analisá-lo de maneira eficiente.
+				</p>
+			</div>
+
+			<div class="flex flex-col gap-5">
+				<app-input-text
+					[label]="'Descrição do equipamento'"
+					controlName="descricaoEquipamento"
+					[type]="'text'"
+					[placeholder]="'iPhone, Notebook Acer...'"
+					[required]="true"
+				/>
+
+				<div class="flex flex-col w-full">
+					<label for="categoria" class="mb-1 text-sm font-medium text-gray-700">Categoria do equipamento</label>
+					<select
+						name="categoria"
+						id="categoria"
+						class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
+						required
+						formControlName="categoria"
+					>
+						@for (categoria of listaCategorias; track categoria.id) {
+							<option [value]="categoria">{{ categoria.descricao }}</option>
+						}
+					</select>
+				</div>
+
+				<app-input-text
+					[label]="'Descrição do defeito'"
+					controlName="descricaoDefeito"
+					[type]="'text'"
+					[placeholder]="'Tela trincada, não liga...'"
+					[required]="true"
+				/>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<button
+					type="submit"
+					class="justify-center cursor-pointer text-white text-sm font-semibold w-full p-2.5 rounded-md bg-[#4931A9] hover:bg-indigo-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+					[disabled]="novaSolicitacaoForm.invalid"
+				>
+					Solicitar manutenção
+				</button>
+				<a
+					routerLink="/solicitacoes"
+					class="justify-center text-center cursor-pointer text-[#4931A9] text-sm font-semibold w-full p-2.5 rounded-md outline outline-[#4931A9] hover:outline-indigo-800 hover:text-indigo-800 duration-150"
+				>
+					Cancelar
+				</a>
+			</div>
+		</form>
+	</section>
+
+	<img src="ilust-nova-solicitacao.png" alt="Ilustração" class="w-[700px] h-[700px] select-none pointer-events-none" />
+
+	<router-outlet></router-outlet>
+</main>
