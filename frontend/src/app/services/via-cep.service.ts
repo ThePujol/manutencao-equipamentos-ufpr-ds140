@@ -9,7 +9,7 @@ export class ViaCepService {
 
   constructor(private http: HttpClient) { }
 
-  buscar(cep: string): Observable<any> {
+  buscar(cep: string): Observable<unknown> {
     return this.http.get(`https://viacep.com.br/ws/${cep}/json/`);
   }
 }
