@@ -5,6 +5,7 @@ import { PaginaEdicaoPerfilComponent } from './components/pages/pagina-edicao-pe
 import { PaginaLoginComponent } from './components/pages/pagina-login/pagina-login.component';
 import { PaginaNovaSolicitacaoComponent } from './components/pages/pagina-nova-solicitacao/pagina-nova-solicitacao.component';
 import { PaginaSolicitacoesComponent } from './components/pages/pagina-solicitacoes/pagina-solicitacoes.component';
+import { PaginaCategoriasComponent } from './components/pages/pagina-categorias/pagina-categorias.component';
 
 export const routes: Routes = [
 	{
@@ -32,6 +33,11 @@ export const routes: Routes = [
 		component: PaginaEdicaoPerfilComponent,
 		title: 'Editar Perfil',
 	},
+  {
+    path: 'categorias',
+    component: PaginaCategoriasComponent,
+    title: 'Lista de Categorias',
+  },
 	{
 		path: '**',
 		redirectTo: 'cadastro',

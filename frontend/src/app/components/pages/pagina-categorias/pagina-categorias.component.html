@@ -1,1 +1,94 @@
-<p>pagina-categorias works!</p>
+<div class="flex">
+  <app-sidebar-cliente></app-sidebar-cliente>
+
+  <div class="flex-1 p-10 bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow p-8">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Categorias</h1>
+        <button
+          type="button" class="bg-purple-700 text-white px-4 py-2 rounded-xl hover:bg-purple-800"
+          (click)="abrirModal()"
+        >
+          Novo
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full border-separate border-spacing-y-3">
+          <thead>
+            <tr class="text-left text-sm text-gray-600">
+              <th class="px-4 py-2">Categoria</th>
+              <th class="px-4 py-2 text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let categoria of categorias"
+              class="bg-gray-50 hover:bg-gray-100 rounded-lg shadow-sm"
+            >
+              <td class="px-4 py-3 rounded-l-lg">{{ categoria.descricao }}</td>
+              <td class="px-4 py-3 text-center rounded-r-lg space-x-2">
+                <button type="button" (click)="abrirModal(categoria)"
+                  class="inline-flex items-center gap-1 bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded shadow"
+                >
+                  Editar
+                </button>
+                <button type="button" (click)="removerCategoria(categoria.id)"
+                  class="inline-flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded shadow"
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p
+          *ngIf="categorias.length === 0"
+          class="mt-6 text-gray-500 text-sm text-center"
+        >
+          Nenhuma categoria cadastrada.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="modal" class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-gray-800">
+          {{ categoriaSelecionada ? 'Editar Categoria' : 'Nova Categoria' }}
+        </h2>
+        <button (click)="fecharModal()">✖</button>
+      </div>
+
+      <form [formGroup]="formCategoria" (ngSubmit)="salvarOuEditarCategoria()">
+        <div class="mb-4">
+          <app-input-text
+            [label]="'Nome'"
+            controlName="descricao"
+            [type]="'text'"
+            [placeholder]="'Ex: Desktop'"
+            [required]="true"
+          />
+
+          <div *ngIf="formCategoria.get('descricao')?.touched && formCategoria.get('descricao')?.invalid"
+               class="text-red-500 text-sm mt-1">
+            Campo obrigatório.
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-3">
+          <button type="button" (click)="fecharModal()"
+                  class="px-4 py-2 rounded-xl border border-purple-600 text-purple-600 hover:bg-purple-50">
+            Cancelar
+          </button>
+          <button type="submit"
+                  class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
