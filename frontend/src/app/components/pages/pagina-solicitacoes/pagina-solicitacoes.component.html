@@ -1,7 +1,7 @@
 <main class="flex gap-10 h-full">
 	<app-sidebar-cliente nome="Guilherme" />
 
-	<section class="flex flex-col py-10 gap-[30px] pr-10 w-full">
+	<section class="flex flex-col py-10 gap-[30px] pr-10 w-full overflow-y-auto">
 		<div>
 			<h1 class="text-[40px] font-semibold text-[#4931A9]">Suas solicitações</h1>
 			<h2 class="opacity-50 font-light text-[18px]">Aqui encontram-se todas as solicitações que você realizou.</h2>
@@ -69,5 +69,6 @@
 			</p>
 		</table>
 	</section>
-	<router-outlet></router-outlet>
 </main>
+
+<router-outlet></router-outlet>

@@ -33,9 +33,9 @@ export class TabelaExpandidaComponent {
 
 	@Input() ultima = false;
 
-	@Output() onToggleExpansion = new EventEmitter<any>();
+	@Output() toggleExpansionEvent = new EventEmitter();
 
 	toggleExpansion() {
-		this.onToggleExpansion.emit();
+		this.toggleExpansionEvent.emit();
 	}
 }
