@@ -1,0 +1,123 @@
+<div class="flex">
+  <app-sidebar-cliente></app-sidebar-cliente>
+
+  <div class="flex-1 p-10 bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow p-8">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Funcionarios</h1>
+        <button
+          type="button" class="bg-purple-700 text-white px-4 py-2 rounded-xl hover:bg-purple-800"
+          (click)="abrirModal()"
+        >
+          Novo
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full border-separate border-spacing-y-3">
+          <thead>
+            <tr class="text-left text-sm text-gray-600">
+              <th class="px-4 py-2">Nome</th>
+              <th class="px-4 py-2">Email</th>
+              <th class="px-4 py-2">Data de Nascimento</th>
+              <th class="px-4 py-2 text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let funcionario of funcionarios"
+              class="bg-gray-50 hover:bg-gray-100 rounded-lg shadow-sm"
+            >
+              <td class="px-4 py-3 rounded-l-lg">{{ funcionario.nome }}</td>
+              <td class="px-4 py-3 rounded-l-lg">{{ funcionario.email }}</td>
+              <td class="px-4 py-3 rounded-l-lg">{{ funcionario.dataNasc }}</td>
+              <td class="px-4 py-3 text-center rounded-r-lg space-x-2">
+                <button type="button" (click)="abrirModal(funcionario)"
+                  class="inline-flex items-center gap-1 bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded shadow"
+                >
+                  Editar
+                </button>
+                <button [disabled]="funcionarios.length === 1" type="button" (click)="removerfuncionario(funcionario.id)"
+                  class="inline-flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded shadow  disabled:bg-gray-400 disabled:cursor-not-allowed"
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="modal" class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-gray-800">
+          {{ funcionarioSelecionado ? 'Editar funcionario' : 'Novo funcionario' }}
+        </h2>
+        <button (click)="fecharModal()">✖</button>
+      </div>
+
+      <form [formGroup]="formfuncionario" (ngSubmit)="salvarOuEditarfuncionario()">
+        <div class="mb-4">
+          <app-input-text
+            [label]="'Nome'"
+            controlName="nome"
+            [type]="'text'"
+            [placeholder]="'Ex: Geraldo Alckmin'"
+            [required]="true"
+          />
+          <app-input-text
+            [label]="'Email'"
+            controlName="email"
+            [type]="'email'"
+            [placeholder]="'Ex: alckmail@email.com'"
+            [required]="true"
+          />
+          <app-input-text
+            [label]="'Senha'"
+            controlName="senha"
+            [type]="'password'"
+            [placeholder]="'Ex: ********'"
+            [required]="true"
+          />
+          <app-input-text
+          [label]="'Data de Nascimento'"
+          controlName="dataNasc"
+          [type]="'date'"
+          [required]="true"
+        />
+
+
+          <div *ngIf="formfuncionario.get('nome')?.touched && formfuncionario.get('nome')?.invalid"
+            class="text-red-500 text-sm mt-1">
+            Nome é obrigatório.
+          </div>
+
+          <div *ngIf="formfuncionario.get('email')?.touched && formfuncionario.get('email')?.invalid"
+            class="text-red-500 text-sm mt-1">
+            Email é obrigatório.
+          </div>
+
+          <div *ngIf="formfuncionario.get('senha')?.touched && formfuncionario.get('senha')?.invalid"
+            class="text-red-500 text-sm mt-1">
+           Senha é obrigatória.
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-3">
+          <button type="button" (click)="fecharModal()"
+                  class="px-4 py-2 rounded-xl border border-purple-600 text-purple-600 hover:bg-purple-50">
+            Cancelar
+          </button>
+          <button type="submit"
+                  class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
