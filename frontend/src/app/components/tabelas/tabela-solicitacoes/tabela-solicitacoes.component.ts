@@ -10,7 +10,8 @@ import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.c
 	templateUrl: './tabela-solicitacoes.component.html',
 })
 export class TabelaSolicitacoesComponent {
-	@Input() tipo = 'regular';
+	@Input() ultima = false;
+	@Input() header = false;
 	@Input() dataSolicitacao!: Date;
 	@Input() descricao!: string;
 	@Input() estado!: Estado;

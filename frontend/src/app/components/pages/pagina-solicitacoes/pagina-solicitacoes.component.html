@@ -48,8 +48,8 @@
 
 		<!-- Tabela -->
 		<table class="flex flex-col">
-			<app-tabela-solicitacoes tipo="header" />
-			<tbody *ngFor="let solicitacao of listaSolicitacoes">
+			<app-tabela-solicitacoes [header]="true" />
+			<!-- <tbody *ngFor="let solicitacao of listaSolicitacoes">
 				<app-tabela-solicitacoes
 					tipo="regular"
 					[dataSolicitacao]="solicitacao.dataSolicitacao"
@@ -57,7 +57,21 @@
 					[estado]="solicitacao.estado"
 					[funcionario]="solicitacao.funcionario"
 					[categoria]="solicitacao.categoria"
+					[ultima]=""
 				/>
+			</tbody> -->
+			<tbody>
+				@for (solicitacao of listaSolicitacoes; track $index) {
+					<app-tabela-solicitacoes
+						tipo="regular"
+						[dataSolicitacao]="solicitacao.dataSolicitacao"
+						[descricao]="solicitacao.descricaoEquipamento"
+						[estado]="solicitacao.estado"
+						[funcionario]="solicitacao.funcionario"
+						[categoria]="solicitacao.categoria"
+						[ultima]="$index + 1 === listaSolicitacoes.length"
+					/>
+				}
 			</tbody>
 			<p class="mt-3 text-sm text-gray-900/70 font-light">
 				Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.

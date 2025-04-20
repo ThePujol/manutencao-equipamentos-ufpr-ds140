@@ -1,29 +1,49 @@
-<tr class="flex justify-between w-full h-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center">
-	<td>
-		<app-table-label>Data da solicitação</app-table-label>
-		<p class="w-52">
-			{{ dataSolicitacao.getDate() }}/{{ dataSolicitacao.getMonth() }}/{{ dataSolicitacao.getFullYear() }}
-		</p>
+<tr class="flex justify-between w-full h-[250px] border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center">
+	<td class="flex flex-col h-full justify-between">
+		<span>
+			<app-table-label>Data da solicitação</app-table-label>
+			<p class="w-52">
+				{{ dataSolicitacao.getDate() }}/{{ dataSolicitacao.getMonth() }}/{{ dataSolicitacao.getFullYear() }}
+			</p>
+		</span>
 
-		<app-table-label>Descrição do equipamento</app-table-label>
-		<p class="w-52">{{ descricao }}</p>
+		<span>
+			<app-table-label>Descrição do equipamento</app-table-label>
+			<p class="w-52">{{ descricao }}</p>
+		</span>
 
-		<app-table-label>Categoria do equipamento</app-table-label>
-		<p class="w-52">{{ categoria.descricao }}</p>
+		<span>
+			<app-table-label>Categoria do equipamento</app-table-label>
+			<p class="w-52">{{ categoria.descricao }}</p>
+		</span>
 	</td>
 
-	<td>
-		<app-table-label>Estado atual</app-table-label>
-		<p class="w-52">{{ estado }}</p>
+	<td class="flex flex-col h-full justify-between">
+		<span>
+			<app-table-label>Estado atual</app-table-label>
+			<p class="w-52">{{ estado }}</p>
+		</span>
 
-		<app-table-label>Funcionário(a)</app-table-label>
-		<p class="w-52">{{ funcionario.nome }}</p>
+		<span>
+			<app-table-label>Funcionário(a)</app-table-label>
+			<p class="w-52">{{ funcionario.nome }}</p>
+		</span>
 
-		<app-table-label>Data do orçamento</app-table-label>
-		<p class="w-52">{{ dataOrcamento.getDate() }}/{{ dataOrcamento.getMonth() }}/{{ dataOrcamento.getFullYear() }}</p>
+		<span>
+			<app-table-label>Data do orçamento</app-table-label>
+			<p class="w-52">N/A</p>
+		</span>
 	</td>
 
-	<td class="w-52 text-right h-full flex items-start justify-end">
+	@if (estado === 'Arrumada') {
+		<app-arrumado-card />
+	} @else if (estado === 'Orçada') {
+		<app-orcada-card [precoOrcamento]="80.12" />
+	} @else {
+		<span class="w-52"></span>
+	}
+
+	<td class="max-w-52 text-right h-full flex items-start justify-end">
 		<button class="opacity-50 cursor-pointer" (click)="toggleExpansion()">Mostrar menos</button>
 	</td>
 </tr>

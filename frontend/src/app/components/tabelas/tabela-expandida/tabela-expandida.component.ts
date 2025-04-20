@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 
 import { Categoria, Estado, Funcionario } from '../../../db';
+import { ArrumadoCardComponent } from '../../ui/arrumado-card/arrumado-card.component';
+import { OrcadaCardComponent } from '../../ui/orcada-card/orcada-card.component';
 import { TableLabelComponent } from '../../ui/table-label/table-label.component';
 
 @Component({
 	selector: 'app-tabela-expandida',
-	imports: [MatIcon, TableLabelComponent],
+	imports: [TableLabelComponent, ArrumadoCardComponent, OrcadaCardComponent],
 	templateUrl: './tabela-expandida.component.html',
 })
 export class TabelaExpandidaComponent {
