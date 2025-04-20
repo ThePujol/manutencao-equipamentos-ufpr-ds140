@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 
-import { Categoria, Estado, Funcionario } from '../../../db';
+import { Categoria } from '../../../shared/models/categoria.model';
+import { Funcionario } from '../../../shared/models/funcionario.model';
+import { Situacao } from '../../../shared/models/solicitacao.model';
 import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.component';
 
 @Component({
 	selector: 'app-tabela-solicitacoes',
-	imports: [MatIcon, TabelaExpandidaComponent],
+	imports: [TabelaExpandidaComponent],
 	templateUrl: './tabela-solicitacoes.component.html',
 })
 export class TabelaSolicitacoesComponent {
@@ -14,10 +15,11 @@ export class TabelaSolicitacoesComponent {
 	@Input() header = false;
 	@Input() dataSolicitacao!: Date;
 	@Input() descricao!: string;
-	@Input() estado!: Estado;
+	@Input() situacao!: Situacao;
 	@Input() categoria!: Categoria;
-	@Input() funcionario!: Funcionario;
-	@Input() dataOrcamento!: Date;
+	@Input() funcionario?: Funcionario;
+	@Input() valorOrcamento?: number;
+	@Input() dataOrcamento?: Date;
 
 	expandida = false;
 

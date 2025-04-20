@@ -30,7 +30,7 @@
 				<select
 					name="estado"
 					id="estado"
-					class="focus:outline-none outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
+					class="focus:outline-primary focus:outline-2 outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
 				>
 					<option value="todos">Todos</option>
 					<option value="orcada">Orçada</option>
@@ -49,26 +49,17 @@
 		<!-- Tabela -->
 		<table class="flex flex-col">
 			<app-tabela-solicitacoes [header]="true" />
-			<!-- <tbody *ngFor="let solicitacao of listaSolicitacoes">
-				<app-tabela-solicitacoes
-					tipo="regular"
-					[dataSolicitacao]="solicitacao.dataSolicitacao"
-					[descricao]="solicitacao.descricaoEquipamento"
-					[estado]="solicitacao.estado"
-					[funcionario]="solicitacao.funcionario"
-					[categoria]="solicitacao.categoria"
-					[ultima]=""
-				/>
-			</tbody> -->
 			<tbody>
 				@for (solicitacao of listaSolicitacoes; track $index) {
 					<app-tabela-solicitacoes
 						tipo="regular"
 						[dataSolicitacao]="solicitacao.dataSolicitacao"
-						[descricao]="solicitacao.descricaoEquipamento"
-						[estado]="solicitacao.estado"
-						[funcionario]="solicitacao.funcionario"
+						[descricao]="solicitacao.descricao"
+						[situacao]="solicitacao.situacao"
 						[categoria]="solicitacao.categoria"
+						[funcionario]="solicitacao.funcionario"
+						[valorOrcamento]="solicitacao.orcamento"
+						[dataOrcamento]="solicitacao.dataOrcamento"
 						[ultima]="$index + 1 === listaSolicitacoes.length"
 					/>
 				}
