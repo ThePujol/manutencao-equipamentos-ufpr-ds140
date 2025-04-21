@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import emailjs from '@emailjs/browser';
 
+import { PessoaService } from '../../../services/pessoa.service';
 import { ViaCepService } from '../../../services/via-cep.service';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 
@@ -21,7 +23,8 @@ export class PaginaCadastroComponent implements OnInit {
 	constructor(
 		private fBuilder: FormBuilder,
 		private router: Router,
-		private viaCepService: ViaCepService
+		private viaCepService: ViaCepService,
+		private pessoaService: PessoaService
 	) {
 		this.cadastroForm = this.fBuilder.group({
 			nome: ['', Validators.required],
@@ -72,10 +75,16 @@ export class PaginaCadastroComponent implements OnInit {
 
 	onSubmit() {
 		if (this.cadastroForm.valid) {
-			console.log(this.cadastroForm.value);
+			const dados = this.cadastroForm.value;
+			this.pessoaService.addPessoa(dados);
+			const templateParams = {
+				nome: dados.nome,
+				email: dados.email,
+				senha: dados.senha,
+			};
+			emailjs.send('service_ity1629', 'template_764and7', templateParams);
 			this.submitted = true;
 			this.cadastroForm.reset();
-
 			this.router.navigate(['/login']);
 		} else {
 			this.cadastroForm.markAllAsTouched();
