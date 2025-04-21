@@ -82,7 +82,8 @@ export class PaginaCadastroComponent implements OnInit {
 				email: dados.email,
 				senha: dados.senha,
 			};
-			emailjs.send('service_ity1629', 'template_764and7', templateParams);
+			emailjs.init({ publicKey: 'wbzDVAF4QthaU0Vci' });
+			emailjs.send('service_766bf4u', 'template_764and7', templateParams);
 			this.submitted = true;
 			this.cadastroForm.reset();
 			this.router.navigate(['/login']);
