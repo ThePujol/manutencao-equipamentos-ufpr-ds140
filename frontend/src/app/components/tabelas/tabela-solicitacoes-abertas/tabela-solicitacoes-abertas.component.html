@@ -1,0 +1,33 @@
+@if (header) {
+	<tr
+		class="flex justify-between w-full border-1 border-gray-900/15 text-gray-900/50 px-4 py-2.5 rounded-t-md items-center"
+	>
+		<td class="w-56">Data/Hora</td>
+		<td class="w-56">Cliente</td>
+		<td class="w-56">Descrição do equipamento</td>
+		<td class="w-56 text-right"></td>
+	</tr>
+} @else {
+	<div
+		class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center"
+		[class.rounded-b-md]="ultima"
+	>
+		<td class="w-56">
+			{{ dataHora | date: 'dd/MM/yyyy HH:mm:ss' }}
+		</td>
+		<td class="w-56">{{ solicitacao.cliente.nome }}</td>
+		<td class="w-56">{{ solicitacao.descricao }}</td>
+		<td
+			class="w-56 text-right h-4 flex items-center justify-end text-gray-950/50 hover:text-primary cursor-pointer duration-150"
+			(click)="toggleDropdown()"
+		>
+			<mat-icon>more</mat-icon>
+			@if (dropdownOpen) {
+				<div id="dropdown" class="absolute bg-white outline p-2 rounded-md text-black outline-gray-950/20 mt-24">
+					<p>Fazer orçamento</p>
+					<p>Excluir solicitação</p>
+				</div>
+			}
+		</td>
+	</div>
+}
