@@ -1,6 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-html, body {
-    font-family: "Poppins", "sans-serif";
-    height: 100%;
+@theme {
+	--color-primary: #4931a9;
+}
+
+html,
+body {
+	font-family: 'Poppins', 'sans-serif';
+	height: 100%;
 }

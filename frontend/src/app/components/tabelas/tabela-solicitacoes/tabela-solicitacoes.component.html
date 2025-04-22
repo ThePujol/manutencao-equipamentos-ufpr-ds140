@@ -1,5 +1,5 @@
 @if (!expandida) {
-	@if (tipo === 'header') {
+	@if (header) {
 		<tr
 			class="flex justify-between w-full border-1 border-gray-900/15 text-gray-900/50 px-4 py-2.5 rounded-t-md items-center"
 		>
@@ -8,45 +8,31 @@
 			<td class="w-52">Estado</td>
 			<td class="w-52 text-right"></td>
 		</tr>
-	} @else if (tipo === 'regular') {
-		<div class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center">
-			<td class="w-52">
-				{{ dataSolicitacao.getDate() }}/{{ dataSolicitacao.getMonth() }}/{{ dataSolicitacao.getFullYear() }}
-			</td>
-			<td class="w-52">{{ descricao }}</td>
-			<td class="w-52">{{ estado }}</td>
-			<td class="w-52 text-right h-4 flex items-center justify-end">
-				@if (!(estado.toUpperCase() === 'APROVADA')) {
-					<button class="opacity-50 cursor-pointer" (click)="toggleExpansion()">Mostrar mais</button>
-				}
-			</td>
-		</div>
-	} @else if (tipo === 'last') {
+	} @else {
 		<div
-			class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 rounded-b-md items-center"
+			class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center"
+			[class.rounded-b-md]="ultima"
 		>
 			<td class="w-52">
-				{{ dataSolicitacao.getDate() }}/{{ dataSolicitacao.getMonth() }}/{{ dataSolicitacao.getFullYear() }}
+				{{ dataSolicitacao.getDate() + 1 }}/{{ dataSolicitacao.getMonth() + 1 }}/{{ dataSolicitacao.getFullYear() }}
 			</td>
 			<td class="w-52">{{ descricao }}</td>
-			<td class="w-52">{{ estado }}</td>
+			<td class="w-52">{{ situacao }}</td>
 			<td class="w-52 text-right h-4 flex items-center justify-end">
-				@if (!(estado.toUpperCase() === 'APROVADA')) {
-					<button class="opacity-50 cursor-pointer" (click)="toggleExpansion()">Mostrar mais</button>
-				}
+				<button class="opacity-50 cursor-pointer" (click)="toggleExpansion()">Mostrar mais</button>
 			</td>
 		</div>
-	} @else {
-		<p>Erro: nenhum tipo {{ tipo }} encontrado.</p>
 	}
 } @else {
 	<app-tabela-expandida
 		[dataSolicitacao]="dataSolicitacao"
-		[estado]="estado"
+		[situacao]="situacao"
 		[descricao]="descricao"
 		[categoria]="categoria"
 		[funcionario]="funcionario"
+		[valorOrcamento]="valorOrcamento"
 		[dataOrcamento]="dataOrcamento"
-		(onToggleExpansion)="toggleExpansion()"
+		[ultima]="ultima"
+		(toggleExpansionEvent)="toggleExpansion()"
 	/>
 }
