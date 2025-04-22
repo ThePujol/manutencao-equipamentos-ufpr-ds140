@@ -14,7 +14,7 @@
 			[class.rounded-b-md]="ultima"
 		>
 			<td class="w-52">
-				{{ dataSolicitacao.getDate() + 1 }}/{{ dataSolicitacao.getMonth() + 1 }}/{{ dataSolicitacao.getFullYear() }}
+				{{ dataSolicitacao | date: 'dd/MM/yyyy' }}
 			</td>
 			<td class="w-52">{{ descricao }}</td>
 			<td class="w-52">{{ situacao }}</td>

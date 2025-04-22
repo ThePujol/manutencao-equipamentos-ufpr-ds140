@@ -47,27 +47,31 @@
 		</div>
 
 		<!-- Tabela -->
-		<table class="flex flex-col">
-			<app-tabela-solicitacoes [header]="true" />
-			<tbody>
-				@for (solicitacao of listaSolicitacoes; track $index) {
-					<app-tabela-solicitacoes
-						tipo="regular"
-						[dataSolicitacao]="solicitacao.dataSolicitacao"
-						[descricao]="solicitacao.descricao"
-						[situacao]="solicitacao.situacao"
-						[categoria]="solicitacao.categoria"
-						[funcionario]="solicitacao.funcionario"
-						[valorOrcamento]="solicitacao.orcamento"
-						[dataOrcamento]="solicitacao.dataOrcamento"
-						[ultima]="$index + 1 === listaSolicitacoes.length"
-					/>
-				}
-			</tbody>
-			<p class="mt-3 text-sm text-gray-900/70 font-light">
-				Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
-			</p>
-		</table>
+		@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
+			<table class="flex flex-col">
+				<app-tabela-solicitacoes [header]="true" />
+				<tbody>
+					@for (solicitacao of listaSolicitacoes; track $index) {
+						<app-tabela-solicitacoes
+							tipo="regular"
+							[dataSolicitacao]="solicitacao.dataSolicitacao"
+							[descricao]="solicitacao.descricao"
+							[situacao]="solicitacao.situacao"
+							[categoria]="solicitacao.categoria"
+							[funcionario]="solicitacao.funcionario"
+							[valorOrcamento]="solicitacao.orcamento"
+							[dataOrcamento]="solicitacao.dataOrcamento"
+							[ultima]="$index + 1 === listaSolicitacoes.length"
+						/>
+					}
+				</tbody>
+				<p class="mt-3 text-sm text-gray-900/70 font-light">
+					Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
+				</p>
+			</table>
+		} @else {
+			<p>Você ainda não fez nenhuma solicitação.</p>
+		}
 	</section>
 </main>
 

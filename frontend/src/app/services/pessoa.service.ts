@@ -8,10 +8,6 @@ const LS_CHAVE = 'pessoas';
 	providedIn: 'root',
 })
 export class PessoaService {
-	constructor() {
-		//Construtor vazio
-	}
-
 	listarTodosPessoas(): Pessoa[] {
 		const pessoas = localStorage['pessoas'];
 		return pessoas ? JSON.parse(pessoas) : [];

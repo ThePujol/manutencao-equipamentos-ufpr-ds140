@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { Categoria } from '../../../shared/models/categoria.model';
@@ -7,7 +8,7 @@ import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.c
 
 @Component({
 	selector: 'app-tabela-solicitacoes',
-	imports: [TabelaExpandidaComponent],
+	imports: [TabelaExpandidaComponent, DatePipe],
 	templateUrl: './tabela-solicitacoes.component.html',
 })
 export class TabelaSolicitacoesComponent {

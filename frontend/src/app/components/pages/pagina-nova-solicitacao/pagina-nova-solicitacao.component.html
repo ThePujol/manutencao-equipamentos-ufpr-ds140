@@ -29,7 +29,7 @@
 				<div class="flex flex-col gap-5">
 					<app-input-text
 						[label]="'Descrição do equipamento'"
-						controlName="descricaoEquipamento"
+						controlName="descricao"
 						[type]="'text'"
 						[placeholder]="'iPhone, Notebook Acer...'"
 						[required]="true"
@@ -45,14 +45,14 @@
 							formControlName="categoria"
 						>
 							@for (categoria of listaCategorias; track categoria.id) {
-								<option [value]="categoria">{{ categoria.descricao }}</option>
+								<option [value]="categoria.id">{{ categoria.descricao }}</option>
 							}
 						</select>
 					</div>
 
 					<app-input-text
 						[label]="'Descrição do defeito'"
-						controlName="descricaoDefeito"
+						controlName="defeito"
 						[type]="'text'"
 						[placeholder]="'Tela trincada, não liga...'"
 						[required]="true"

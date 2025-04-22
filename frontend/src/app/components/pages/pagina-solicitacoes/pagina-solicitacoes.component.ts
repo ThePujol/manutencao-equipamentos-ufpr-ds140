@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 
-import { listaSolicitacoes } from '../../../db';
+import { SolicitacaoService } from '../../../services/solicitacao.service';
+import { Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TabelaSolicitacoesComponent } from '../../tabelas/tabela-solicitacoes/tabela-solicitacoes.component';
 import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
 
@@ -11,6 +12,20 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 	imports: [SidebarClienteComponent, MatIcon, TabelaSolicitacoesComponent, RouterOutlet],
 	templateUrl: './pagina-solicitacoes.component.html',
 })
-export class PaginaSolicitacoesComponent {
-	listaSolicitacoes = listaSolicitacoes;
+export class PaginaSolicitacoesComponent implements OnInit {
+	listaSolicitacoes: Solicitacao[] = [];
+
+	constructor(private solicitacaoService: SolicitacaoService) {}
+
+	listarSolicitacoes() {
+		this.listaSolicitacoes = this.solicitacaoService.listarSolicitacoes();
+	}
+
+	ngOnInit() {
+		this.listarSolicitacoes();
+	}
+
+	teste() {
+		console.log(this.listaSolicitacoes);
+	}
 }
