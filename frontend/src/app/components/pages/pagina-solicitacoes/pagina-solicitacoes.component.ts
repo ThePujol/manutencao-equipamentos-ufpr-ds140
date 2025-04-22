@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 
+import { LoggedUserService } from '../../../services/logged-user.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
+import { Pessoa } from '../../../shared/models/pessoa.model';
 import { Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TabelaSolicitacoesComponent } from '../../tabelas/tabela-solicitacoes/tabela-solicitacoes.component';
 import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
@@ -14,15 +16,26 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 })
 export class PaginaSolicitacoesComponent implements OnInit {
 	listaSolicitacoes: Solicitacao[] = [];
+	loggedUser!: Pessoa;
 
-	constructor(private solicitacaoService: SolicitacaoService) {}
+	constructor(
+		private solicitacaoService: SolicitacaoService,
+		private loggedUserService: LoggedUserService
+	) {}
 
-	listarSolicitacoes() {
-		this.listaSolicitacoes = this.solicitacaoService.listarSolicitacoes();
+	listarSolicitacoesCliente() {
+		const todasSolicitacoes = this.solicitacaoService.listarSolicitacoes();
+		console.log(todasSolicitacoes);
+		const solicitacoesCliente = todasSolicitacoes.filter(
+			(solicitacao) => solicitacao.cliente.id === this.loggedUser.id
+		);
+
+		return solicitacoesCliente;
 	}
 
 	ngOnInit() {
-		this.listarSolicitacoes();
+		this.loggedUser = this.loggedUserService.getLoggedUser();
+		this.listaSolicitacoes = this.listarSolicitacoesCliente();
 	}
 
 	teste() {

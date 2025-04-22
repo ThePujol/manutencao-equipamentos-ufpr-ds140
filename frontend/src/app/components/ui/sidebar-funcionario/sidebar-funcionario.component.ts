@@ -8,11 +8,11 @@ import { Pessoa } from '../../../shared/models/pessoa.model';
 import { SidebarButtonComponent } from '../sidebar-button/sidebar-button.component';
 
 @Component({
-	selector: 'app-sidebar-cliente',
+	selector: 'app-sidebar-funcionario',
 	imports: [MatIconModule, RouterLink, RouterOutlet, RouterModule, SidebarButtonComponent],
-	templateUrl: './sidebar-cliente.component.html',
+	templateUrl: './sidebar-funcionario.component.html',
 })
-export class SidebarClienteComponent implements OnInit {
+export class SidebarFuncionarioComponent implements OnInit {
 	@Input() selected = 0;
 	loggedUser!: Pessoa | Funcionario;
 	primeiroNome!: string;

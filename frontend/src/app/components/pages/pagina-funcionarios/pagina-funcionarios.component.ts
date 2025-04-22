@@ -5,11 +5,17 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { FuncionarioService } from '../../../services/funcionario.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
+import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-funcionarios',
-	imports: [CommonModule, SidebarClienteComponent, ReactiveFormsModule, InputTextComponent],
+	imports: [
+		CommonModule,
+		SidebarFuncionarioComponent,
+		ReactiveFormsModule,
+		InputTextComponent,
+		SidebarFuncionarioComponent,
+	],
 	templateUrl: './pagina-funcionarios.component.html',
 })
 export class PaginaFuncionariosComponent implements OnInit {

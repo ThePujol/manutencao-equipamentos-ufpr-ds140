@@ -5,10 +5,12 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 import { CategoriaService } from '../../../services/categoria.service';
-import { PessoaService } from '../../../services/pessoa.service';
+import { LoggedUserService } from '../../../services/logged-user.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Categoria } from '../../../shared/models/categoria.model';
+import { Pessoa } from '../../../shared/models/pessoa.model';
 import { Solicitacao } from '../../../shared/models/solicitacao.model';
+import { ButtonComponent } from '../../ui/button/button.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
 
@@ -23,18 +25,20 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 		MatIcon,
 		InputTextComponent,
 		RouterLink,
+		ButtonComponent,
 	],
 })
 export class PaginaNovaSolicitacaoComponent implements OnInit {
 	title = 'Nova Solicitação';
 	novaSolicitacaoForm!: FormGroup;
 	listaCategorias: Categoria[] = [];
+	loggedUser!: Pessoa;
 
 	constructor(
 		private fBuilder: FormBuilder,
 		private categoriaService: CategoriaService,
 		private solicitacaoService: SolicitacaoService,
-		private pessoaService: PessoaService
+		private loggedUserService: LoggedUserService
 	) {
 		this.novaSolicitacaoForm = this.fBuilder.group({
 			descricao: ['', Validators.required],
@@ -45,6 +49,7 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 
 	ngOnInit() {
 		this.listaCategorias = this.listarCategorias();
+		this.loggedUser = this.loggedUserService.getLoggedUser();
 	}
 
 	listarCategorias() {
@@ -62,7 +67,7 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 				categoria: categoriaSelecionada!,
 			};
 
-			this.solicitacaoService.addSolicitacao(solicitacao, this.pessoaService.pessoaPorId(1745344160078));
+			this.solicitacaoService.addSolicitacao(solicitacao, this.loggedUser);
 
 			this.novaSolicitacaoForm.reset();
 		} else {
