@@ -1,79 +1,79 @@
-import { InputTextComponent } from './../../ui/input-text/input-text.component';
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { FuncionarioService } from '../../../services/funcionario.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
-import { CommonModule } from '@angular/common';
+import { InputTextComponent } from '../../ui/input-text/input-text.component';
 import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 
 @Component({
-  selector: 'app-pagina-funcionarios',
-  imports: [CommonModule, SidebarClienteComponent, ReactiveFormsModule, InputTextComponent],
-  templateUrl: './pagina-funcionarios.component.html'
+	selector: 'app-pagina-funcionarios',
+	imports: [CommonModule, SidebarClienteComponent, ReactiveFormsModule, InputTextComponent],
+	templateUrl: './pagina-funcionarios.component.html',
 })
-export class PaginaFuncionariosComponent {
-  funcionarios: Funcionario[] = [];
-  funcionarioSelecionado?: Funcionario;
-  modal= false;
-  formfuncionario!: FormGroup;
+export class PaginaFuncionariosComponent implements OnInit {
+	funcionarios: Funcionario[] = [];
+	funcionarioSelecionado?: Funcionario;
+	modal = false;
+	formfuncionario!: FormGroup;
 
-  constructor(private funcionarioService: FuncionarioService, private fBuilder: FormBuilder) {
-    this.formfuncionario = this.fBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      nome: ['', Validators.required],
-      senha: ['', Validators.required],
-      dataNasc: ['', Validators.required],
-    })
+	constructor(
+		private funcionarioService: FuncionarioService,
+		private fBuilder: FormBuilder
+	) {
+		this.formfuncionario = this.fBuilder.group({
+			email: ['', [Validators.required, Validators.email]],
+			nome: ['', Validators.required],
+			senha: ['', Validators.required],
+			dataNasc: ['', Validators.required],
+		});
+	}
 
-  }
+	ngOnInit(): void {
+		this.funcionarios = this.listarfuncionarios();
+	}
 
+	abrirModal(funcionario?: Funcionario) {
+		this.modal = true;
+		if (funcionario) {
+			this.funcionarioSelecionado = funcionario;
+			this.formfuncionario.patchValue(funcionario);
+		} else {
+			this.funcionarioSelecionado = undefined;
+			this.formfuncionario.reset();
+		}
+	}
 
+	fecharModal() {
+		this.modal = false;
+	}
 
-  ngOnInit(): void {
-    this.funcionarios= this.listarfuncionarios();
-  }
+	removerfuncionario(id: number) {
+		this.funcionarioService.removerFuncionario(id);
+		this.funcionarios = this.funcionarioService.listarTodosFuncionarios();
+	}
 
-  abrirModal(funcionario?: Funcionario) {
-    this.modal = true;
-    if (funcionario) {
-      this.funcionarioSelecionado = funcionario;
-      this.formfuncionario.patchValue(funcionario);
-    } else {
-      this.funcionarioSelecionado = undefined;
-      this.formfuncionario.reset();
-    }
-  }
+	salvarOuEditarfuncionario() {
+		if (this.formfuncionario.invalid) {
+			this.formfuncionario.markAllAsTouched();
+			return;
+		}
 
-  fecharModal() {
-    this.modal = false;
-  }
+		const dados = this.formfuncionario.value;
 
-  removerfuncionario(id: number) {
-    this.funcionarioService.removerFuncionario(id);
-    this.funcionarios = this.funcionarioService.listarTodosFuncionarios();
-  }
+		if (this.funcionarioSelecionado) {
+			const funcionarioEditado = { ...this.funcionarioSelecionado, ...dados };
+			this.funcionarioService.atualizarFuncionario(funcionarioEditado);
+		} else {
+			this.funcionarioService.addFuncionario(dados);
+		}
 
-  salvarOuEditarfuncionario() {
-    if (this.formfuncionario.invalid) {
-      this.formfuncionario.markAllAsTouched();
-      return;
-    }
+		this.funcionarios = this.funcionarioService.listarTodosFuncionarios();
+		this.fecharModal();
+	}
 
-    const dados = this.formfuncionario.value;
-
-    if (this.funcionarioSelecionado) {
-      const funcionarioEditado = { ...this.funcionarioSelecionado, ...dados };
-      this.funcionarioService.atualizarFuncionario(funcionarioEditado);
-    } else {
-      this.funcionarioService.addFuncionario(dados);
-    }
-
-    this.funcionarios = this.funcionarioService.listarTodosFuncionarios();
-    this.fecharModal();
-  }
-
-  listarfuncionarios(): Funcionario[] {
-    return this.funcionarioService.listarTodosFuncionarios();
-  }
+	listarfuncionarios(): Funcionario[] {
+		return this.funcionarioService.listarTodosFuncionarios();
+	}
 }

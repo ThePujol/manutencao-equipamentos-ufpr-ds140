@@ -1,5 +1,6 @@
 import { Categoria } from './categoria.model';
 import { Funcionario } from './funcionario.model';
+import { Pessoa } from './pessoa.model';
 
 export enum Situacao {
 	aberta = 'Aberta',
@@ -19,6 +20,7 @@ export class Solicitacao {
 		public defeito: string,
 		public situacao: Situacao,
 		public dataSolicitacao: Date,
+		public cliente: Pessoa,
 		public funcionario?: Funcionario,
 		public orcamento?: number,
 		public dataOrcamento?: Date
