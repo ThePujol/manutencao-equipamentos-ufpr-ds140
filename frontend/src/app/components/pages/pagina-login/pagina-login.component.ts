@@ -43,9 +43,11 @@ export class PaginaLoginComponent {
 			(!funcionario || funcionario.senha != this.loginForm.value.password)
 		) {
 			this.invalidCredentials = true;
+		} else {
+			this.invalidCredentials = false;
 		}
 
-		if ((this.loginForm.valid && pessoa) || funcionario) {
+		if (this.loginForm.valid && !this.invalidCredentials) {
 			this.invalidCredentials = false;
 			if (pessoa) {
 				this.loggedUserService.setLoggedUser(pessoa.id);
