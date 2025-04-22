@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 
 import { Categoria, Estado, Funcionario } from '../../../db';
 import { TableLabelComponent } from '../../ui/table-label/table-label.component';
 
 @Component({
 	selector: 'app-tabela-expandida',
-	imports: [MatIcon, TableLabelComponent],
+	imports: [TableLabelComponent],
 	templateUrl: './tabela-expandida.component.html',
 })
 export class TabelaExpandidaComponent {
