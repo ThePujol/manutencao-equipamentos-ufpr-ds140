@@ -32,4 +32,16 @@ export class SolicitacaoService {
 		solicitacoes.push(solicitacao);
 		localStorage[LS_CHAVE] = JSON.stringify(solicitacoes);
 	}
+
+	atualizarSolicitacao(solicitacao: Solicitacao) {
+		const solicitacoes = this.listarSolicitacoes();
+
+		solicitacoes.forEach((obj, index, objs) => {
+			if (solicitacao.id === obj.id) {
+				objs[index] = solicitacao;
+			}
+		});
+
+		localStorage[LS_CHAVE] = JSON.stringify(solicitacoes);
+	}
 }

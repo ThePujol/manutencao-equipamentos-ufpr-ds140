@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 
 import { LoggedUserService } from '../../../services/logged-user.service';
@@ -12,7 +11,7 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 
 @Component({
 	selector: 'app-pagina-solicitacoes',
-	imports: [SidebarClienteComponent, MatIcon, TabelaSolicitacoesComponent, RouterOutlet, InputPesquisarComponent],
+	imports: [SidebarClienteComponent, TabelaSolicitacoesComponent, RouterOutlet, InputPesquisarComponent],
 	templateUrl: './pagina-solicitacoes.component.html',
 })
 export class PaginaSolicitacoesComponent implements OnInit {

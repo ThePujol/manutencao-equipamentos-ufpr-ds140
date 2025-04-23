@@ -6,7 +6,7 @@
 		<span>
 			<app-table-label>Data da solicitação</app-table-label>
 			<p class="w-52">
-				{{ dataSolicitacao.getDate() + 1 }}/{{ dataSolicitacao.getMonth() + 1 }}/{{ dataSolicitacao.getFullYear() }}
+				{{ dataSolicitacao | date: 'dd/MM/yyyy' }}
 			</p>
 		</span>
 
@@ -36,7 +36,7 @@
 			<app-table-label>Data do orçamento</app-table-label>
 			<p class="w-52">
 				@if (dataOrcamento) {
-					{{ dataOrcamento.getDate() + 1 }}/{{ dataOrcamento.getMonth() + 1 }}/{{ dataOrcamento.getFullYear() }}
+					{{ dataOrcamento | date: 'dd/MM/yyyy' }}
 				} @else {
 					N/A
 				}

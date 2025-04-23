@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Categoria } from '../../../shared/models/categoria.model';
@@ -19,6 +20,7 @@ import { TableLabelComponent } from '../../ui/table-label/table-label.component'
 		AbertaCardComponent,
 		AprovadaCardComponent,
 		RejeitadaCardComponent,
+		DatePipe,
 	],
 	templateUrl: './tabela-expandida.component.html',
 })

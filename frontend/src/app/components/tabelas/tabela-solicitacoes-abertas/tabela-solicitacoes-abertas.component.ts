@@ -1,23 +1,20 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Solicitacao } from '../../../shared/models/solicitacao.model';
 
 @Component({
 	selector: 'app-tabela-solicitacoes-abertas',
-	imports: [DatePipe, MatIcon],
+	imports: [DatePipe],
 	templateUrl: './tabela-solicitacoes-abertas.component.html',
 })
 export class TabelaSolicitacoesAbertasComponent {
 	@Input() solicitacao!: Solicitacao;
 	@Input() ultima = false;
 	@Input() header = false;
-	@Input() dataHora!: Date;
-	@Input() descricao!: string;
-	dropdownOpen = false;
+	@Output() orcamentoClicked = new EventEmitter<Solicitacao>();
 
-	toggleDropdown() {
-		this.dropdownOpen = !this.dropdownOpen;
+	emitirOrcamento() {
+		this.orcamentoClicked.emit(this.solicitacao);
 	}
 }

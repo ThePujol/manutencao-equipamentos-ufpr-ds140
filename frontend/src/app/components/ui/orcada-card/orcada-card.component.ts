@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { ButtonComponent } from '../button/button.component';
@@ -5,7 +6,7 @@ import { SecondaryButtonComponent } from '../secondary-button/secondary-button.c
 
 @Component({
 	selector: 'app-orcada-card',
-	imports: [ButtonComponent, SecondaryButtonComponent],
+	imports: [ButtonComponent, SecondaryButtonComponent, CurrencyPipe],
 	templateUrl: './orcada-card.component.html',
 })
 export class OrcadaCardComponent {

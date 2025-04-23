@@ -27,9 +27,8 @@
 					@for (solicitacao of solicitacoesAbertas; track $index) {
 						<app-tabela-solicitacoes-abertas
 							[solicitacao]="solicitacao"
-							[dataHora]="solicitacao.dataSolicitacao"
-							[descricao]="solicitacao.descricao"
 							[ultima]="$index + 1 === solicitacoesAbertas.length"
+							(orcamentoClicked)="toggleModal($event)"
 						/>
 					}
 				</tbody>
@@ -39,6 +38,36 @@
 			</table>
 		} @else {
 			<p>Não há nenhuma solicitação aberta.</p>
+		}
+
+		<!-- Modal -->
+		@if (modal) {
+			<div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+				<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+					<div class="flex justify-between items-center mb-4">
+						<h2 class="text-xl font-semibold text-gray-800">Fazer orçamento</h2>
+						<button (click)="toggleModal()" class="cursor-pointer">✖</button>
+					</div>
+
+					<form [formGroup]="formOrcamento" (ngSubmit)="fazerOrcamento(solicitacaoModal)">
+						<div class="mb-4">
+							<!-- Dados sobre a solicitação vão aqui posteriormente -->
+							<app-input-text
+								label="Valor do orçamento"
+								controlName="orcamento"
+								type="number"
+								placeholder="R$ 23.45"
+								[required]="true"
+							/>
+						</div>
+
+						<div class="flex justify-end space-x-3">
+							<app-button text="Cancelar" (funcao)="toggleModal()" />
+							<app-button text="Fazer orçamento" type="submit" />
+						</div>
+					</form>
+				</div>
+			</div>
 		}
 	</section>
 </main>
