@@ -1,6 +1,10 @@
 <td class="p-5 w-80 h-fit outline outline-gray-950/20 rounded-md flex flex-col justify-between gap-8">
 	<div>
 		<h1 class="text-xl text-primary font-semibold">Orçamento aprovado!</h1>
-		<p class="text-sm font-light">Em pouco tempo, seu equipamento estará consertado.</p>
+		<p class="text-sm font-light">
+			O serviço foi aprovado no valor de
+			<span class="font-semibold text-primary">{{ orcamento | currency: 'BRL' }}</span
+			>. Em pouco tempo, seu equipamento estará consertado.
+		</p>
 	</div>
 </td>

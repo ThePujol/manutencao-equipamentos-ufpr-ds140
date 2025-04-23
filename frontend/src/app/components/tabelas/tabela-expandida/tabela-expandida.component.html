@@ -50,8 +50,8 @@
 		<app-orcada-card [precoOrcamento]="solicitacao.orcamento" [solicitacao]="solicitacao" />
 	} @else if (solicitacao.situacao === 'Aberta') {
 		<app-aberta-card />
-	} @else if (solicitacao.situacao === 'Aprovada') {
-		<app-aprovada-card />
+	} @else if (solicitacao.situacao === 'Aprovada' && solicitacao.orcamento) {
+		<app-aprovada-card [orcamento]="solicitacao.orcamento" />
 	} @else if (solicitacao.situacao === 'Rejeitada') {
 		<app-rejeitada-card [solicitacao]="solicitacao" />
 	} @else {

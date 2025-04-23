@@ -9,9 +9,5 @@
 	<div class="flex flex-col gap-2.5">
 		<app-button text="Aprovar orçamento" (funcao)="aprovarOrcamento()" />
 		<app-secondary-button text="Rejeitar orçamento" (funcao)="rejeitarOrcamento()" />
-		<app-mensagem
-			[showMessage]="showMessage"
-			[mensagem]="`Serviço aprovado no valor ${precoOrcamento | currency: 'BRL'}`"
-		/>
 	</div>
 </td>
