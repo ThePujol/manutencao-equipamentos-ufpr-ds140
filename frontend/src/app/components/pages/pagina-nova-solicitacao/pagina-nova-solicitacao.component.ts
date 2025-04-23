@@ -10,7 +10,7 @@ import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Categoria } from '../../../shared/models/categoria.model';
 import { Pessoa } from '../../../shared/models/pessoa.model';
 import { Solicitacao } from '../../../shared/models/solicitacao.model';
-import { ButtonComponent } from '../../ui/button/button.component';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
 

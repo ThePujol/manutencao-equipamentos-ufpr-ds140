@@ -6,7 +6,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FuncionarioService } from '../../../services/funcionario.service';
 import { LoggedUserService } from '../../../services/logged-user.service';
 import { PessoaService } from '../../../services/pessoa.service';
-import { ButtonComponent } from '../../ui/button/button.component';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 
 @Component({

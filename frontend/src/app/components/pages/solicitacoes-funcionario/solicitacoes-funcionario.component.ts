@@ -15,11 +15,11 @@ import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TabelaSolicitacoesFuncionarioComponent } from '../../tabelas/tabela-solicitacoes-funcionario/tabela-solicitacoes-funcionario.component';
-import { ButtonComponent } from '../../ui/button/button.component';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
+import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
 import { InformacaoDetalheComponent } from '../../ui/informacao-detalhe/informacao-detalhe.component';
 import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SecondaryButtonComponent } from '../../ui/secondary-button/secondary-button.component';
 import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({

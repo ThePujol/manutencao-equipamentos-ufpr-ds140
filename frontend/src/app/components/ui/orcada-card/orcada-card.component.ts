@@ -3,8 +3,8 @@ import { Component, Input } from '@angular/core';
 
 import { OrcamentoService } from '../../../services/orcamento.service';
 import { Solicitacao } from '../../../shared/models/solicitacao.model';
-import { ButtonComponent } from '../button/button.component';
-import { SecondaryButtonComponent } from '../secondary-button/secondary-button.component';
+import { ButtonComponent } from '../buttons/button/button.component';
+import { SecondaryButtonComponent } from '../buttons/secondary-button/secondary-button.component';
 
 @Component({
 	selector: 'app-orcada-card',

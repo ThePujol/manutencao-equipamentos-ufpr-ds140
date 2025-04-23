@@ -6,11 +6,11 @@ import { LoggedUserService } from '../../../services/logged-user.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TabelaSolicitacoesAbertasComponent } from '../../tabelas/tabela-solicitacoes-abertas/tabela-solicitacoes-abertas.component';
-import { ButtonComponent } from '../../ui/button/button.component';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
+import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
 import { InformacaoDetalheComponent } from '../../ui/informacao-detalhe/informacao-detalhe.component';
 import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SecondaryButtonComponent } from '../../ui/secondary-button/secondary-button.component';
 import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
-import { ButtonComponent } from '../button/button.component';
+import { ButtonComponent } from '../buttons/button/button.component';
 
 @Component({
 	selector: 'app-rejeitada-card',

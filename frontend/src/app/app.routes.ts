@@ -5,6 +5,7 @@ import { PaginaCategoriasComponent } from './components/pages/pagina-categorias/
 import { PaginaEdicaoPerfilComponent } from './components/pages/pagina-edicao-perfil/pagina-edicao-perfil.component';
 import { PaginaFuncionariosComponent } from './components/pages/pagina-funcionarios/pagina-funcionarios.component';
 import { PaginaLoginComponent } from './components/pages/pagina-login/pagina-login.component';
+import { PaginaNaoEncontradaComponent } from './components/pages/pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { PaginaNovaSolicitacaoComponent } from './components/pages/pagina-nova-solicitacao/pagina-nova-solicitacao.component';
 import { PaginaSolicitacoesAbertasComponent } from './components/pages/pagina-solicitacoes-abertas/pagina-solicitacoes-abertas.component';
 import { PaginaSolicitacoesComponent } from './components/pages/pagina-solicitacoes/pagina-solicitacoes.component';
@@ -57,8 +58,13 @@ export const routes: Routes = [
 		title: 'Solicitações Atribuídas',
 	},
 	{
+		path: '404',
+		component: PaginaNaoEncontradaComponent,
+		title: 'Página Não Encontrada',
+	},
+	{
 		path: '**',
-		redirectTo: 'cadastro',
+		redirectTo: '404',
 		pathMatch: 'full',
 	},
 ];

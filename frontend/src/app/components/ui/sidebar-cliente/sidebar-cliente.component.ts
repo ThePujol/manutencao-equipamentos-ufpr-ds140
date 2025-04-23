@@ -5,7 +5,7 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { LoggedUserService } from '../../../services/logged-user.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
 import { Pessoa } from '../../../shared/models/pessoa.model';
-import { SidebarButtonComponent } from '../sidebar-button/sidebar-button.component';
+import { SidebarButtonComponent } from '../buttons/sidebar-button/sidebar-button.component';
 
 @Component({
 	selector: 'app-sidebar-cliente',
