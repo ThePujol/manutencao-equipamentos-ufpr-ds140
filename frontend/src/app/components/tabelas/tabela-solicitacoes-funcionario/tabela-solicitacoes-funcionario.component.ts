@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
@@ -13,6 +13,7 @@ export class TabelaSolicitacoesFuncionarioComponent {
 	@Input() header = false;
 	@Input() ultima = false;
 	@Input() solicitacao!: Solicitacao;
+	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
 	situacoes = {
 		aberta: Situacao.aberta,
 		orcada: Situacao.orcada,
@@ -24,6 +25,10 @@ export class TabelaSolicitacoesFuncionarioComponent {
 		finalizada: Situacao.finalizada,
 	};
 	dropdown = false;
+
+	efetuarManutencao(solicitacao: Solicitacao) {
+		this.efetuarManutencaoClicked.emit(solicitacao);
+	}
 
 	toggleDropdown() {
 		this.dropdown = !this.dropdown;

@@ -45,9 +45,22 @@
 			@if (dropdown) {
 				<div class="bg-white outline outline-gray-950/20 absolute mt-30 text-black rounded-md py-2 text-left">
 					<ul class="w-full">
-						<li class="hover:bg-gray-950/10 px-5 py-1"><button class="cursor-pointer">Efetuar manutenção</button></li>
 						<li class="hover:bg-gray-950/10 px-5 py-1">
-							<button class="cursor-pointer">Finalizar solicitação</button>
+							<button
+								class="cursor-pointer disabled:cursor-not-allowed"
+								(click)="efetuarManutencao(solicitacao)"
+								[disabled]="solicitacao.situacao !== situacoes.aprovada"
+							>
+								Efetuar manutenção
+							</button>
+						</li>
+						<li class="hover:bg-gray-950/10 px-5 py-1">
+							<button
+								class="cursor-pointer disabled:cursor-not-allowed"
+								[disabled]="solicitacao.situacao !== situacoes.paga"
+							>
+								Finalizar solicitação
+							</button>
 						</li>
 					</ul>
 				</div>

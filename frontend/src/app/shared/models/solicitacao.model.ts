@@ -23,6 +23,9 @@ export class Solicitacao {
 		public cliente: Pessoa,
 		public funcionario?: Funcionario,
 		public orcamento?: number,
-		public dataOrcamento?: Date
+		public dataOrcamento?: Date,
+		public descricaoManutencao?: string,
+		public dataManutencao?: Date,
+		public orientacoes?: string
 	) {}
 }
