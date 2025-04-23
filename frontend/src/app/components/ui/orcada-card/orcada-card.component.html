@@ -7,7 +7,7 @@
 	</div>
 
 	<div class="flex flex-col gap-2.5">
-		<app-button text="Aprovar orçamento" />
-		<app-secondary-button text="Rejeitar orçamento" />
+		<app-button text="Aprovar orçamento" (funcao)="aprovarOrcamento(solicitacao)" />
+		<app-secondary-button text="Rejeitar orçamento" (funcao)="rejeitarOrcamento(solicitacao)" />
 	</div>
 </td>

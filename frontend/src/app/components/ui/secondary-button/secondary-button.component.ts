@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-secondary-button',
@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class SecondaryButtonComponent {
 	@Input() text = 'Botao';
+	@Output() funcao = new EventEmitter<void>();
 }

@@ -6,37 +6,37 @@
 		<span>
 			<app-table-label>Data da solicitação</app-table-label>
 			<p class="w-52">
-				{{ dataSolicitacao | date: 'dd/MM/yyyy' }}
+				{{ solicitacao.dataSolicitacao | date: 'dd/MM/yyyy' }}
 			</p>
 		</span>
 
 		<span>
 			<app-table-label>Descrição do equipamento</app-table-label>
-			<p class="w-52">{{ descricao }}</p>
+			<p class="w-52">{{ solicitacao.descricao }}</p>
 		</span>
 
 		<span>
 			<app-table-label>Categoria do equipamento</app-table-label>
-			<p class="w-52">{{ categoria.descricao }}</p>
+			<p class="w-52">{{ solicitacao.categoria.descricao }}</p>
 		</span>
 	</td>
 
 	<td class="flex flex-col h-full justify-between">
 		<span>
 			<app-table-label>Estado atual</app-table-label>
-			<p class="w-52">{{ situacao }}</p>
+			<p class="w-52">{{ solicitacao.situacao }}</p>
 		</span>
 
 		<span>
 			<app-table-label>Funcionário(a)</app-table-label>
-			<p class="w-52">{{ funcionario ? funcionario.nome : 'N/A' }}</p>
+			<p class="w-52">{{ solicitacao.funcionario ? solicitacao.funcionario.nome : 'N/A' }}</p>
 		</span>
 
 		<span>
 			<app-table-label>Data do orçamento</app-table-label>
 			<p class="w-52">
-				@if (dataOrcamento) {
-					{{ dataOrcamento | date: 'dd/MM/yyyy' }}
+				@if (solicitacao.dataOrcamento) {
+					{{ solicitacao.dataOrcamento | date: 'dd/MM/yyyy' }}
 				} @else {
 					N/A
 				}
@@ -44,16 +44,16 @@
 		</span>
 	</td>
 
-	@if (situacao === 'Arrumada') {
+	@if (solicitacao.situacao === 'Arrumada') {
 		<app-arrumado-card />
-	} @else if (situacao === 'Orçada' && valorOrcamento) {
-		<app-orcada-card [precoOrcamento]="valorOrcamento" />
-	} @else if (situacao === 'Aberta') {
+	} @else if (solicitacao.situacao === 'Orçada' && solicitacao.orcamento) {
+		<app-orcada-card [precoOrcamento]="solicitacao.orcamento" [solicitacao]="solicitacao" />
+	} @else if (solicitacao.situacao === 'Aberta') {
 		<app-aberta-card />
-	} @else if (situacao === 'Aprovada') {
+	} @else if (solicitacao.situacao === 'Aprovada') {
 		<app-aprovada-card />
-	} @else if (situacao === 'Rejeitada') {
-		<app-rejeitada-card />
+	} @else if (solicitacao.situacao === 'Rejeitada') {
+		<app-rejeitada-card [solicitacao]="solicitacao" />
 	} @else {
 		<span class="w-52"></span>
 	}

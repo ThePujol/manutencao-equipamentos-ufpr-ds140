@@ -25,7 +25,6 @@ export class PaginaSolicitacoesComponent implements OnInit {
 
 	listarSolicitacoesCliente() {
 		const todasSolicitacoes = this.solicitacaoService.listarSolicitacoes();
-		console.log(todasSolicitacoes);
 		const solicitacoesCliente = todasSolicitacoes.filter(
 			(solicitacao) => solicitacao.cliente.id === this.loggedUser.id
 		);
@@ -36,9 +35,5 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	ngOnInit() {
 		this.loggedUser = this.loggedUserService.getLoggedUser();
 		this.listaSolicitacoes = this.listarSolicitacoesCliente();
-	}
-
-	teste() {
-		console.log(this.listaSolicitacoes);
 	}
 }

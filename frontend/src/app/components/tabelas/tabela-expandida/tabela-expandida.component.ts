@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Categoria } from '../../../shared/models/categoria.model';
-import { Funcionario } from '../../../shared/models/funcionario.model';
-import { Situacao } from '../../../shared/models/solicitacao.model';
+import { Solicitacao } from '../../../shared/models/solicitacao.model';
 import { AbertaCardComponent } from '../../ui/aberta-card/aberta-card.component';
 import { AprovadaCardComponent } from '../../ui/aprovada-card/aprovada-card.component';
 import { ArrumadoCardComponent } from '../../ui/arrumado-card/arrumado-card.component';
@@ -25,17 +23,11 @@ import { TableLabelComponent } from '../../ui/table-label/table-label.component'
 	templateUrl: './tabela-expandida.component.html',
 })
 export class TabelaExpandidaComponent {
-	@Input() dataSolicitacao!: Date;
-	@Input() descricao!: string;
-	@Input() categoria!: Categoria;
-	@Input() situacao!: Situacao;
-	@Input() funcionario?: Funcionario;
-	@Input() valorOrcamento?: number;
-	@Input() dataOrcamento?: Date;
+	@Input() solicitacao!: Solicitacao;
 
 	@Input() ultima = false;
 
-	@Output() toggleExpansionEvent = new EventEmitter();
+	@Output() toggleExpansionEvent = new EventEmitter<void>();
 
 	toggleExpansion() {
 		this.toggleExpansionEvent.emit();

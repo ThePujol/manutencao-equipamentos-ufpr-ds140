@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { Categoria } from '../../../shared/models/categoria.model';
-import { Funcionario } from '../../../shared/models/funcionario.model';
-import { Situacao } from '../../../shared/models/solicitacao.model';
+import { Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.component';
 
 @Component({
@@ -14,13 +12,7 @@ import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.c
 export class TabelaSolicitacoesComponent {
 	@Input() ultima = false;
 	@Input() header = false;
-	@Input() dataSolicitacao!: Date;
-	@Input() descricao!: string;
-	@Input() situacao!: Situacao;
-	@Input() categoria!: Categoria;
-	@Input() funcionario?: Funcionario;
-	@Input() valorOrcamento?: number;
-	@Input() dataOrcamento?: Date;
+	@Input() solicitacao!: Solicitacao;
 
 	expandida = false;
 

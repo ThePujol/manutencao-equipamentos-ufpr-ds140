@@ -45,13 +45,7 @@
 						@for (solicitacao of listaSolicitacoes; track $index) {
 							<app-tabela-solicitacoes
 								tipo="regular"
-								[dataSolicitacao]="solicitacao.dataSolicitacao"
-								[descricao]="solicitacao.descricao"
-								[situacao]="solicitacao.situacao"
-								[categoria]="solicitacao.categoria"
-								[funcionario]="solicitacao.funcionario"
-								[valorOrcamento]="solicitacao.orcamento"
-								[dataOrcamento]="solicitacao.dataOrcamento"
+								[solicitacao]="solicitacao"
 								[ultima]="$index + 1 === listaSolicitacoes.length"
 							/>
 						}
