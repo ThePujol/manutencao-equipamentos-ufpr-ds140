@@ -26,6 +26,7 @@ export class Solicitacao {
 		public dataOrcamento?: Date,
 		public descricaoManutencao?: string,
 		public dataManutencao?: Date,
-		public orientacoes?: string
+		public orientacoes?: string,
+		public dataFinalizacao?: Date
 	) {}
 }

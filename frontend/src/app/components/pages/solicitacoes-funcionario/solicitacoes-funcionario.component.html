@@ -29,6 +29,8 @@
 							[solicitacao]="solicitacao"
 							[ultima]="$index + 1 === listaSolicitacoes.length"
 							(efetuarManutencaoClicked)="toggleModalManutencao($event)"
+							(redirecionarManutencaoClicked)="toggleModalRedirecionar($event)"
+							(finalizarClicked)="finalizarSolicitacao($event)"
 						/>
 					}
 				</tbody>
@@ -40,7 +42,7 @@
 			<p>Não há nenhuma solicitação atribuída a você.</p>
 		}
 
-		<!-- Modal -->
+		<!-- Modal Efetuar Manutenção -->
 		@if (modalEfetuarManutencao) {
 			<div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
 				<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
@@ -102,6 +104,79 @@
 								[disabledCondition]="this.formManutencao.invalid"
 							/>
 							<app-secondary-button text="Redirecionar manutenção" (funcao)="toggleModalManutencao()" class="w-full" />
+						</div>
+					</form>
+				</div>
+			</div>
+		}
+
+		<!-- Modal Redirecionar Manutenção -->
+		@if (modalRedirecionarManutencao) {
+			<div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+				<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+					<div class="flex justify-between items-center mb-4">
+						<h2 class="text-xl font-semibold text-gray-800">Redirecionar manutenção</h2>
+						<button
+							(click)="toggleModalRedirecionar()"
+							class="cursor-pointer rounded-full hover:bg-gray-950/5 p-1 w-7 h-7 duration-150"
+						>
+							✖
+						</button>
+					</div>
+
+					<form [formGroup]="formRedirecionar" (ngSubmit)="redirecionarManutencao(solicitacaoModal)">
+						<div class="mb-4 flex gap-3 flex-col">
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe class="w-full" label="Descrição" [dado]="solicitacaoModal.descricao" />
+								<app-informacao-detalhe
+									class="w-full"
+									label="Categoria"
+									[dado]="solicitacaoModal.categoria.descricao"
+								/>
+							</div>
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe class="w-full" label="Defeito" [dado]="solicitacaoModal.defeito" />
+								<app-informacao-detalhe class="w-full" label="Situação atual" [dado]="solicitacaoModal.situacao" />
+							</div>
+
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe
+									class="w-full"
+									label="Data da solicitação"
+									[dado]="solicitacaoModal.dataSolicitacao | date: 'dd/MM/yyyy - HH:mm:ss'"
+								/>
+								<app-informacao-detalhe class="w-full" label="Cliente" [dado]="solicitacaoModal.cliente.nome" />
+							</div>
+
+							<div>
+								<label for="funcionarioDestino" class="mb-1 text-sm font-medium text-gray-700"
+									>Funcionário destino</label
+								>
+								<select
+									name="funcionarioDestino"
+									id="funcionarioDestino"
+									class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
+									required
+									formControlName="funcionarioDestino"
+								>
+									@for (funcionario of listaFuncionarios; track funcionario.id) {
+										<option [ngValue]="funcionario">{{ funcionario.nome }}</option>
+									}
+								</select>
+								@if (formRedirecionar.errors?.['mesmoFuncionario']) {
+									<p class="text-red-500 text-sm mt-1">Não é possível redirecionar uma solicitação para si mesmo.</p>
+								}
+							</div>
+						</div>
+
+						<div class="flex flex-col w-full gap-3 justify-end space-x-3">
+							<app-button
+								text="Rediorecionar manutenção"
+								type="submit"
+								class="w-full"
+								[disabledCondition]="this.formRedirecionar.invalid"
+							/>
+							<app-secondary-button text="Cancelar" (funcao)="toggleModalRedirecionar()" class="w-full" />
 						</div>
 					</form>
 				</div>

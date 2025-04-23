@@ -14,6 +14,8 @@ export class TabelaSolicitacoesFuncionarioComponent {
 	@Input() ultima = false;
 	@Input() solicitacao!: Solicitacao;
 	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
+	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
+	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
 	situacoes = {
 		aberta: Situacao.aberta,
 		orcada: Situacao.orcada,
@@ -28,6 +30,14 @@ export class TabelaSolicitacoesFuncionarioComponent {
 
 	efetuarManutencao(solicitacao: Solicitacao) {
 		this.efetuarManutencaoClicked.emit(solicitacao);
+	}
+
+	redirecionarManutencao(solicitacao: Solicitacao) {
+		this.redirecionarManutencaoClicked.emit(solicitacao);
+	}
+
+	finalizarManutencao(solicitacao: Solicitacao) {
+		this.finalizarClicked.emit(solicitacao);
 	}
 
 	toggleDropdown() {
