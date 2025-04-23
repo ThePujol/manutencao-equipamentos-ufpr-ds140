@@ -16,7 +16,6 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 @Component({
 	selector: 'app-pagina-solicitacoes-abertas',
 	imports: [
-		SidebarFuncionarioComponent,
 		InputPesquisarComponent,
 		TabelaSolicitacoesAbertasComponent,
 		InputTextComponent,
@@ -25,6 +24,7 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 		InformacaoDetalheComponent,
 		SecondaryButtonComponent,
 		DatePipe,
+		SidebarFuncionarioComponent,
 	],
 	templateUrl: './pagina-solicitacoes-abertas.component.html',
 })

@@ -8,6 +8,7 @@ import { PaginaLoginComponent } from './components/pages/pagina-login/pagina-log
 import { PaginaNovaSolicitacaoComponent } from './components/pages/pagina-nova-solicitacao/pagina-nova-solicitacao.component';
 import { PaginaSolicitacoesAbertasComponent } from './components/pages/pagina-solicitacoes-abertas/pagina-solicitacoes-abertas.component';
 import { PaginaSolicitacoesComponent } from './components/pages/pagina-solicitacoes/pagina-solicitacoes.component';
+import { SolicitacoesFuncionarioComponent } from './components/pages/solicitacoes-funcionario/solicitacoes-funcionario.component';
 
 export const routes: Routes = [
 	{
@@ -49,6 +50,11 @@ export const routes: Routes = [
 		path: 'solicitacoes-abertas',
 		component: PaginaSolicitacoesAbertasComponent,
 		title: 'Solicitações em Aberto',
+	},
+	{
+		path: 'solicitacoes-funcionario',
+		component: SolicitacoesFuncionarioComponent,
+		title: 'Solicitações Atribuídas',
 	},
 	{
 		path: '**',

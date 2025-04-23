@@ -1,0 +1,57 @@
+@if (header) {
+	<tr
+		class="flex justify-between w-full border-1 border-gray-900/15 text-gray-900/50 px-4 py-2.5 rounded-t-md items-center"
+	>
+		<td class="w-56">Data/Hora</td>
+		<td class="w-56">Cliente</td>
+		<td class="w-56">Descrição do equipamento</td>
+		<td class="w-56">Situação atual</td>
+		<td class="w-56 text-right"></td>
+	</tr>
+} @else {
+	<div
+		class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-4 items-center"
+		[class.rounded-b-md]="ultima"
+	>
+		<td class="w-56">
+			{{ solicitacao.dataSolicitacao | date: 'dd/MM/yyyy HH:mm:ss' }}
+		</td>
+		<td class="w-56">{{ solicitacao.cliente.nome }}</td>
+		<td class="w-56">{{ solicitacao.descricao }}</td>
+		<td class="w-56">
+			<p
+				class="rounded-full p-1 max-w-40 text-center text-sm font-semibold"
+				[class.bg-gray-200]="solicitacao.situacao === situacoes.aberta"
+				[class.bg-amber-800]="solicitacao.situacao === situacoes.orcada"
+				[class.bg-red-400]="solicitacao.situacao === situacoes.rejeitada"
+				[class.bg-yellow-200]="solicitacao.situacao === situacoes.aprovada"
+				[class.bg-purple-200]="solicitacao.situacao === situacoes.redirecionada"
+				[class.bg-blue-200]="solicitacao.situacao === situacoes.arrumada"
+				[class.bg-amber-200]="solicitacao.situacao === situacoes.paga"
+				[class.bg-green-200]="solicitacao.situacao === situacoes.finalizada"
+			>
+				{{ solicitacao.situacao }}
+			</p>
+		</td>
+		<td class="w-56 text-right h-4 flex items-center justify-end text-gray-950/50 hover:text-primary duration-150">
+			<button
+				class="pl-5 pr-3 py-1 rounded-md outline text-primary outline-primary-950/20 flex justify-between gap-2 duration-150"
+				(click)="toggleDropdown()"
+			>
+				<p>Ações</p>
+				<mat-icon>arrow_drop_down</mat-icon>
+			</button>
+
+			@if (dropdown) {
+				<div class="bg-white outline outline-gray-950/20 absolute mt-30 text-black rounded-md py-2 text-left">
+					<ul class="w-full">
+						<li class="hover:bg-gray-950/10 px-5 py-1"><button class="cursor-pointer">Efetuar manutenção</button></li>
+						<li class="hover:bg-gray-950/10 px-5 py-1">
+							<button class="cursor-pointer">Finalizar solicitação</button>
+						</li>
+					</ul>
+				</div>
+			}
+		</td>
+	</div>
+}
