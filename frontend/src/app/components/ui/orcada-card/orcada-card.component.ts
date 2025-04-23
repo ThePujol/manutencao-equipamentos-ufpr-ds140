@@ -1,29 +1,29 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { SolicitacaoService } from '../../../services/solicitacao.service';
-import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
+import { OrcamentoService } from '../../../services/orcamento.service';
+import { Solicitacao } from '../../../shared/models/solicitacao.model';
 import { ButtonComponent } from '../button/button.component';
+import { MensagemComponent } from '../mensagem/mensagem.component';
 import { SecondaryButtonComponent } from '../secondary-button/secondary-button.component';
 
 @Component({
 	selector: 'app-orcada-card',
-	imports: [ButtonComponent, SecondaryButtonComponent, CurrencyPipe],
+	imports: [ButtonComponent, SecondaryButtonComponent, CurrencyPipe, MensagemComponent],
 	templateUrl: './orcada-card.component.html',
 })
 export class OrcadaCardComponent {
 	@Input() precoOrcamento!: number;
 	@Input() solicitacao!: Solicitacao;
+	showMessage = false;
 
-	constructor(private solicitacaoService: SolicitacaoService) {}
+	constructor(private orcamentoActions: OrcamentoService) {}
 
-	aprovarOrcamento(solicitacao: Solicitacao) {
-		solicitacao.situacao = Situacao.aprovada;
-		this.solicitacaoService.atualizarSolicitacao(solicitacao);
+	aprovarOrcamento() {
+		this.orcamentoActions.aprovarOrcamentoFn?.(this.solicitacao);
 	}
 
-	rejeitarOrcamento(solicitacao: Solicitacao) {
-		solicitacao.situacao = Situacao.rejeitada;
-		this.solicitacaoService.atualizarSolicitacao(solicitacao);
+	rejeitarOrcamento() {
+		this.orcamentoActions.rejeitarOrcamentoFn?.(this.solicitacao);
 	}
 }

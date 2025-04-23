@@ -2,12 +2,16 @@
 	<div>
 		<h1 class="text-sm font-light">Seu equipamento será consertado por...</h1>
 		<p class="text-4xl text-primary font-semibold">
-			{{ precoOrcamento | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+			{{ precoOrcamento | currency: 'BRL' }}
 		</p>
 	</div>
 
 	<div class="flex flex-col gap-2.5">
-		<app-button text="Aprovar orçamento" (funcao)="aprovarOrcamento(solicitacao)" />
-		<app-secondary-button text="Rejeitar orçamento" (funcao)="rejeitarOrcamento(solicitacao)" />
+		<app-button text="Aprovar orçamento" (funcao)="aprovarOrcamento()" />
+		<app-secondary-button text="Rejeitar orçamento" (funcao)="rejeitarOrcamento()" />
+		<app-mensagem
+			[showMessage]="showMessage"
+			[mensagem]="`Serviço aprovado no valor ${precoOrcamento | currency: 'BRL'}`"
+		/>
 	</div>
 </td>

@@ -1,3 +1,5 @@
-<div class="p-2.5 bg-green-700 text-white rounded-md absolute top-20" [hidden]="showMessage">
-	<p>{{ mensagem }}</p>
-</div>
+@if (showMessage) {
+	<div class="p-2.5 bg-green-700 text-white rounded-md absolute top-20">
+		<p>{{ mensagem }}</p>
+	</div>
+}
