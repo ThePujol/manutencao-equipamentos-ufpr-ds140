@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -6,8 +7,10 @@ import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TabelaSolicitacoesAbertasComponent } from '../../tabelas/tabela-solicitacoes-abertas/tabela-solicitacoes-abertas.component';
 import { ButtonComponent } from '../../ui/button/button.component';
+import { InformacaoDetalheComponent } from '../../ui/informacao-detalhe/informacao-detalhe.component';
 import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
+import { SecondaryButtonComponent } from '../../ui/secondary-button/secondary-button.component';
 import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
@@ -19,6 +22,9 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 		InputTextComponent,
 		ReactiveFormsModule,
 		ButtonComponent,
+		InformacaoDetalheComponent,
+		SecondaryButtonComponent,
+		DatePipe,
 	],
 	templateUrl: './pagina-solicitacoes-abertas.component.html',
 })
@@ -49,16 +55,12 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 			return;
 		}
 
-		if (solicitacao) {
-			solicitacao.funcionario = this.loggedUserService.getLoggedUser();
-			solicitacao.dataOrcamento = new Date();
-			solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
-			solicitacao.situacao = Situacao.orcada;
-			const solicitacaoEditada = { ...solicitacao };
-			this.solicitacaoService.atualizarSolicitacao(solicitacaoEditada);
-		} else {
-			throw new Error('Solicitação não existe!');
-		}
+		solicitacao.funcionario = this.loggedUserService.getLoggedUser();
+		solicitacao.dataOrcamento = new Date();
+		solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
+		solicitacao.situacao = Situacao.orcada;
+		const solicitacaoEditada = { ...solicitacao };
+		this.solicitacaoService.atualizarSolicitacao(solicitacaoEditada);
 	}
 
 	ngOnInit() {

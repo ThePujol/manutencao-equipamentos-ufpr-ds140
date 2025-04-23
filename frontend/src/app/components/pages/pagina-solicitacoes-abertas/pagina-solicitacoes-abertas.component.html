@@ -50,8 +50,17 @@
 					</div>
 
 					<form [formGroup]="formOrcamento" (ngSubmit)="fazerOrcamento(solicitacaoModal)">
-						<div class="mb-4">
-							<!-- Dados sobre a solicitação vão aqui posteriormente -->
+						<div class="mb-4 flex gap-3 flex-col">
+							<app-informacao-detalhe label="Descrição" [dado]="solicitacaoModal.descricao" />
+							<app-informacao-detalhe label="Categoria" [dado]="solicitacaoModal.categoria.descricao" />
+							<app-informacao-detalhe label="Defeito" [dado]="solicitacaoModal.defeito" />
+							<app-informacao-detalhe label="Situação atual" [dado]="solicitacaoModal.situacao" />
+							<app-informacao-detalhe
+								label="Data da solicitação"
+								[dado]="solicitacaoModal.dataSolicitacao | date: 'dd/MM/yyyy - HH:mm:ss'"
+							/>
+							<app-informacao-detalhe label="Cliente" [dado]="solicitacaoModal.cliente.nome" />
+
 							<app-input-text
 								label="Valor do orçamento"
 								controlName="orcamento"
@@ -61,9 +70,14 @@
 							/>
 						</div>
 
-						<div class="flex justify-end space-x-3">
-							<app-button text="Cancelar" (funcao)="toggleModal()" />
-							<app-button text="Fazer orçamento" type="submit" />
+						<div class="flex flex-col w-full gap-3 justify-end space-x-3">
+							<app-button
+								text="Fazer orçamento"
+								type="submit"
+								class="w-full"
+								[disabledCondition]="this.formOrcamento.invalid"
+							/>
+							<app-secondary-button text="Cancelar" (funcao)="toggleModal()" class="w-full" />
 						</div>
 					</form>
 				</div>

@@ -59,8 +59,10 @@ export class PaginaSolicitacoesComponent implements OnInit {
 			const precoFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
 				solicitacao.orcamento
 			);
+
 			this.showMessage = true;
 			this.mensagem = `Serviço aprovado no valor de ${precoFormatado}`;
+
 			this.solicitacaoService.atualizarSolicitacao(solicitacao);
 
 			setTimeout(() => {
@@ -72,7 +74,14 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	}
 
 	rejeitarOrcamento(solicitacao: Solicitacao) {
+		this.showMessage = true;
+		this.mensagem = 'Serviço rejeitado.';
+
 		solicitacao.situacao = Situacao.rejeitada;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao);
+
+		setTimeout(() => {
+			this.showMessage = false;
+		}, 3000);
 	}
 }
