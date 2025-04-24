@@ -60,6 +60,8 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 		solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
 		solicitacao.situacao = Situacao.orcada;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao);
+		this.formOrcamento.reset();
+		this.toggleModal();
 	}
 
 	ngOnInit() {

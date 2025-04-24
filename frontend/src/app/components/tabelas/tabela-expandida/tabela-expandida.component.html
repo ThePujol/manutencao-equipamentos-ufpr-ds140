@@ -45,7 +45,7 @@
 	</td>
 
 	@if (solicitacao.situacao === 'Arrumada') {
-		<app-arrumado-card />
+		<app-arrumado-card [solicitacao]="solicitacao" />
 	} @else if (solicitacao.situacao === 'Orçada' && solicitacao.orcamento) {
 		<app-orcada-card [precoOrcamento]="solicitacao.orcamento" [solicitacao]="solicitacao" />
 	} @else if (solicitacao.situacao === 'Aberta') {
