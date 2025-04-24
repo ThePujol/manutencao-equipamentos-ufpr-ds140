@@ -54,8 +54,7 @@ export class PaginaLoginComponent {
 				this.router.navigate(['/solicitacoes']);
 			} else if (funcionario) {
 				this.loggedUserService.setLoggedUser(funcionario.id);
-				// Mudar para a pagina de solicitacoes em aberto dps
-				this.router.navigate(['/funcionarios']);
+				this.router.navigate(['/solicitacoes-abertas']);
 			}
 		}
 	}
