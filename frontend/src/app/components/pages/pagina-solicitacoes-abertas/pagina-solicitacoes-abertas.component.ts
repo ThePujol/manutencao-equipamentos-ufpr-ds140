@@ -47,21 +47,31 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 
 	fazerOrcamento(solicitacao: Solicitacao) {
 		if (!solicitacao) {
-			throw new Error('Solicitação inválida.');
+			console.error('Erro: Solicitação inválida.');
+			alert('A solicitação selecionada é inválida. Por favor, tente novamente.');
+			return; // Interrompe a execução do método
 		}
 
 		if (this.formOrcamento.invalid) {
 			this.formOrcamento.markAllAsTouched();
+			alert('Por favor, preencha o campo de orçamento corretamente.');
 			return;
 		}
 
-		solicitacao.funcionario = this.loggedUserService.getLoggedUser();
-		solicitacao.dataOrcamento = new Date();
-		solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
-		solicitacao.situacao = Situacao.orcada;
-		this.solicitacaoService.atualizarSolicitacao(solicitacao);
-		this.formOrcamento.reset();
-		this.toggleModal();
+		try {
+			solicitacao.funcionario = this.loggedUserService.getLoggedUser();
+			solicitacao.dataOrcamento = new Date();
+			solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
+			solicitacao.situacao = Situacao.orcada;
+
+			this.solicitacaoService.atualizarSolicitacao(solicitacao);
+			this.formOrcamento.reset();
+			this.toggleModal();
+			alert('Orçamento realizado com sucesso!');
+		} catch (error) {
+			console.error('Erro inesperado ao fazer orçamento:', error);
+			alert('Ocorreu um erro inesperado ao realizar o orçamento. Tente novamente.');
+		}
 	}
 
 	ngOnInit() {
