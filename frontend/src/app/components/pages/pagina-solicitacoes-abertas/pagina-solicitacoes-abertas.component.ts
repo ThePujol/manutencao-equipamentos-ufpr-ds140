@@ -36,9 +36,9 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	modal = false;
 
 	constructor(
-		private solicitacaoService: SolicitacaoService,
-		private loggedUserService: LoggedUserService,
-		private fBuilder: FormBuilder
+		private readonly solicitacaoService: SolicitacaoService,
+		private readonly loggedUserService: LoggedUserService,
+		private readonly fBuilder: FormBuilder
 	) {
 		this.formOrcamento = this.fBuilder.group({
 			orcamento: ['', Validators.required],
@@ -66,15 +66,30 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 
 	ngOnInit() {
 		this.listaSolicitacoes = this.solicitacaoService.listarSolicitacoes();
-		this.solicitacoesAbertas = this.listaSolicitacoes.filter((solicitacao) => solicitacao.situacao === Situacao.aberta);
+		this.solicitacoesAbertas = this.listaSolicitacoes.filter(
+			(solicitacao) => solicitacao.situacao === Situacao.aberta
+		);
+
+		// Recuperar o estado do modal do Local Storage
+		const savedModalState = localStorage.getItem('modalState');
+		if (savedModalState) {
+			this.modal = JSON.parse(savedModalState);
+		}
 	}
 
 	toggleModal(solicitacao?: Solicitacao) {
 		this.modal = !this.modal;
+
+		// Salvar o estado do modal no Local Storage
+		localStorage.setItem('modalState', JSON.stringify(this.modal));
+
 		if (this.modal && solicitacao) {
 			this.solicitacaoModal = solicitacao;
 		} else if (this.modal && !solicitacao) {
-			throw new Error('Não é possível abrir o modal sem uma solicitação selecionada!');
+			console.error('Erro: Não é possível abrir o modal sem uma solicitação selecionada!');
+			alert('Selecione uma solicitação antes de abrir o modal.');
+			this.modal = false; // Fecha o modal para evitar inconsistências
+			localStorage.setItem('modalState', JSON.stringify(this.modal)); // Atualiza o estado no Local Storage
 		}
 	}
 }
