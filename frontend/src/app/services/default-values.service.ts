@@ -16,10 +16,8 @@ export class DefaultValuesService {
 
 	setarDefaultFuncionarios() {
 		const listaFuncionarios = this.funcionarioService.listarTodosFuncionarios();
-		console.log(listaFuncionarios);
 
 		if (!listaFuncionarios.find((funcionario: Funcionario) => funcionario.id === 1)) {
-			console.log('Ronaldo');
 			this.funcionarioService.addFuncionario(this.defaultFuncionarios[0]);
 		}
 		if (!listaFuncionarios.find((funcionario: Funcionario) => funcionario.id === 2)) {
