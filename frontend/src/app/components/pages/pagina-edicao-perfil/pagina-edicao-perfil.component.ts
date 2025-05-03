@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
+import { PessoaService } from '../../../services/pessoa.service';
 import { ViaCepService } from '../../../services/via-cep.service';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
@@ -14,21 +15,25 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 	templateUrl: './pagina-edicao-perfil.component.html',
 })
 export class PaginaEdicaoPerfilComponent implements OnInit {
-	private fb = inject(FormBuilder);
-	private viaCepService = inject(ViaCepService);
-
-	form = this.fb.group({
-		nome: ['', Validators.required],
-		email: ['', [Validators.required, Validators.email]],
-		cpf: ['', Validators.required],
-		tel: ['', Validators.required],
-		cep: ['', Validators.required],
-		estado: ['', Validators.required],
-		cidade: ['', Validators.required],
-		endereco: ['', Validators.required],
-		numero: ['', Validators.required],
-		complemento: [''],
-	});
+	form!: FormGroup;
+	constructor(
+		private fb: FormBuilder,
+		private viaCepService: ViaCepService,
+		private pessoaService: PessoaService
+	) {
+		this.form = this.fb.group({
+			nome: ['', Validators.required],
+			email: ['', [Validators.required, Validators.email]],
+			cpf: ['', Validators.required],
+			tel: ['', Validators.required],
+			cep: ['', Validators.required],
+			estado: ['', Validators.required],
+			cidade: ['', Validators.required],
+			endereco: ['', Validators.required],
+			numero: ['', Validators.required],
+			complemento: [''],
+		});
+	}
 
 	imagem: string | null = null;
 	cepInvalido = false;
@@ -105,6 +110,7 @@ export class PaginaEdicaoPerfilComponent implements OnInit {
 		}
 
 		const dados = this.form.value;
+		this.pessoaService.atualizarPessoa(dados);
 		console.log('Dados salvos:', dados);
 	}
 }
