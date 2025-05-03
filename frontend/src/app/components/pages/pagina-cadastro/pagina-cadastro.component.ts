@@ -1,17 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import emailjs from '@emailjs/browser';
 
 import { PessoaService } from '../../../services/pessoa.service';
 import { ViaCepService } from '../../../services/via-cep.service';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 
 @Component({
 	selector: 'app-pagina-cadastro',
 	standalone: true,
-	imports: [CommonModule, ReactiveFormsModule, InputTextComponent, RouterOutlet, RouterLink],
+	imports: [CommonModule, ReactiveFormsModule, InputTextComponent, RouterOutlet, RouterLink, MatIcon, ButtonComponent],
 	templateUrl: './pagina-cadastro.component.html',
 })
 export class PaginaCadastroComponent implements OnInit {

@@ -1,89 +1,121 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
+<div class="flex items-center gap-16 justify-center min-h-screen bg-radial from-white to-[#7E84F0]/20">
+	<div class="flex flex-col gap-8">
+		<div class="pointer-events-none select-none">
+			<p class="font-bold text-primary flex items-center gap-2">
+				<img src="logo.png" alt="Logo" width="30px" height="30px" /> repair.io
+			</p>
+			<h1 class="font-semibold text-4xl">Cadastre-se.</h1>
+			<p class="font-light text-black/50">Crie uma conta na melhor plataforma de manutenções.</p>
+		</div>
+
+		<div class="w-[330px]">
+			<span class="text-primary text-4xl"><mat-icon>handyman</mat-icon></span>
+			<h2 class="text-xl font-semibold">Manutenção e reparo</h2>
+			<p class="font-light text-black/50">Agende manutenções ou reparos para qualquer equipamento eletrônico.</p>
+		</div>
+
+		<div class="w-[330px]">
+			<span class="text-primary text-4xl"><mat-icon>check_circle</mat-icon></span>
+			<h2 class="text-xl font-semibold">Estabelecimento certificado</h2>
+			<p class="font-light text-black/50">
+				Somos um estabelecimento certificado e garantimos a excelência na execução do nosso trabalho.
+			</p>
+		</div>
+
+		<div class="w-[330px]">
+			<span class="text-primary text-4xl"><mat-icon>security</mat-icon></span>
+			<h2 class="text-xl font-semibold">Segurança garantida</h2>
+			<p class="font-light text-black/50">Possuímos diversos planos de garantia para o seu equipamento danificado.</p>
+		</div>
+	</div>
+
 	<div class="flex bg-white shadow-lg rounded-2xl overflow-hidden">
 		<div class="flex flex-col justify-center w-[675px] p-8">
-			<div>
-				<h1 class="text-2xl font-bold text-indigo-700 flex items-center gap-2">
-					<img class="w-[27px]" src="person.svg" alt="Ícone Cadastro" />
-					<span class="text-[34px]">Cadastro</span>
-				</h1>
-				<h2 class="font-light text-gray-500 mt-1">Preencha os campos abaixo para criar uma conta.</h2>
-			</div>
-
 			<form *ngIf="!submitted" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="mt-4">
-				<div class="grid grid-cols-2 gap-[15px] gap-y-[30px]">
+				<div class="grid grid-cols-4 gap-[15px] gap-y-[30px]">
 					<app-input-text
 						[label]="'Nome Completo:'"
 						controlName="nome"
 						[type]="'text'"
-						[placeholder]="'Ex: Davi Brito'"
+						[placeholder]="'Geraldo Alckmin'"
 						[required]="true"
+						class="col-span-2"
 					></app-input-text>
 					<app-input-text
 						[label]="'Email:'"
 						controlName="email"
 						[type]="'email'"
-						[placeholder]="'Ex: email@teste.com'"
+						[placeholder]="'email@example.com'"
 						[required]="true"
+						class="col-span-2"
 					></app-input-text>
 					<app-input-text
 						[label]="'CPF:'"
 						controlName="cpf"
 						[type]="'text'"
-						[placeholder]="'Ex: 000.000.000-00'"
+						[placeholder]="'000.000.000-00'"
 						[mask]="'000.000.000-00'"
 						[required]="true"
+						class="col-span-2"
 					></app-input-text>
 					<app-input-text
 						[label]="'Telefone:'"
 						controlName="tel"
 						[type]="'tel'"
-						[placeholder]="'Ex: (00) 00000-0000'"
+						[placeholder]="'(00) 00000-0000'"
 						[mask]="'(00) 00000-0000'"
 						[required]="true"
+						class="col-span-2"
 					></app-input-text>
 					<app-input-text
 						[label]="'CEP:'"
 						controlName="cep"
 						[type]="'text'"
-						[placeholder]="'Ex: 00000-000'"
+						[placeholder]="'00000-000'"
 						[mask]="'00000-000'"
 						[required]="true"
+						class="col-span-2"
 					></app-input-text>
 					<app-input-text
 						[label]="'Estado:'"
 						controlName="estado"
 						[type]="'text'"
-						[placeholder]="'Ex: PR'"
+						[placeholder]="'PR'"
 						[mask]="'AA'"
 						[required]="true"
+						class="col-span-2"
 					></app-input-text>
 					<app-input-text
 						[label]="'Cidade:'"
 						controlName="cidade"
 						[type]="'text'"
-						[placeholder]="'Ex: Curitiba'"
+						[placeholder]="'Curitiba'"
 						[required]="true"
-					></app-input-text>
-					<app-input-text
-						[label]="'Endereco:'"
-						controlName="endereco"
-						[type]="'text'"
-						[placeholder]="'Ex: Rua das Palmeiras'"
-						[required]="true"
-					></app-input-text>
-					<app-input-text
-						[label]="'Numero:'"
-						controlName="numero"
-						[type]="'text'"
-						[placeholder]="'Ex: 100'"
-						[required]="true"
+						class="col-span-2"
 					></app-input-text>
 					<app-input-text
 						[label]="'Complemento:'"
 						controlName="complemento"
 						[type]="'text'"
-						[placeholder]="'Ex: 1'"
+						[placeholder]="'Apto 30'"
 						[required]="false"
+						class="col-span-2"
+					></app-input-text>
+					<app-input-text
+						[label]="'Endereco:'"
+						controlName="endereco"
+						[type]="'text'"
+						[placeholder]="'Rua das Palmeiras'"
+						[required]="true"
+						class="col-span-3"
+					></app-input-text>
+					<app-input-text
+						[label]="'Numero:'"
+						controlName="numero"
+						[type]="'text'"
+						[placeholder]="'100'"
+						[required]="true"
+						class="col-span-1"
 					></app-input-text>
 				</div>
 
@@ -99,14 +131,16 @@
 
 				<div class="flex flex-col gap-2 mt-2">
 					<div class="flex justify-center mt-4">
-						<button
-							type="submit"
-							[disabled]="cadastroForm.invalid"
-							class="justify-center cursor-pointer text-white text-sm font-semibold w-[300px] p-2.5 rounded-lg transition-transform transform hover:-translate-y-1 active:-translate-y-0.5 bg-indigo-700 hover:bg-indigo-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
-						>
-							Confirmar
-						</button>
+						<app-button [disabledCondition]="cadastroForm.invalid" type="submit" text="Criar conta" class="w-full" />
 					</div>
+
+					<p class="text-black/50 text-xs">
+						Ao criar uma conta, você concorda com os
+						<a routerLink="/termos-servico" target="blank" class="text-primary hover:underline cursor-pointer"
+							>Termos de Serviço.</a
+						>
+						Você também receberá novidades pelo seu email.
+					</p>
 
 					<p class="text-sm text-gray-500 text-center">
 						Já possui uma conta?
@@ -115,11 +149,9 @@
 				</div>
 			</form>
 		</div>
-
-		<div class="w-[531px]">
-			<img src="cadastro.svg" alt="Ilustração de Cadastro" class="w-full h-full object-cover" />
-		</div>
 	</div>
+
+	<!-- Modal -->
 	<div *ngIf="modal" class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
 		<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
 			<div class="flex justify-between items-center mb-4">
@@ -138,6 +170,6 @@
 			</div>
 		</div>
 	</div>
-
-	<router-outlet></router-outlet>
 </div>
+
+<router-outlet></router-outlet>
