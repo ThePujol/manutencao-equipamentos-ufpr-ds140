@@ -5,11 +5,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CategoriaService } from '../../../services/categoria.service';
 import { Categoria } from '../../../shared/models/categoria.model';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-categorias',
-	imports: [CommonModule, ReactiveFormsModule, InputTextComponent, SidebarFuncionarioComponent],
+	imports: [CommonModule, ReactiveFormsModule, InputTextComponent],
 	templateUrl: './pagina-categorias.component.html',
 })
 export class PaginaCategoriasComponent implements OnInit {

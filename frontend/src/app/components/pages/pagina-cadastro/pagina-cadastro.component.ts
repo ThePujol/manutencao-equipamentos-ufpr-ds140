@@ -18,6 +18,7 @@ export class PaginaCadastroComponent implements OnInit {
 	title = 'Cadastro de Usuário';
 	submitted = false;
 	cepNaoEncontrado = false;
+	modal = false;
 	cadastroForm!: FormGroup;
 
 	constructor(
@@ -73,6 +74,11 @@ export class PaginaCadastroComponent implements OnInit {
 		});
 	}
 
+	continuar() {
+		this.router.navigate(['/login']);
+		this.modal = false;
+	}
+
 	onSubmit() {
 		if (this.cadastroForm.valid) {
 			const dados = this.cadastroForm.value;
@@ -86,7 +92,7 @@ export class PaginaCadastroComponent implements OnInit {
 			emailjs.send('service_766bf4u', 'template_764and7', templateParams);
 			this.submitted = true;
 			this.cadastroForm.reset();
-			this.router.navigate(['/login']);
+			this.modal = true;
 		} else {
 			this.cadastroForm.markAllAsTouched();
 		}
