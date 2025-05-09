@@ -6,6 +6,7 @@ import { OrcamentoService } from '../../../services/orcamento.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Pessoa } from '../../../shared/models/pessoa.model';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
+import { TabelaComponent } from '../../tabela/tabela.component';
 import { TabelaSolicitacoesComponent } from '../../tabelas/tabela-solicitacoes/tabela-solicitacoes.component';
 import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
 import { MensagemComponent } from '../../ui/mensagem/mensagem.component';
@@ -19,6 +20,7 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 		RouterOutlet,
 		InputPesquisarComponent,
 		MensagemComponent,
+		TabelaComponent,
 	],
 	templateUrl: './pagina-solicitacoes.component.html',
 })

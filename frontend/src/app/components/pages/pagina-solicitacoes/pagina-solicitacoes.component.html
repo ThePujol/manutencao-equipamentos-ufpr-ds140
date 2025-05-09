@@ -8,6 +8,7 @@
 				<h2 class="opacity-50 font-light text-[18px]">Aqui encontram-se todas as solicitações que você realizou.</h2>
 			</div>
 
+			<!-- Filtros -->
 			<div class="flex justify-between w-full items-center">
 				<div>
 					<app-input-pesquisar />
@@ -54,6 +55,18 @@
 						Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
 					</p>
 				</table>
+
+				<app-tabela
+					[columns]="['Nome', 'Ação']"
+					[rows]="[
+						{ nome: 'João', sobrenome: 'Paulo' },
+						{ nome: 'Maria', sobrenome: 'Madalena' },
+					]"
+				/>
+
+				<ng-template #actionTemplate>
+					<p class="bg-red-500">CKAKAKA</p>
+				</ng-template>
 			} @else {
 				<p>Você ainda não fez nenhuma solicitação.</p>
 			}
