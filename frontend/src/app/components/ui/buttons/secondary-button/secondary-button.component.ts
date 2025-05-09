@@ -9,5 +9,6 @@ import { RouterLink } from '@angular/router';
 export class SecondaryButtonComponent {
 	@Input() text = 'Botao';
 	@Input() linkTo?: string;
+	@Input() disabledCondition?: boolean;
 	@Output() funcao = new EventEmitter<void>();
 }

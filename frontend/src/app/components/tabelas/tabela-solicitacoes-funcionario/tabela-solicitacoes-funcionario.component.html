@@ -35,11 +35,11 @@
 		</td>
 		<td class="w-56 text-right h-4 flex items-center justify-end text-gray-950/50 hover:text-primary duration-150">
 			<button
-				class="pl-5 pr-3 py-1 rounded-md outline text-primary outline-primary-950/20 flex justify-between gap-2 duration-150"
+				class="pl-5 pr-3 py-1 rounded-md outline text-primary outline-primary-950/20 flex justify-between gap-2 duration-150 cursor-pointer"
 				(click)="toggleDropdown()"
 			>
 				<p>Ações</p>
-				<mat-icon>arrow_drop_down</mat-icon>
+				<ng-icon name="matArrowDropDownOutline" class="text-2xl" />
 			</button>
 
 			@if (dropdown) {

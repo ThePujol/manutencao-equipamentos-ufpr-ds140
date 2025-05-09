@@ -9,13 +9,13 @@
 		</div>
 
 		<div class="w-[330px]">
-			<span class="text-primary text-4xl"><mat-icon>handyman</mat-icon></span>
+			<span class="text-primary text-4xl"><ng-icon name="matHandymanOutline" /></span>
 			<h2 class="text-xl font-semibold">Manutenção e reparo</h2>
 			<p class="font-light text-black/50">Agende manutenções ou reparos para qualquer equipamento eletrônico.</p>
 		</div>
 
 		<div class="w-[330px]">
-			<span class="text-primary text-4xl"><mat-icon>check_circle</mat-icon></span>
+			<span class="text-primary text-4xl"><ng-icon name="matCheckCircleOutline" /></span>
 			<h2 class="text-xl font-semibold">Estabelecimento certificado</h2>
 			<p class="font-light text-black/50">
 				Somos um estabelecimento certificado e garantimos a excelência na execução do nosso trabalho.
@@ -23,7 +23,7 @@
 		</div>
 
 		<div class="w-[330px]">
-			<span class="text-primary text-4xl"><mat-icon>security</mat-icon></span>
+			<span class="text-primary text-4xl"><ng-icon name="matSecurityOutline" /></span>
 			<h2 class="text-xl font-semibold">Segurança garantida</h2>
 			<p class="font-light text-black/50">Possuímos diversos planos de garantia para o seu equipamento danificado.</p>
 		</div>
@@ -129,7 +129,7 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col gap-2 mt-2">
+				<div class="flex flex-col gap-2">
 					<div class="flex justify-center mt-4">
 						<app-button [disabledCondition]="cadastroForm.invalid" type="submit" text="Criar conta" class="w-full" />
 					</div>
@@ -141,13 +141,13 @@
 						>
 						Você também receberá novidades pelo seu email.
 					</p>
-
-					<p class="text-sm text-gray-500 text-center">
-						Já possui uma conta?
-						<a routerLink="/login" class="text-indigo-600 hover:underline">Faça o login</a>
-					</p>
 				</div>
 			</form>
+
+			<p class="text-sm text-center mt-10">
+				Já possui uma conta?
+				<a routerLink="/login" class="text-indigo-600 hover:underline">Faça o login</a>
+			</p>
 		</div>
 	</div>
 

@@ -8,6 +8,45 @@
 
 	<div class="flex flex-col gap-2.5">
 		<app-button text="Aprovar orçamento" (funcao)="aprovarOrcamento()" />
-		<app-secondary-button text="Rejeitar orçamento" (funcao)="rejeitarOrcamento()" />
+		<app-secondary-button text="Rejeitar orçamento" (funcao)="toggleFormRejeitarOrcamento()" />
 	</div>
+
+	<!-- Form Rejeitar Solicitacao -->
+	@if (mostrarFormRejeitar) {
+		<div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+			<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+				<div class="flex justify-between items-center mb-4">
+					<h2 class="text-xl font-semibold text-gray-800">Fazer orçamento</h2>
+					<button
+						(click)="toggleFormRejeitarOrcamento()"
+						class="cursor-pointer rounded-full hover:bg-gray-950/5 p-1 w-7 h-7 duration-150"
+					>
+						✖
+					</button>
+				</div>
+
+				<form [formGroup]="formRejeitarOrcamento" (ngSubmit)="rejeitarOrcamento()">
+					<div class="mb-4 flex gap-3 flex-col">
+						<app-input-text
+							label="Motivo da rejeição"
+							controlName="motivoRejeicao"
+							type="text"
+							placeholder="Muito caro"
+							[required]="true"
+						/>
+					</div>
+
+					<div class="flex flex-col w-full gap-3 justify-end space-x-3">
+						<app-secondary-button
+							text="Rejeitar Orçamento"
+							type="submit"
+							class="w-full"
+							[disabledCondition]="this.formRejeitarOrcamento.invalid"
+						/>
+						<app-button text="Cancelar" (funcao)="toggleFormRejeitarOrcamento()" class="w-full" />
+					</div>
+				</form>
+			</div>
+		</div>
+	}
 </td>

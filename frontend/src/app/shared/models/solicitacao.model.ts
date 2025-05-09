@@ -27,6 +27,7 @@ export class Solicitacao {
 		public descricaoManutencao?: string,
 		public dataManutencao?: Date,
 		public orientacoes?: string,
-		public dataFinalizacao?: Date
+		public dataFinalizacao?: Date,
+		public motivoRejeicao?: string
 	) {}
 }

@@ -1,12 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matArrowDropDownOutline } from '@ng-icons/material-icons/outline';
 
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 
 @Component({
 	selector: 'app-tabela-solicitacoes-funcionario',
-	imports: [DatePipe, MatIcon],
+	imports: [DatePipe, NgIcon],
+	viewProviders: [provideIcons({ matArrowDropDownOutline })],
 	templateUrl: './tabela-solicitacoes-funcionario.component.html',
 })
 export class TabelaSolicitacoesFuncionarioComponent {

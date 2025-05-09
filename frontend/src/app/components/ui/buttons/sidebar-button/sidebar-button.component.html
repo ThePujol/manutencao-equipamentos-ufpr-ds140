@@ -2,9 +2,9 @@
 	[routerLink]="routerLink"
 	routerLinkActive="bg-[#331F80] font-semibold"
 	[routerLinkActiveOptions]="{ exact: true }"
-	class="rounded-md px-[30px] py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-1"
+	class="rounded-md px-2.5 py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-2.5"
 >
-	<mat-icon>{{ icon }}</mat-icon>
+	<ng-icon [name]="icon" class="text-2xl" />
 	<p>{{ text }}</p>
 </a>
 <router-outlet></router-outlet>

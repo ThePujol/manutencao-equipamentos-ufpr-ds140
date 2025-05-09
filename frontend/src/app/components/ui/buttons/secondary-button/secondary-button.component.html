@@ -1,7 +1,8 @@
 <button
-	class="justify-center text-center cursor-pointer text-primary text-sm font-semibold w-full p-2.5 rounded-md hover:text-indigo-800 hover:outline-indigo-800 duration-150 outline outline-primary"
+	class="justify-center text-center cursor-pointer text-primary text-sm font-semibold w-full p-2.5 rounded-md duration-150 outline outline-primary disabled:text-gray-400 disabled:outline-gray-400 disabled:cursor-not-allowed"
 	(click)="funcao.emit()"
 	[routerLink]="linkTo"
+	[disabled]="disabledCondition"
 >
 	{{ text }}
 </button>

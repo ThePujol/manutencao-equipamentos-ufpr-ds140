@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatIcon } from '@angular/material/icon';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matAddCircleOutlineOutline, matInfoOutline } from '@ng-icons/material-icons/outline';
 
 import { CategoriaService } from '../../../services/categoria.service';
 import { LoggedUserService } from '../../../services/logged-user.service';
@@ -22,11 +23,12 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 		RouterOutlet,
 		CommonModule,
 		ReactiveFormsModule,
-		MatIcon,
 		InputTextComponent,
 		RouterLink,
 		ButtonComponent,
+		NgIcon,
 	],
+	viewProviders: [provideIcons({ matAddCircleOutlineOutline, matInfoOutline })],
 })
 export class PaginaNovaSolicitacaoComponent implements OnInit {
 	title = 'Nova Solicitação';

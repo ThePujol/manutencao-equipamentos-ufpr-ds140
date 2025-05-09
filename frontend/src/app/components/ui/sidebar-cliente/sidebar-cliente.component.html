@@ -20,16 +20,16 @@
 			</div>
 		</div>
 
-		<app-sidebar-button routerLink="/solicitacoes" text="Solicitações" icon="build_outline" />
-		<app-sidebar-button routerLink="/nova-solicitacao" icon="add_circle_outline" text="Nova solicitação" />
+		<app-sidebar-button routerLink="/solicitacoes" text="Solicitações" icon="matBuildOutline" />
+		<app-sidebar-button routerLink="/nova-solicitacao" icon="matAddCircleOutlineOutline" text="Nova solicitação" />
 	</div>
 
 	<a
 		routerLink="/login"
 		(click)="deslogar()"
-		class="rounded-md px-[30px] py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-1"
+		class="rounded-md px-2.5 py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-2.5"
 	>
-		<mat-icon>logout</mat-icon>
+		<ng-icon class="text-2xl" name="matLogOutOutline" />
 		<p>Sair</p>
 	</a>
 

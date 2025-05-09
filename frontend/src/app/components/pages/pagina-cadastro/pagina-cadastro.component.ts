@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import emailjs from '@emailjs/browser';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matCheckCircleOutline, matHandymanOutline, matSecurityOutline } from '@ng-icons/material-icons/outline';
 
 import { PessoaService } from '../../../services/pessoa.service';
 import { ViaCepService } from '../../../services/via-cep.service';
@@ -13,7 +14,8 @@ import { InputTextComponent } from '../../ui/input-text/input-text.component';
 @Component({
 	selector: 'app-pagina-cadastro',
 	standalone: true,
-	imports: [CommonModule, ReactiveFormsModule, InputTextComponent, RouterOutlet, RouterLink, MatIcon, ButtonComponent],
+	imports: [CommonModule, ReactiveFormsModule, InputTextComponent, RouterOutlet, RouterLink, ButtonComponent, NgIcon],
+	viewProviders: [provideIcons({ matCheckCircleOutline, matHandymanOutline, matSecurityOutline })],
 	templateUrl: './pagina-cadastro.component.html',
 })
 export class PaginaCadastroComponent implements OnInit {

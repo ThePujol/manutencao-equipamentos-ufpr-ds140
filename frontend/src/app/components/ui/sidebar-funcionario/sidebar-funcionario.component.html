@@ -20,19 +20,23 @@
 			</div>
 		</div>
 
-		<app-sidebar-button routerLink="/solicitacoes-abertas" icon="priority_high" text="Solicitações em aberto" />
-		<app-sidebar-button routerLink="/solicitacoes-funcionario" icon="build_outline" text="Suas solicitações" />
-		<app-sidebar-button routerLink="/categorias" icon="category" text="Categorias" />
-		<app-sidebar-button routerLink="/funcionarios" icon="person_apron" text="Funcionários" />
-		<app-sidebar-button routerLink="/relatorios" icon="description" text="Gerar relatórios" />
+		<app-sidebar-button
+			routerLink="/solicitacoes-abertas"
+			icon="matPriorityHighOutline"
+			text="Solicitações em aberto"
+		/>
+		<app-sidebar-button routerLink="/solicitacoes-funcionario" icon="matBuildOutline" text="Suas solicitações" />
+		<app-sidebar-button routerLink="/categorias" icon="matCategoryOutline" text="Categorias" />
+		<app-sidebar-button routerLink="/funcionarios" icon="matPerson2Outline" text="Funcionários" />
+		<app-sidebar-button routerLink="/relatorios" icon="matDescriptionOutline" text="Gerar relatórios" />
 	</div>
 
 	<a
 		routerLink="/login"
 		(click)="deslogar()"
-		class="rounded-md px-[30px] py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-1"
+		class="rounded-md px-2.5 py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-2.5"
 	>
-		<mat-icon>logout</mat-icon>
+		<span class="text-xl flex items-center"><ng-icon name="matLogOutOutline" /></span>
 		<p>Sair</p>
 	</a>
 

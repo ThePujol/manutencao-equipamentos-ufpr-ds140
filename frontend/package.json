@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@emailjs/browser": "^4.4.1",
+    "@ng-icons/core": "^31.3.0",
+    "@ng-icons/material-icons": "^31.3.0",
     "@tailwindcss/postcss": "^4.0.15",
     "ngx-mask": "^19.0.6",
     "postcss": "^8.5.3",

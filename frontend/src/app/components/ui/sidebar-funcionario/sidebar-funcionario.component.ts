@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matLogOutOutline } from '@ng-icons/material-icons/outline';
 
 import { LoggedUserService } from '../../../services/logged-user.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
@@ -9,7 +10,12 @@ import { SidebarButtonComponent } from '../buttons/sidebar-button/sidebar-button
 
 @Component({
 	selector: 'app-sidebar-funcionario',
-	imports: [MatIconModule, RouterLink, RouterOutlet, RouterModule, SidebarButtonComponent],
+	imports: [RouterLink, RouterOutlet, RouterModule, SidebarButtonComponent, NgIcon],
+	viewProviders: [
+		provideIcons({
+			matLogOutOutline,
+		}),
+	],
 	templateUrl: './sidebar-funcionario.component.html',
 })
 export class SidebarFuncionarioComponent implements OnInit {
