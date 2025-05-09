@@ -1,66 +1,86 @@
--- TABELA PESSOA (Cliente ou Funcionário)
-DEFINE TABLE pessoa SCHEMAFULL;
-DEFINE FIELD id ON pessoa TYPE string;
-DEFINE FIELD nome ON pessoa TYPE string;
-DEFINE FIELD cpf ON pessoa TYPE string;
-DEFINE FIELD email ON pessoa TYPE string;
-DEFINE FIELD senha ON pessoa TYPE string;
-DEFINE FIELD telefone ON pessoa TYPE string;
-DEFINE FIELD tipo ON pessoa TYPE string; 
+
+CREATE TABLE pessoa (
+    id TEXT PRIMARY KEY,
+    nome TEXT,
+    cpf TEXT,
+    email TEXT,
+    senha TEXT,
+    telefone TEXT,
+    tipo TEXT ('cliente', 'funcionario'),
+);
+CREATE TABLE funcionario (
+    id TEXT PRIMARY KEY,
+    id_usuario TEXT REFERENCES pessoa(id),
+    cargo TEXT,
+    salario NUMERIC
+);
+CREATE TABLE endereco (
+    id TEXT PRIMARY KEY,
+    id_usuario TEXT REFERENCES pessoa(id),
+    cep TEXT,
+    logradouro TEXT,
+    numero TEXT,
+    complemento TEXT,
+    bairro TEXT,
+    cidade TEXT,
+    estado TEXT
+);
 
 
-DEFINE TABLE endereco SCHEMAFULL;
-DEFINE FIELD id ON endereco TYPE string;
-DEFINE FIELD id_usuario ON endereco TYPE record(pessoa);
-DEFINE FIELD cep ON endereco TYPE string;
-DEFINE FIELD logradouro ON endereco TYPE string;
-DEFINE FIELD numero ON endereco TYPE string;
-DEFINE FIELD complemento ON endereco TYPE string;
-DEFINE FIELD bairro ON endereco TYPE string;
-DEFINE FIELD cidade ON endereco TYPE string;
-DEFINE FIELD estado ON endereco TYPE string;
+CREATE TABLE categoria (
+    id TEXT PRIMARY KEY,
+    nome_categoria TEXT
+);
 
 
-DEFINE TABLE categoria SCHEMAFULL;
-DEFINE FIELD id ON categoria TYPE string;
-DEFINE FIELD nome_categoria ON categoria TYPE string;
+CREATE TABLE equipamento (
+    id TEXT PRIMARY KEY,
+    id_categoria TEXT REFERENCES categoria(id),
+    descricao TEXT
+);
 
 
-DEFINE TABLE equipamento SCHEMAFULL;
-DEFINE FIELD id ON equipamento TYPE string;
-DEFINE FIELD id_categoria ON equipamento TYPE record(categoria);
-DEFINE FIELD descricao ON equipamento TYPE string;
+CREATE TABLE solicitacao (
+    id TEXT PRIMARY KEY,
+    id_usuario_cliente TEXT REFERENCES pessoa(id),
+    id_equipamento TEXT REFERENCES equipamento(id),
+    descricao_defeito TEXT,
+    estado TEXT,
+    data_abertura TIMESTAMP
+);
 
 
-DEFINE TABLE solicitacao SCHEMAFULL;
-DEFINE FIELD id ON solicitacao TYPE string;
-DEFINE FIELD id_usuario_cliente ON solicitacao TYPE record(pessoa);
-DEFINE FIELD id_equipamento ON solicitacao TYPE record(equipamento);
-DEFINE FIELD descricao_defeito ON solicitacao TYPE string;
-DEFINE FIELD estado ON solicitacao TYPE string; 
-DEFINE FIELD data_abertura ON solicitacao TYPE datetime;
+CREATE TABLE historico_status (
+    id TEXT PRIMARY KEY,
+    id_solicitacao TEXT REFERENCES solicitacao(id),
+    id_usuario_funcionario TEXT REFERENCES pessoa(id),
+    estado_anterior TEXT,
+    estado_atual TEXT,
+    data_hora TIMESTAMP
+);
 
 
-DEFINE TABLE historico_status SCHEMAFULL;
-DEFINE FIELD id ON historico_status TYPE string;
-DEFINE FIELD id_solicitacao ON historico_status TYPE record(solicitacao);
-DEFINE FIELD id_usuario_funcionario ON historico_status TYPE record(pessoa);
-DEFINE FIELD estado_anterior ON historico_status TYPE string;
-DEFINE FIELD estado_atual ON historico_status TYPE string;
-DEFINE FIELD data_hora ON historico_status TYPE datetime;
+CREATE TABLE orcamento (
+    id TEXT PRIMARY KEY,
+    id_solicitacao TEXT REFERENCES solicitacao(id),
+    id_funcionario TEXT REFERENCES pessoa(id),
+    valor NUMERIC,
+    data_hora TIMESTAMP
+);
 
 
-DEFINE TABLE orcamento SCHEMAFULL;
-DEFINE FIELD id ON orcamento TYPE string;
-DEFINE FIELD id_solicitacao ON orcamento TYPE record(solicitacao);
-DEFINE FIELD id_funcionario ON orcamento TYPE record(pessoa);
-DEFINE FIELD valor ON orcamento TYPE number;
-DEFINE FIELD data_hora ON orcamento TYPE datetime;
+CREATE TABLE devolucao (
+    id TEXT PRIMARY KEY,
+    id_solicitacao TEXT REFERENCES solicitacao(id),
+    id_funcionario TEXT REFERENCES pessoa(id),
+    data_devolucao TIMESTAMP,
+    observacoes TEXT
+);
 
-
-DEFINE TABLE devolucao SCHEMAFULL;
-DEFINE FIELD id ON devolucao TYPE string;
-DEFINE FIELD id_solicitacao ON devolucao TYPE record(solicitacao);
-DEFINE FIELD id_funcionario ON devolucao TYPE record(pessoa);
-DEFINE FIELD data_devolucao ON devolucao TYPE datetime;
-DEFINE FIELD observacoes ON devolucao TYPE string;
+CREATE TABLE pagamento (
+    id TEXT PRIMARY KEY,
+    id_orcamento TEXT REFERENCES orcamento(id),
+    id_funcionario TEXT REFERENCES pessoa(id),
+    valor NUMERIC,
+    data_hora TIMESTAMP
+);
