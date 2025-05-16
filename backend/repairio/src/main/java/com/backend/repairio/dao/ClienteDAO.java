@@ -4,23 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
-import com.backend.repairio.model.Funcionario;
-import com.backend.repairio.repository.FuncionarioRepository;
+import com.backend.repairio.model.Cliente;
+import com.backend.repairio.repository.ClienteRepository;
 
 @Repository
-public class FuncionarioDAO {
+public class ClienteDAO {
     @Autowired
-    private FuncionarioRepository repo;
+    private ClienteRepository repo;
 
-    public Funcionario salvar(Funcionario funcionario) {
-        return repo.save(funcionario);
+    public Cliente salvar(Cliente cliente) {
+        return repo.save(cliente);
     }
 
-    public List<Funcionario> listarTodos() {
+    public List<Cliente> listarTodos() {
         return repo.findAll();
     }
 
-    public Optional<Funcionario> buscarPorId(Long id) {
+    public Optional<Cliente> buscarPorId(Long id) {
         return repo.findById(id);
     }
 

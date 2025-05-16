@@ -4,23 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import com.backend.repairio.service.FuncionarioService;
-import com.backend.repairio.model.Funcionario;
+import com.backend.repairio.service.ClienteService;
+import com.backend.repairio.model.Cliente;
 
 @RestController
-@RequestMapping("/funcionarios")
-public class FuncionarioController {
+@RequestMapping("/clientes")
+public class ClienteController {
     @Autowired
-    private FuncionarioService service;
+    private ClienteService service;
 
     @PostMapping
-    public ResponseEntity<Funcionario> criar(@RequestBody Funcionario funcionario) {
-        Funcionario salvo = service.salvar(funcionario);
+    public ResponseEntity<Cliente> criar(@RequestBody Cliente cliente) {
+        Cliente salvo = service.salvar(cliente);
         return ResponseEntity.ok(salvo);
     }
 
     @GetMapping
-    public List<Funcionario> listar() {
+    public List<Cliente> listar() {
         return service.listar();
     }
 
