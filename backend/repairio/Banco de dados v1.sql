@@ -1,86 +1,109 @@
 
-CREATE TABLE pessoa (
-    id TEXT PRIMARY KEY,
-    nome TEXT,
-    cpf TEXT,
-    email TEXT,
-    senha TEXT,
-    telefone TEXT,
-    tipo TEXT ('cliente', 'funcionario'),
+CREATE DATABASE manutencao_equipamentos;
+\c manutencao_equipamentos;
+
+
+CREATE TABLE cliente (
+    id SERIAL PRIMARY KEY,
+    cpf VARCHAR(11) UNIQUE NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    telefone VARCHAR(20),
+    senha_hash VARCHAR(255) NOT NULL,
+    endereco_cep VARCHAR(9),
+    endereco_logradouro VARCHAR(100),
+    endereco_numero VARCHAR(10),
+    endereco_complemento VARCHAR(50),
+    endereco_bairro VARCHAR(50),
+    endereco_cidade VARCHAR(50),
+    endereco_uf VARCHAR(2)
 );
+
+
 CREATE TABLE funcionario (
-    id TEXT PRIMARY KEY,
-    id_usuario TEXT REFERENCES pessoa(id),
-    cargo TEXT,
-    salario NUMERIC
-);
-CREATE TABLE endereco (
-    id TEXT PRIMARY KEY,
-    id_usuario TEXT REFERENCES pessoa(id),
-    cep TEXT,
-    logradouro TEXT,
-    numero TEXT,
-    complemento TEXT,
-    bairro TEXT,
-    cidade TEXT,
-    estado TEXT
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    data_nascimento DATE NOT NULL,
+    senha_hash VARCHAR(255) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE
 );
 
-
-CREATE TABLE categoria (
-    id TEXT PRIMARY KEY,
-    nome_categoria TEXT
-);
-
-
-CREATE TABLE equipamento (
-    id TEXT PRIMARY KEY,
-    id_categoria TEXT REFERENCES categoria(id),
-    descricao TEXT
+-- Tabela de Categorias de Equipamento
+CREATE TABLE categoria_equipamento (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(50) UNIQUE NOT NULL
 );
 
 
 CREATE TABLE solicitacao (
-    id TEXT PRIMARY KEY,
-    id_usuario_cliente TEXT REFERENCES pessoa(id),
-    id_equipamento TEXT REFERENCES equipamento(id),
-    descricao_defeito TEXT,
-    estado TEXT,
-    data_abertura TIMESTAMP
+    id SERIAL PRIMARY KEY,
+    cliente_id INTEGER NOT NULL REFERENCES cliente(id),
+    categoria_id INTEGER NOT NULL REFERENCES categoria_equipamento(id),
+    descricao_equipamento VARCHAR(100) NOT NULL,
+    descricao_defeito TEXT NOT NULL,
+    estado VARCHAR(20) NOT NULL DEFAULT 'ABERTA',
+    data_hora_abertura TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 
 CREATE TABLE historico_status (
-    id TEXT PRIMARY KEY,
-    id_solicitacao TEXT REFERENCES solicitacao(id),
-    id_usuario_funcionario TEXT REFERENCES pessoa(id),
-    estado_anterior TEXT,
-    estado_atual TEXT,
-    data_hora TIMESTAMP
+    id SERIAL PRIMARY KEY,
+    solicitacao_id INTEGER NOT NULL REFERENCES solicitacao(id),
+    estado_anterior VARCHAR(20),
+    estado_novo VARCHAR(20) NOT NULL,
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    funcionario_id INTEGER REFERENCES funcionario(id)
 );
 
 
 CREATE TABLE orcamento (
-    id TEXT PRIMARY KEY,
-    id_solicitacao TEXT REFERENCES solicitacao(id),
-    id_funcionario TEXT REFERENCES pessoa(id),
-    valor NUMERIC,
-    data_hora TIMESTAMP
+    id SERIAL PRIMARY KEY,
+    solicitacao_id INTEGER UNIQUE NOT NULL REFERENCES solicitacao(id),
+    valor NUMERIC(10, 2) NOT NULL,
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    funcionario_id INTEGER NOT NULL REFERENCES funcionario(id)
 );
 
 
-CREATE TABLE devolucao (
-    id TEXT PRIMARY KEY,
-    id_solicitacao TEXT REFERENCES solicitacao(id),
-    id_funcionario TEXT REFERENCES pessoa(id),
-    data_devolucao TIMESTAMP,
-    observacoes TEXT
+CREATE TABLE manutencao (
+    id SERIAL PRIMARY KEY,
+    solicitacao_id INTEGER UNIQUE NOT NULL REFERENCES solicitacao(id),
+    funcionario_id INTEGER NOT NULL REFERENCES funcionario(id),
+    descricao_servico TEXT NOT NULL,
+    orientacoes_cliente TEXT,
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE redirecionamento (
+    id SERIAL PRIMARY KEY,
+    solicitacao_id INTEGER NOT NULL REFERENCES solicitacao(id),
+    funcionario_origem_id INTEGER NOT NULL REFERENCES funcionario(id),
+    funcionario_destino_id INTEGER NOT NULL REFERENCES funcionario(id),
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT redirecionamento_distinto CHECK (funcionario_origem_id <> funcionario_destino_id)
+);
+
 
 CREATE TABLE pagamento (
-    id TEXT PRIMARY KEY,
-    id_orcamento TEXT REFERENCES orcamento(id),
-    id_funcionario TEXT REFERENCES pessoa(id),
-    valor NUMERIC,
-    data_hora TIMESTAMP
+    id SERIAL PRIMARY KEY,
+    solicitacao_id INTEGER UNIQUE NOT NULL REFERENCES solicitacao(id),
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE feedback (
+    id SERIAL PRIMARY KEY,
+    solicitacao_id INTEGER UNIQUE NOT NULL REFERENCES solicitacao(id),
+    nota INTEGER CHECK (nota >= 1 AND nota <= 5),
+    comentario TEXT,
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE notificacao (
+    id SERIAL PRIMARY KEY,
+    cliente_id INTEGER NOT NULL REFERENCES cliente(id),
+    mensagem TEXT NOT NULL,
+    lida BOOLEAN DEFAULT FALSE,
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
