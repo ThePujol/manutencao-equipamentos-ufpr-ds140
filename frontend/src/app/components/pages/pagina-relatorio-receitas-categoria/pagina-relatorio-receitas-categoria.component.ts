@@ -6,6 +6,10 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 import { MensagemComponent } from '../../ui/mensagem/mensagem.component';
 import { ReportService, ReceitaPorCategoria } from '../../../services/report.service';
 
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+
 @Component({
   selector: 'app-pagina-relatorio-receitas-categoria',
   standalone: true,
@@ -23,7 +27,7 @@ export class PaginaRelatorioReceitasCategoriaComponent implements OnInit {
   mensagem = '';
   showMessage = false;
 
-  constructor(private reportService: ReportService) {}
+  constructor(private reportService: ReportService) { }
 
   ngOnInit(): void {
     // já carrega os dados ao entrar na página
@@ -31,10 +35,37 @@ export class PaginaRelatorioReceitasCategoriaComponent implements OnInit {
   }
 
   gerarPDF(): void {
-    // TODO: montar e baixar o PDF usando this.resultados
-    // exibir feedback:
-    // this.mensagem = 'PDF gerado com sucesso!';
-    // this.showMessage = true;
-    // setTimeout(() => this.showMessage = false, 3000);
+    if (!this.resultados.length) {
+      this.mensagem = 'Não há dados para gerar o PDF.';
+      this.showMessage = true;
+      setTimeout(() => this.showMessage = false, 3000);
+      return;
+    }
+
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Relatório de Receitas (por categoria)', 14, 20);
+
+    const head = [['Categoria', 'Total (R$)']];
+    const body = this.resultados.map(r => [
+      r.categoria,
+      r.total.toFixed(2)
+    ]);
+
+    autoTable(doc, {
+      head,
+      body,
+      startY: 30,
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [73, 49, 169] }
+    });
+
+    doc.save('relatorio_receitas_por_categoria.pdf');
+
+    this.mensagem = 'PDF gerado com sucesso!';
+    this.showMessage = true;
+    setTimeout(() => this.showMessage = false, 3000);
   }
+
+
 }

@@ -7,6 +7,10 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 import { MensagemComponent } from '../../ui/mensagem/mensagem.component';
 import { ReportService, ReceitaPorDia } from '../../../services/report.service';
 
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+
 @Component({
   selector: 'app-pagina-relatorio-receitas',
   standalone: true,
@@ -27,21 +31,48 @@ export class PaginaRelatorioReceitasComponent implements OnInit {
   mensagem = '';
   showMessage = false;
 
-  constructor(private reportService: ReportService) {}
+  constructor(private reportService: ReportService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   buscar(): void {
     const inicio = this.dataInicio ? new Date(this.dataInicio) : undefined;
-    const fim    = this.dataFim    ? new Date(this.dataFim)    : undefined;
+    const fim = this.dataFim ? new Date(this.dataFim) : undefined;
     this.resultados = this.reportService.getReceitaPorDia(inicio, fim);
   }
 
   gerarPDF(): void {
-    // TODO: montar o PDF com this.resultados
-    // se quiser exibir mensagem de sucesso:
-    // this.mensagem = 'PDF gerado com sucesso!';
-    // this.showMessage = true;
-    // setTimeout(() => this.showMessage = false, 3000);
+    if (!this.resultados.length) {
+      this.mensagem = 'Não há dados para gerar o PDF.';
+      this.showMessage = true;
+      setTimeout(() => this.showMessage = false, 3000);
+      return;
+    }
+
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Relatório de Receitas (por dia)', 14, 20);
+
+    const head = [['Data', 'Total (R$)']];
+    const body = this.resultados.map(r => [
+      r.data.toLocaleDateString('pt-BR'),
+      r.total.toFixed(2)
+    ]);
+
+    // Chama a função importada em vez de doc.autoTable
+    autoTable(doc, {
+      head,
+      body,
+      startY: 30,
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [73, 49, 169] }
+    });
+
+    doc.save('relatorio_receitas_por_dia.pdf');
+
+    this.mensagem = 'PDF gerado com sucesso!';
+    this.showMessage = true;
+    setTimeout(() => this.showMessage = false, 3000);
   }
+
 }
