@@ -1,0 +1,69 @@
+<main class="flex gap-10 h-full">
+  <!-- 1. Menu lateral já carregado -->
+  <app-sidebar-funcionario></app-sidebar-funcionario>
+
+  <!-- 2. Conteúdo principal -->
+  <section class="flex flex-col py-10 gap-[30px] pr-10 w-full overflow-y-auto">
+    
+    <!-- Cabeçalho da página -->
+    <div>
+      <h1 class="text-[40px] font-semibold text-[#4931A9]">
+        Relatório de Receitas (por dia)
+      </h1>
+      <h2 class="opacity-50 font-light text-[18px]">
+        Filtre o período e gere o PDF.
+      </h2>
+    </div>
+
+    <!-- Formulário de filtro -->
+    <form class="flex gap-4 items-end mb-4" (ngSubmit)="buscar()">
+      <div class="flex flex-col">
+        <label for="dataInicio">Data início</label>
+        <input
+          id="dataInicio"
+          type="date"
+          [(ngModel)]="dataInicio"
+          name="dataInicio"
+          class="border rounded p-1"
+        />
+      </div>
+      <div class="flex flex-col">
+        <label for="dataFim">Data fim</label>
+        <input
+          id="dataFim"
+          type="date"
+          [(ngModel)]="dataFim"
+          name="dataFim"
+          class="border rounded p-1"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Buscar</button>
+      <button type="button" class="btn btn-secondary" (click)="gerarPDF()">
+        Gerar PDF
+      </button>
+    </form>
+
+    <!-- Tabela de preview -->
+    <table *ngIf="resultados.length > 0" class="w-full table-auto">
+      <thead>
+        <tr>
+          <th class="text-left p-2">Data</th>
+          <th class="text-right p-2">Total (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of resultados">
+          <td class="p-2">{{ r.data | date: 'dd/MM/yyyy' }}</td>
+          <td class="p-2 text-right">{{ r.total | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="resultados.length === 0">Nenhum registro encontrado.</p>
+  </section>
+
+  <!-- 3. Mensagem de feedback -->
+  <app-mensagem [mensagem]="mensagem" [showMessage]="showMessage"></app-mensagem>
+</main>
+
+<!-- 4. Outlet caso haja rotas filhas -->
+<router-outlet></router-outlet>

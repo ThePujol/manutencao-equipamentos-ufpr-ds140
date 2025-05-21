@@ -1,0 +1,45 @@
+<main class="flex gap-10 h-full">
+  <!-- menu lateral -->
+  <app-sidebar-funcionario></app-sidebar-funcionario>
+
+  <!-- conteúdo principal -->
+  <section class="flex flex-col py-10 gap-[30px] pr-10 w-full overflow-y-auto">
+    <div>
+      <h1 class="text-[40px] font-semibold text-[#4931A9]">
+        Relatório de Receitas (por categoria)
+      </h1>
+      <h2 class="opacity-50 font-light text-[18px]">
+        Receita acumulada agrupada por categoria.
+      </h2>
+    </div>
+
+    <!-- botão de geração de PDF -->
+    <div class="mb-4">
+      <button class="btn btn-secondary" (click)="gerarPDF()">
+        Gerar PDF
+      </button>
+    </div>
+
+    <!-- tabela de preview -->
+    <table *ngIf="resultados.length > 0" class="w-full table-auto">
+      <thead>
+        <tr>
+          <th class="text-left p-2">Categoria</th>
+          <th class="text-right p-2">Total (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of resultados">
+          <td class="p-2">{{ r.categoria }}</td>
+          <td class="p-2 text-right">{{ r.total | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="resultados.length === 0">Nenhum registro encontrado.</p>
+  </section>
+
+  <!-- mensagem de feedback -->
+  <app-mensagem [mensagem]="mensagem" [showMessage]="showMessage"></app-mensagem>
+</main>
+
+<router-outlet></router-outlet>

@@ -10,6 +10,8 @@ import { PaginaNovaSolicitacaoComponent } from './components/pages/pagina-nova-s
 import { PaginaSolicitacoesAbertasComponent } from './components/pages/pagina-solicitacoes-abertas/pagina-solicitacoes-abertas.component';
 import { PaginaSolicitacoesComponent } from './components/pages/pagina-solicitacoes/pagina-solicitacoes.component';
 import { SolicitacoesFuncionarioComponent } from './components/pages/solicitacoes-funcionario/solicitacoes-funcionario.component';
+import { PaginaRelatorioReceitasComponent } from './components/pages/pagina-relatorio-receitas/pagina-relatorio-receitas.component';
+import { PaginaRelatorioReceitasCategoriaComponent } from './components/pages/pagina-relatorio-receitas-categoria/pagina-relatorio-receitas-categoria.component';
 
 export const routes: Routes = [
 	{
@@ -62,6 +64,15 @@ export const routes: Routes = [
 		component: PaginaNaoEncontradaComponent,
 		title: 'Página Não Encontrada',
 	},
+	{ 	path: 'relatorios/receitas', 
+		component: PaginaRelatorioReceitasComponent, 
+		title: 'Relatório de Receitas (por dia)' 
+	},
+	{
+    	path: 'relatorios/receitas-categoria',
+    	component: PaginaRelatorioReceitasCategoriaComponent,
+    	title: 'Relatório de Receitas por Categoria'
+    },
 	{
 		path: '**',
 		redirectTo: '404',
