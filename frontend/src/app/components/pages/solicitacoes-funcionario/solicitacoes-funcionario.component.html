@@ -38,6 +38,8 @@
 					Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
 				</p>
 			</table>
+
+			<app-tabela [columns]="headersTabela" [gridData]="listaSolicitacoes" (acoesClick)="(toggleModalRedirecionar)" />
 		} @else {
 			<p>Não há nenhuma solicitação atribuída a você.</p>
 		}

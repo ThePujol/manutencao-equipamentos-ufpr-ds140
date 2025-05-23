@@ -20,15 +20,32 @@
 				@for (columnName of columns; track $index) {
 					@if (checkIfDate(item[columnName.fieldName])) {
 						<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy' }}</td>
+					} @else if (columnName.fieldName === 'cliente') {
+						<!-- Temp fix: por algum motivo, a função checkIfCliente não consegue identificar o tipo do objeto como cliente. Resolver depois. -->
+						<td class="w-52">{{ item[columnName.fieldName].nome }}</td>
+					} @else if (columnName.fieldName === 'situacao') {
+						<td class="w-52">
+							<app-situacao-tag [situacao]="item[columnName.fieldName]" />
+						</td>
 					} @else {
 						<td class="w-52">{{ item[columnName.fieldName] }}</td>
 					}
 				}
 
-				<td class="w-52 text-right">
-					<span class="text-3xl text-black/50 cursor-pointer">
-						<ng-icon name="matChevronLeftOutline" />
-					</span>
+				<td class="w-52 text-right flex items-center justify-end gap-3">
+					<button
+						class="py-1 rounded-md text-primary outline-primary outline p-2 flex justify-between gap-2 duration-150 cursor-pointer"
+						(click)="(excluirClick)"
+					>
+						<ng-icon name="matDeleteOutline" class="text-2xl" />
+					</button>
+
+					<button
+						class="py-1 rounded-md text-white bg-primary hover:bg-indigo-950 p-2 flex justify-between gap-2 duration-150 cursor-pointer"
+						(click)="(editarClick)"
+					>
+						<ng-icon name="matEditOutline" class="text-2xl" />
+					</button>
 				</td>
 			</tr>
 		}
