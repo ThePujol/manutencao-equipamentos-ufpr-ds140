@@ -1,18 +1,24 @@
 package com.repairio.backend.dao;
 
-import com.repairio.backend.model.Solicitacao;
+import com.repairio.backend.model.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.util.List;
 
 @Repository
 public class SolicitacaoDao {
     private final JdbcTemplate jdbcTemplate;
+    private final CategoriaDao categoriaDao;
+    private final PessoaDao pessoaDao;
+    private final FuncionarioDao funcionarioDao;
 
-    public SolicitacaoDao(JdbcTemplate jdbcTemplate) {
+    public SolicitacaoDao(JdbcTemplate jdbcTemplate, CategoriaDao categoriaDao, PessoaDao pessoaDao,
+            FuncionarioDao funcionarioDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.categoriaDao = categoriaDao;
+        this.pessoaDao = pessoaDao;
+        this.funcionarioDao = funcionarioDao;
     }
 
     public List<Solicitacao> findAll() {
@@ -20,14 +26,16 @@ public class SolicitacaoDao {
                 (rs, rowNum) -> {
                     Solicitacao s = new Solicitacao();
                     s.setId(rs.getLong("id"));
-                    s.setDataSolicitacao(rs.getDate("data_solicitacao"));
-                    s.setDescricaoEquipamento(rs.getString("descricao_equipamento"));
-                    s.setDescricaoDefeito(rs.getString("descricao_defeito"));
-                    s.setEstado(rs.getString("estado"));
-                    s.setCategoriaId(rs.getLong("categoria_id"));
-                    s.setFuncionarioId(rs.getLong("funcionario_id"));
-                    s.setPessoaId(rs.getLong("pessoa_id"));
-                    s.setDataOrcamento(rs.getDate("data_orcamento"));
+                    s.setDescricao(rs.getString("descricao"));
+                    s.setCategoria(categoriaDao.findById(rs.getLong("categoria_id")));
+                    s.setDefeito(rs.getString("defeito"));
+                    s.setOrcamento(rs.getDouble("orcamento"));
+                    s.setSituacao(Situacao.valueOf(rs.getString("situacao")));
+                    s.setCliente(pessoaDao.findById(rs.getLong("cliente_id")));
+                    Long funcionarioId = rs.getLong("funcionario_id");
+                    if (!rs.wasNull()) {
+                        s.setFuncionario(funcionarioDao.findById(funcionarioId));
+                    }
                     return s;
                 });
     }
@@ -37,42 +45,42 @@ public class SolicitacaoDao {
                 (rs, rowNum) -> {
                     Solicitacao s = new Solicitacao();
                     s.setId(rs.getLong("id"));
-                    s.setDataSolicitacao(rs.getDate("data_solicitacao"));
-                    s.setDescricaoEquipamento(rs.getString("descricao_equipamento"));
-                    s.setDescricaoDefeito(rs.getString("descricao_defeito"));
-                    s.setEstado(rs.getString("estado"));
-                    s.setCategoriaId(rs.getLong("categoria_id"));
-                    s.setFuncionarioId(rs.getLong("funcionario_id"));
-                    s.setPessoaId(rs.getLong("pessoa_id"));
-                    s.setDataOrcamento(rs.getDate("data_orcamento"));
+                    s.setDescricao(rs.getString("descricao"));
+                    s.setCategoria(categoriaDao.findById(rs.getLong("categoria_id")));
+                    s.setDefeito(rs.getString("defeito"));
+                    s.setOrcamento(rs.getDouble("orcamento"));
+                    s.setSituacao(Situacao.valueOf(rs.getString("situacao")));
+                    s.setCliente(pessoaDao.findById(rs.getLong("cliente_id")));
+                    Long funcionarioId = rs.getLong("funcionario_id");
+                    if (!rs.wasNull()) {
+                        s.setFuncionario(funcionarioDao.findById(funcionarioId));
+                    }
                     return s;
                 }, id);
     }
 
     public void save(Solicitacao solicitacao) {
         jdbcTemplate.update(
-                "INSERT INTO solicitacao (data_solicitacao, descricao_equipamento, descricao_defeito, estado, categoria_id, funcionario_id, pessoa_id, data_orcamento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                new Date(solicitacao.getDataSolicitacao().getTime()),
-                solicitacao.getDescricaoEquipamento(),
-                solicitacao.getDescricaoDefeito(),
-                solicitacao.getEstado(),
-                solicitacao.getCategoriaId(),
-                solicitacao.getFuncionarioId(),
-                solicitacao.getPessoaId(),
-                solicitacao.getDataOrcamento() != null ? new Date(solicitacao.getDataOrcamento().getTime()) : null);
+                "INSERT INTO solicitacao (descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                solicitacao.getDescricao(),
+                solicitacao.getCategoria().getId(),
+                solicitacao.getDefeito(),
+                solicitacao.getOrcamento(),
+                solicitacao.getSituacao().name(),
+                solicitacao.getCliente().getId(),
+                solicitacao.getFuncionario() != null ? solicitacao.getFuncionario().getId() : null);
     }
 
     public void update(Solicitacao solicitacao) {
         jdbcTemplate.update(
-                "UPDATE solicitacao SET data_solicitacao = ?, descricao_equipamento = ?, descricao_defeito = ?, estado = ?, categoria_id = ?, funcionario_id = ?, pessoa_id = ?, data_orcamento = ? WHERE id = ?",
-                new Date(solicitacao.getDataSolicitacao().getTime()),
-                solicitacao.getDescricaoEquipamento(),
-                solicitacao.getDescricaoDefeito(),
-                solicitacao.getEstado(),
-                solicitacao.getCategoriaId(),
-                solicitacao.getFuncionarioId(),
-                solicitacao.getPessoaId(),
-                solicitacao.getDataOrcamento() != null ? new Date(solicitacao.getDataOrcamento().getTime()) : null,
+                "UPDATE solicitacao SET descricao = ?, categoria_id = ?, defeito = ?, orcamento = ?, situacao = ?, cliente_id = ?, funcionario_id = ? WHERE id = ?",
+                solicitacao.getDescricao(),
+                solicitacao.getCategoria().getId(),
+                solicitacao.getDefeito(),
+                solicitacao.getOrcamento(),
+                solicitacao.getSituacao().name(),
+                solicitacao.getCliente().getId(),
+                solicitacao.getFuncionario() != null ? solicitacao.getFuncionario().getId() : null,
                 solicitacao.getId());
     }
 

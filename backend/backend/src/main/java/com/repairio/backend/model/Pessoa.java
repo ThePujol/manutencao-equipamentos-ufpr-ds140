@@ -3,7 +3,10 @@ package com.repairio.backend.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 
 @Data
 @EqualsAndHashCode(of = "id")
@@ -16,6 +19,9 @@ public class Pessoa {
 
     @NotBlank(message = "Senha é obrigatória")
     private String senha;
+
+    @NotBlank(message = "Salt é obrigatório")
+    private String salt;
 
     @NotBlank(message = "Nome é obrigatório")
     private String nome;

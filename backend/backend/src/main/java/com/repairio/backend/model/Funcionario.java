@@ -3,7 +3,10 @@ package com.repairio.backend.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+
 import java.time.LocalDate;
 
 @Data

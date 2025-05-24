@@ -5,7 +5,7 @@ import com.repairio.backend.service.FuncionarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,7 +35,8 @@ public class FuncionarioController {
 
     @PostMapping
     public ResponseEntity<Funcionario> create(@Valid @RequestBody Funcionario funcionario) {
-        funcionarioService.save(funcionario);
+        String plainPassword = funcionario.getSenha();
+        funcionarioService.save(funcionario, plainPassword);
         return ResponseEntity.status(201).body(funcionario);
     }
 

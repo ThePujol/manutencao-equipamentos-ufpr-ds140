@@ -21,6 +21,7 @@ public class PessoaDao {
                     p.setId(rs.getLong("id"));
                     p.setEmail(rs.getString("email"));
                     p.setSenha(rs.getString("senha"));
+                    p.setSalt(rs.getString("salt"));
                     p.setNome(rs.getString("nome"));
                     p.setCpf(rs.getString("cpf"));
                     p.setTel(rs.getString("tel"));
@@ -41,6 +42,7 @@ public class PessoaDao {
                     p.setId(rs.getLong("id"));
                     p.setEmail(rs.getString("email"));
                     p.setSenha(rs.getString("senha"));
+                    p.setSalt(rs.getString("salt"));
                     p.setNome(rs.getString("nome"));
                     p.setCpf(rs.getString("cpf"));
                     p.setTel(rs.getString("tel"));
@@ -56,18 +58,18 @@ public class PessoaDao {
 
     public void save(Pessoa pessoa) {
         jdbcTemplate.update(
-                "INSERT INTO pessoa (email, senha, nome, cpf, tel, cep, estado, cidade, endereco, num, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                pessoa.getEmail(), pessoa.getSenha(), pessoa.getNome(), pessoa.getCpf(), pessoa.getTel(),
-                pessoa.getCep(), pessoa.getEstado(), pessoa.getCidade(), pessoa.getEndereco(), pessoa.getNum(),
-                pessoa.getComplemento());
+                "INSERT INTO pessoa (email, senha, salt, nome, cpf, tel, cep, estado, cidade, endereco, num, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                pessoa.getEmail(), pessoa.getSenha(), pessoa.getSalt(), pessoa.getNome(), pessoa.getCpf(),
+                pessoa.getTel(), pessoa.getCep(), pessoa.getEstado(), pessoa.getCidade(), pessoa.getEndereco(),
+                pessoa.getNum(), pessoa.getComplemento());
     }
 
     public void update(Pessoa pessoa) {
         jdbcTemplate.update(
-                "UPDATE pessoa SET email = ?, senha = ?, nome = ?, cpf = ?, tel = ?, cep = ?, estado = ?, cidade = ?, endereco = ?, num = ?, complemento = ? WHERE id = ?",
-                pessoa.getEmail(), pessoa.getSenha(), pessoa.getNome(), pessoa.getCpf(), pessoa.getTel(),
-                pessoa.getCep(), pessoa.getEstado(), pessoa.getCidade(), pessoa.getEndereco(), pessoa.getNum(),
-                pessoa.getComplemento(), pessoa.getId());
+                "UPDATE pessoa SET email = ?, senha = ?, salt = ?, nome = ?, cpf = ?, tel = ?, cep = ?, estado = ?, cidade = ?, endereco = ?, num = ?, complemento = ? WHERE id = ?",
+                pessoa.getEmail(), pessoa.getSenha(), pessoa.getSalt(), pessoa.getNome(), pessoa.getCpf(),
+                pessoa.getTel(), pessoa.getCep(), pessoa.getEstado(), pessoa.getCidade(), pessoa.getEndereco(),
+                pessoa.getNum(), pessoa.getComplemento(), pessoa.getId());
     }
 
     public void delete(Long id) {
@@ -81,6 +83,7 @@ public class PessoaDao {
                     p.setId(rs.getLong("id"));
                     p.setEmail(rs.getString("email"));
                     p.setSenha(rs.getString("senha"));
+                    p.setSalt(rs.getString("salt"));
                     p.setNome(rs.getString("nome"));
                     p.setCpf(rs.getString("cpf"));
                     p.setTel(rs.getString("tel"));
