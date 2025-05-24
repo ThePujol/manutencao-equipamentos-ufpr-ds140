@@ -24,7 +24,6 @@ public class Funcionario {
     @NotBlank(message = "Senha é obrigatória")
     private String senha;
 
-    @NotBlank(message = "Salt é obrigatório")
     private String salt;
 
     @NotNull(message = "Data de nascimento é obrigatória")

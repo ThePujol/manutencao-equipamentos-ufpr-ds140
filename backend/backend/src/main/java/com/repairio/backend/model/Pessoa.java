@@ -20,7 +20,6 @@ public class Pessoa {
     @NotBlank(message = "Senha é obrigatória")
     private String senha;
 
-    @NotBlank(message = "Salt é obrigatório")
     private String salt;
 
     @NotBlank(message = "Nome é obrigatório")
@@ -37,14 +36,11 @@ public class Pessoa {
     @Pattern(regexp = "\\d{8}|\\d{5}-\\d{3}", message = "CEP inválido")
     private String cep;
 
-    @NotBlank(message = "Estado é obrigatório")
     @Size(min = 2, max = 2, message = "UF deve ter 2 letras")
     private String estado;
 
-    @NotBlank(message = "Cidade é obrigatória")
     private String cidade;
 
-    @NotBlank(message = "Endereço é obrigatório")
     private String endereco;
 
     @NotBlank(message = "Número é obrigatório")
