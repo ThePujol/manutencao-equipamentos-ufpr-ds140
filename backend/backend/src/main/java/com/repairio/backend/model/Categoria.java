@@ -1,11 +1,12 @@
 package com.repairio.backend.model;
 
 import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import lombok.EqualsAndHashCode;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Data
+@EqualsAndHashCode(of = "id")
 public class Categoria {
     private Long id;
 
