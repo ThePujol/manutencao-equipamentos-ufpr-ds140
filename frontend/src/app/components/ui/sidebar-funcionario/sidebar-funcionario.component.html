@@ -1,44 +1,42 @@
 <div class="flex flex-col items-start justify-between w-[283px] bg-[#4931A9] text-white h-screen p-1.5 pt-2.5">
 	<div class="flex gap-1 flex-col w-full h-full">
-		<a
-			routerLink="/"
-			class="flex items-center p-2.5 pb-8 gap-4 cursor-pointer opacity-70 hover:opacity-100 duration-150"
-		>
+		<a routerLink="/"
+			class="flex items-center p-2.5 pb-8 gap-4 cursor-pointer opacity-70 hover:opacity-100 duration-150">
 			<img src="logo-branco.png" alt="Logo" class="w-[30px]" />
 			<p class="text-white font-bold">repair.io</p>
 		</a>
 
 		<div class="flex p-2.5 gap-4 items-center">
-			<img
-				src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
-				alt="Foto Perfil"
-				class="rounded-full w-[42px] h-[42px]"
-			/>
+			<img src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+				alt="Foto Perfil" class="rounded-full w-[42px] h-[42px]" />
 			<div>
 				<h1 class="text-[20px] font-semibold">Olá, {{ primeiroNome }}.</h1>
 				<h2 class="opacity-50 text-sm">Selecione uma página.</h2>
 			</div>
 		</div>
 
-		<app-sidebar-button
-			routerLink="/solicitacoes-abertas"
-			icon="matPriorityHighOutline"
-			text="Solicitações em aberto"
-		/>
+		<app-sidebar-button routerLink="/solicitacoes-abertas" icon="matPriorityHighOutline"
+			text="Solicitações em aberto" />
 		<app-sidebar-button routerLink="/solicitacoes-funcionario" icon="matBuildOutline" text="Suas solicitações" />
 		<app-sidebar-button routerLink="/categorias" icon="matCategoryOutline" text="Categorias" />
 		<app-sidebar-button routerLink="/funcionarios" icon="matPerson2Outline" text="Funcionários" />
-		<app-sidebar-button routerLink="/relatorios" icon="matDescriptionOutline" text="Gerar relatórios" />
+		
+		
+		<app-sidebar-button (click)="toggleRelatorios()"
+			[icon]="relatoriosExpanded ? 'matExpandLessOutline' : 'matExpandMoreOutline'" text="Relatórios"
+			class="cursor-pointer"></app-sidebar-button>
+
+		<!-- submenu -->
+		<div *ngIf="relatoriosExpanded" class="ml-4 space-y-1">
+			<app-sidebar-button routerLink="/relatorios/receitas" icon="matTodayOutline" text="Por dia" />
+			<app-sidebar-button routerLink="/relatorios/receitas-categoria" icon="matCategoryOutline" text="Por categoria" />
+		</div>
+
+		<a routerLink="/login" (click)="deslogar()"
+			class="rounded-md px-2.5 py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-2.5">
+			<span class="text-xl flex items-center"><ng-icon name="matLogOutOutline" /></span>
+			<p>Sair</p>
+		</a>
+
+		<router-outlet></router-outlet>
 	</div>
-
-	<a
-		routerLink="/login"
-		(click)="deslogar()"
-		class="rounded-md px-2.5 py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-2.5"
-	>
-		<span class="text-xl flex items-center"><ng-icon name="matLogOutOutline" /></span>
-		<p>Sair</p>
-	</a>
-
-	<router-outlet></router-outlet>
-</div>
