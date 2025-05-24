@@ -3,35 +3,31 @@ package com.repairio.backend.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 @Data
 @EqualsAndHashCode(of = "id")
 public class Solicitacao {
     private Long id;
 
-    @NotNull(message = "Data da solicitação é obrigatória")
-    private Date dataSolicitacao;
-
-    @NotBlank(message = "Descrição do equipamento é obrigatória")
-    private String descricaoEquipamento;
-
-    @NotBlank(message = "Descrição do defeito é obrigatória")
-    private String descricaoDefeito;
-
-    @NotBlank(message = "Estado é obrigatório")
-    private String estado;
+    @NotBlank(message = "Descrição é obrigatória")
+    private String descricao;
 
     @NotNull(message = "Categoria é obrigatória")
-    private Long categoriaId;
+    private Categoria categoria;
 
-    @NotNull(message = "Funcionário é obrigatório")
-    private Long funcionarioId;
+    @NotBlank(message = "Defeito é obrigatório")
+    private String defeito;
 
-    @NotNull(message = "Pessoa é obrigatória")
-    private Long pessoaId;
+    @NotNull(message = "Orçamento é obrigatório")
+    private Double orcamento;
 
-    private Date dataOrcamento;
+    @NotNull(message = "Situação é obrigatória")
+    private Situacao situacao;
+
+    @NotNull(message = "Cliente é obrigatório")
+    private Pessoa cliente;
+
+    private Funcionario funcionario;
 }

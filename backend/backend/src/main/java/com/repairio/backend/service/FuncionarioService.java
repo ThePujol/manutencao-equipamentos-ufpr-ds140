@@ -3,6 +3,7 @@ package com.repairio.backend.service;
 import com.repairio.backend.dao.FuncionarioDao;
 import com.repairio.backend.model.Funcionario;
 import org.springframework.stereotype.Service;
+import com.repairio.backend.util.PasswordUtil;
 
 import java.util.List;
 
@@ -22,13 +23,13 @@ public class FuncionarioService {
         return funcionarioDao.findById(id);
     }
 
-public void save(Funcionario funcionario, String plainPassword) {
-    String salt = PasswordUtil.generateSalt();
-    String hashed = PasswordUtil.hashPassword(plainPassword, salt);
-    funcionario.setSenha(hashed);
-    funcionario.setSalt(salt);
-    funcionarioDao.save(funcionario);
-}
+    public void save(Funcionario funcionario, String plainPassword) {
+        String salt = PasswordUtil.generateSalt();
+        String hashed = PasswordUtil.hashPassword(plainPassword, salt);
+        funcionario.setSenha(hashed);
+        funcionario.setSalt(salt);
+        funcionarioDao.save(funcionario);
+    }
 
     public void update(Funcionario funcionario) {
         funcionarioDao.update(funcionario);
@@ -39,6 +40,6 @@ public void save(Funcionario funcionario, String plainPassword) {
     }
 
     public Funcionario findByEmail(String email) {
-       return funcionarioDao.findByEmail(email);
+        return funcionarioDao.findByEmail(email);
     }
 }

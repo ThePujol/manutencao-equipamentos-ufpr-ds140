@@ -9,6 +9,7 @@ import com.repairio.backend.util.PasswordUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,13 +42,13 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> create(@RequestBody Pessoa pessoa) {
+    public ResponseEntity<Pessoa> create(@Valid @RequestBody Pessoa pessoa) {
         if (pessoa.getCep() != null && pessoa.getCep().length() == 8) {
             ViaCepResponse viaCep = viaCepService.buscarEnderecoPorCep(pessoa.getCep());
             if (viaCep != null && viaCep.getCep() != null) {
-                pessoa.setLogradouro(viaCep.getLogradouro());
-                pessoa.setLocalidade(viaCep.getLocalidade());
-                pessoa.setUf(viaCep.getUf());
+                pessoa.setEndereco(viaCep.getLogradouro());
+                pessoa.setCidade(viaCep.getLocalidade());
+                pessoa.setEstado(viaCep.getUf());
             }
         }
 
@@ -59,7 +60,7 @@ public class PessoaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pessoa> update(@PathVariable Long id, @RequestBody Pessoa pessoa) {
+    public ResponseEntity<Pessoa> update(@PathVariable Long id, @Valid @RequestBody Pessoa pessoa) {
         pessoa.setId(id);
         pessoaService.update(pessoa);
         return ResponseEntity.ok(pessoa);
