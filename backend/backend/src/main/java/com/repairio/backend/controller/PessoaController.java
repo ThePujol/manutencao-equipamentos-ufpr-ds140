@@ -46,7 +46,6 @@ public class PessoaController {
             ViaCepResponse viaCep = viaCepService.buscarEnderecoPorCep(pessoa.getCep());
             if (viaCep != null && viaCep.getCep() != null) {
                 pessoa.setLogradouro(viaCep.getLogradouro());
-                pessoa.setBairro(viaCep.getBairro());
                 pessoa.setLocalidade(viaCep.getLocalidade());
                 pessoa.setUf(viaCep.getUf());
             }

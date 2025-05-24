@@ -19,20 +19,17 @@ public class PessoaDao {
                 (rs, rowNum) -> {
                     Pessoa p = new Pessoa();
                     p.setId(rs.getLong("id"));
-                    p.setNome(rs.getString("nome"));
                     p.setEmail(rs.getString("email"));
                     p.setSenha(rs.getString("senha"));
-                    p.setSalt(rs.getString("salt"));
-                    p.setTelefone(rs.getString("telefone"));
+                    p.setNome(rs.getString("nome"));
                     p.setCpf(rs.getString("cpf"));
+                    p.setTel(rs.getString("tel"));
                     p.setCep(rs.getString("cep"));
-                    p.setLogradouro(rs.getString("logradouro"));
-                    p.setNumero(rs.getString("numero"));
+                    p.setEstado(rs.getString("estado"));
+                    p.setCidade(rs.getString("cidade"));
+                    p.setEndereco(rs.getString("endereco"));
+                    p.setNum(rs.getString("num"));
                     p.setComplemento(rs.getString("complemento"));
-                    p.setBairro(rs.getString("bairro"));
-                    p.setLocalidade(rs.getString("localidade"));
-                    p.setUf(rs.getString("uf"));
-                    p.setImagem(rs.getString("imagem"));
                     return p;
                 });
     }
@@ -42,42 +39,35 @@ public class PessoaDao {
                 (rs, rowNum) -> {
                     Pessoa p = new Pessoa();
                     p.setId(rs.getLong("id"));
-                    p.setNome(rs.getString("nome"));
                     p.setEmail(rs.getString("email"));
                     p.setSenha(rs.getString("senha"));
-                    p.setSalt(rs.getString("salt"));
-                    p.setTelefone(rs.getString("telefone"));
+                    p.setNome(rs.getString("nome"));
                     p.setCpf(rs.getString("cpf"));
+                    p.setTel(rs.getString("tel"));
                     p.setCep(rs.getString("cep"));
-                    p.setLogradouro(rs.getString("logradouro"));
-                    p.setNumero(rs.getString("numero"));
+                    p.setEstado(rs.getString("estado"));
+                    p.setCidade(rs.getString("cidade"));
+                    p.setEndereco(rs.getString("endereco"));
+                    p.setNum(rs.getString("num"));
                     p.setComplemento(rs.getString("complemento"));
-                    p.setBairro(rs.getString("bairro"));
-                    p.setLocalidade(rs.getString("localidade"));
-                    p.setUf(rs.getString("uf"));
-                    p.setImagem(rs.getString("imagem"));
                     return p;
                 }, id);
     }
 
     public void save(Pessoa pessoa) {
         jdbcTemplate.update(
-            "INSERT INTO pessoa (nome, email, senha, salt, telefone, cpf, cep, logradouro, numero, complemento, bairro, localidade, uf, imagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            pessoa.getNome(), pessoa.getEmail(), pessoa.getSenha(), pessoa.getSalt(),
-            pessoa.getTelefone(), pessoa.getCpf(), pessoa.getCep(), pessoa.getLogradouro(),
-            pessoa.getNumero(), pessoa.getComplemento(), pessoa.getBairro(), pessoa.getLocalidade(),
-            pessoa.getUf(), pessoa.getImagem()
-        );
+                "INSERT INTO pessoa (email, senha, nome, cpf, tel, cep, estado, cidade, endereco, num, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                pessoa.getEmail(), pessoa.getSenha(), pessoa.getNome(), pessoa.getCpf(), pessoa.getTel(),
+                pessoa.getCep(), pessoa.getEstado(), pessoa.getCidade(), pessoa.getEndereco(), pessoa.getNum(),
+                pessoa.getComplemento());
     }
 
     public void update(Pessoa pessoa) {
         jdbcTemplate.update(
-            "UPDATE pessoa SET nome = ?, email = ?, senha = ?, salt = ?, telefone = ?, cpf = ?, cep = ?, logradouro = ?, numero = ?, complemento = ?, bairro = ?, localidade = ?, uf = ?, imagem = ? WHERE id = ?",
-            pessoa.getNome(), pessoa.getEmail(), pessoa.getSenha(), pessoa.getSalt(),
-            pessoa.getTelefone(), pessoa.getCpf(), pessoa.getCep(), pessoa.getLogradouro(),
-            pessoa.getNumero(), pessoa.getComplemento(), pessoa.getBairro(), pessoa.getLocalidade(),
-            pessoa.getUf(), pessoa.getImagem(), pessoa.getId()
-        );
+                "UPDATE pessoa SET email = ?, senha = ?, nome = ?, cpf = ?, tel = ?, cep = ?, estado = ?, cidade = ?, endereco = ?, num = ?, complemento = ? WHERE id = ?",
+                pessoa.getEmail(), pessoa.getSenha(), pessoa.getNome(), pessoa.getCpf(), pessoa.getTel(),
+                pessoa.getCep(), pessoa.getEstado(), pessoa.getCidade(), pessoa.getEndereco(), pessoa.getNum(),
+                pessoa.getComplemento(), pessoa.getId());
     }
 
     public void delete(Long id) {
@@ -85,25 +75,22 @@ public class PessoaDao {
     }
 
     public Pessoa findByEmail(String email) {
-    return jdbcTemplate.queryForObject("SELECT * FROM pessoa WHERE email = ?",
-        (rs, rowNum) -> {
-            Pessoa p = new Pessoa();
-            p.setId(rs.getLong("id"));
-            p.setNome(rs.getString("nome"));
-            p.setEmail(rs.getString("email"));
-            p.setSenha(rs.getString("senha"));
-            p.setSalt(rs.getString("salt"));
-            p.setTelefone(rs.getString("telefone"));
-            p.setCpf(rs.getString("cpf"));
-            p.setCep(rs.getString("cep"));
-            p.setLogradouro(rs.getString("logradouro"));
-            p.setNumero(rs.getString("numero"));
-            p.setComplemento(rs.getString("complemento"));
-            p.setBairro(rs.getString("bairro"));
-            p.setLocalidade(rs.getString("localidade"));
-            p.setUf(rs.getString("uf"));
-            p.setImagem(rs.getString("imagem"));
-            return p;
-        }, email);
-}
+        return jdbcTemplate.queryForObject("SELECT * FROM pessoa WHERE email = ?",
+                (rs, rowNum) -> {
+                    Pessoa p = new Pessoa();
+                    p.setId(rs.getLong("id"));
+                    p.setEmail(rs.getString("email"));
+                    p.setSenha(rs.getString("senha"));
+                    p.setNome(rs.getString("nome"));
+                    p.setCpf(rs.getString("cpf"));
+                    p.setTel(rs.getString("tel"));
+                    p.setCep(rs.getString("cep"));
+                    p.setEstado(rs.getString("estado"));
+                    p.setCidade(rs.getString("cidade"));
+                    p.setEndereco(rs.getString("endereco"));
+                    p.setNum(rs.getString("num"));
+                    p.setComplemento(rs.getString("complemento"));
+                    return p;
+                }, email);
+    }
 }
