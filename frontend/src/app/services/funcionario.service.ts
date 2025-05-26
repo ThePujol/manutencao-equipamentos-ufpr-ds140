@@ -8,13 +8,18 @@ const LS_CHAVE = 'funcionarios';
 	providedIn: 'root',
 })
 export class FuncionarioService {
-	constructor() {
-		//Construtor vazio
-	}
-
 	listarTodosFuncionarios(): Funcionario[] {
 		const funcionarios = localStorage['funcionarios'];
-		return funcionarios ? JSON.parse(funcionarios) : [];
+		const parsedFuncionarios = funcionarios ? JSON.parse(funcionarios) : [];
+
+		// Re-converter datas armazenadas no local storage
+		if (parsedFuncionarios) {
+			parsedFuncionarios.forEach((funcionario: Funcionario) => {
+				funcionario.dataNasc = new Date(funcionario.dataNasc);
+			});
+		}
+
+		return parsedFuncionarios;
 	}
 
 	addFuncionario(funcionario: Funcionario): void {

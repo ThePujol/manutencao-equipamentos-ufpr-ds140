@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LoggedUserService } from '../../../services/logged-user.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
-import { TabelaSolicitacoesAbertasComponent } from '../../tabelas/tabela-solicitacoes-abertas/tabela-solicitacoes-abertas.component';
+import { TableColumn } from '../../../shared/tabela-interface';
+import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
 import { ButtonComponent } from '../../ui/buttons/button/button.component';
 import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
 import { InformacaoDetalheComponent } from '../../ui/informacao-detalhe/informacao-detalhe.component';
@@ -17,7 +18,6 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 	selector: 'app-pagina-solicitacoes-abertas',
 	imports: [
 		InputPesquisarComponent,
-		TabelaSolicitacoesAbertasComponent,
 		InputTextComponent,
 		ReactiveFormsModule,
 		ButtonComponent,
@@ -25,6 +25,7 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 		SecondaryButtonComponent,
 		DatePipe,
 		SidebarFuncionarioComponent,
+		TabelaComponent,
 	],
 	templateUrl: './pagina-solicitacoes-abertas.component.html',
 })
@@ -34,6 +35,21 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	formOrcamento!: FormGroup;
 	solicitacaoModal!: Solicitacao;
 	modal = false;
+
+	headersTabela: TableColumn[] = [
+		{
+			fieldName: 'dataSolicitacao',
+			headerName: 'Data / Hora',
+		},
+		{
+			fieldName: 'cliente',
+			headerName: 'Cliente',
+		},
+		{
+			fieldName: 'descricao',
+			headerName: 'Descrição',
+		},
+	];
 
 	constructor(
 		private solicitacaoService: SolicitacaoService,

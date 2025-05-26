@@ -4,14 +4,24 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 import { CategoriaService } from '../../../services/categoria.service';
 import { Categoria } from '../../../shared/models/categoria.model';
+import { TableColumn } from '../../../shared/tabela-interface';
+import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
+import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import {
-    SidebarFuncionarioComponent
-} from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
+import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-categorias',
-	imports: [CommonModule, ReactiveFormsModule, InputTextComponent, SidebarFuncionarioComponent],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		InputTextComponent,
+		SidebarFuncionarioComponent,
+		TabelaComponent,
+		InputPesquisarComponent,
+		ButtonComponent,
+	],
 	templateUrl: './pagina-categorias.component.html',
 })
 export class PaginaCategoriasComponent implements OnInit {
@@ -19,6 +29,13 @@ export class PaginaCategoriasComponent implements OnInit {
 	categoriaSelecionada?: Categoria;
 	modal = false;
 	formCategoria!: FormGroup;
+
+	headersTabela: TableColumn[] = [
+		{
+			fieldName: 'descricao',
+			headerName: 'Categoria',
+		},
+	];
 
 	constructor(
 		private categoriaService: CategoriaService,

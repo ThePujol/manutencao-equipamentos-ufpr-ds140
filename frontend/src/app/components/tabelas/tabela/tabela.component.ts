@@ -1,34 +1,36 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import {
-	matArrowDropDownOutline,
-	matChevronLeftOutline,
-	matDeleteOutline,
-	matEditOutline,
-} from '@ng-icons/material-icons/outline';
+import { matDeleteOutline, matEditOutline } from '@ng-icons/material-icons/outline';
 
 import { Pessoa } from '../../../shared/models/pessoa.model';
-import { Situacao } from '../../../shared/models/solicitacao.model';
+import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TableColumn } from '../../../shared/tabela-interface';
+import { DropdownComponent } from '../../ui/dropdown/dropdown.component';
 import { SituacaoTagComponent } from '../../ui/situacao-tag/situacao-tag.component';
 
 @Component({
 	selector: 'app-tabela',
-	imports: [DatePipe, NgIcon, SituacaoTagComponent],
-	viewProviders: [provideIcons({ matChevronLeftOutline, matArrowDropDownOutline, matDeleteOutline, matEditOutline })],
+	imports: [DatePipe, SituacaoTagComponent, DropdownComponent, NgIcon],
+	viewProviders: [provideIcons({ matDeleteOutline, matEditOutline })],
 	templateUrl: './tabela.component.html',
 })
 export class TabelaComponent {
 	@Input() columns!: TableColumn[];
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	@Input() gridData!: any[];
 	@Input() mostrarHora = false;
+	@Input() tabelaFuncionario = false;
+	@Input() tabelaSolicitacoesAbertas = false;
 
 	dropdown = false;
 
-	@Output() editarClick = new EventEmitter<unknown>();
-	@Output() excluirClick = new EventEmitter<unknown>();
+	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
+	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
+	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
+	@Output() orcamentoClicked = new EventEmitter<Solicitacao>();
+	@Output() editarClicked = new EventEmitter<any>();
+	@Output() excluirClicked = new EventEmitter<any>();
 
 	situacoes = {
 		aberta: Situacao.aberta,
@@ -46,13 +48,28 @@ export class TabelaComponent {
 		console.log(this.dropdown);
 	}
 
-	onEditarClick(item: unknown) {
-		console.log('Bunda');
-		this.editarClick.emit(item);
+	efetuarManutencao(solicitacao: Solicitacao) {
+		this.efetuarManutencaoClicked.emit(solicitacao);
 	}
 
-	onExcluirClick(item: unknown) {
-		this.excluirClick.emit(item);
+	redirecionarManutencao(solicitacao: Solicitacao) {
+		this.redirecionarManutencaoClicked.emit(solicitacao);
+	}
+
+	finalizarManutencao(solicitacao: Solicitacao) {
+		this.finalizarClicked.emit(solicitacao);
+	}
+
+	emitirOrcamento(solicitacao: Solicitacao) {
+		this.orcamentoClicked.emit(solicitacao);
+	}
+
+	editar(item: any) {
+		this.editarClicked.emit(item);
+	}
+
+	excluir(item: any) {
+		this.excluirClicked.emit(item);
 	}
 
 	checkIfDate(obj: unknown) {

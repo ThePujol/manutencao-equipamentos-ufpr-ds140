@@ -14,8 +14,8 @@
 	<tbody>
 		@for (item of gridData; track $index) {
 			<tr
-				class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center"
-				[class.rounded-b-md]="$index - 1 === gridData.length"
+				class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center hover:bg-gray-100 duration-75"
+				[class.rounded-b-md]="$index + 1 === gridData.length"
 			>
 				@for (columnName of columns; track $index) {
 					@if (checkIfDate(item[columnName.fieldName])) {
@@ -32,21 +32,40 @@
 					}
 				}
 
-				<td class="w-52 text-right flex items-center justify-end gap-3">
-					<button
-						class="py-1 rounded-md text-primary outline-primary outline p-2 flex justify-between gap-2 duration-150 cursor-pointer"
-						(click)="(excluirClick)"
-					>
-						<ng-icon name="matDeleteOutline" class="text-2xl" />
-					</button>
-
-					<button
-						class="py-1 rounded-md text-white bg-primary hover:bg-indigo-950 p-2 flex justify-between gap-2 duration-150 cursor-pointer"
-						(click)="(editarClick)"
-					>
-						<ng-icon name="matEditOutline" class="text-2xl" />
-					</button>
-				</td>
+				@if (tabelaFuncionario) {
+					<td>
+						<app-dropdown
+							[solicitacao]="item"
+							(efetuarManutencaoClicked)="efetuarManutencao(item)"
+							(finalizarClicked)="finalizarManutencao(item)"
+							(redirecionarManutencaoClicked)="redirecionarManutencao(item)"
+						/>
+					</td>
+				} @else if (tabelaSolicitacoesAbertas) {
+					<td>
+						<button
+							class="bg-primary text-white w-52 px-4 py-1 rounded-md hover:bg-indigo-900 hover:cursor-pointer"
+							(click)="emitirOrcamento(item)"
+						>
+							Fazer orçamento
+						</button>
+					</td>
+				} @else {
+					<td class="flex w-52 gap-3 justify-end">
+						<button
+							class="text-white bg-primary p-2 rounded-md flex justify-center items-center cursor-pointer hover:bg-indigo-950"
+							(click)="editar(item)"
+						>
+							<ng-icon name="matEditOutline" />
+						</button>
+						<button
+							class="text-red-500 outline outline-red-500 p-2 rounded-md flex justify-center items-center cursor-pointer"
+							(click)="excluir(item)"
+						>
+							<ng-icon name="matDeleteOutline" />
+						</button>
+					</td>
+				}
 			</tr>
 		}
 	</tbody>

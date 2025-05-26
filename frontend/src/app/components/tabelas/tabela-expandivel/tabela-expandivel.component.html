@@ -25,7 +25,7 @@
 			} @else {
 				<tr
 					class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center"
-					[class.rounded-b-md]="$index - 1 === gridData.length"
+					[class.rounded-b-md]="$index + 1 === gridData.length"
 				>
 					@for (columnName of columns; track $index) {
 						@if (checkIfDate(item[columnName.fieldName])) {

@@ -4,6 +4,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 import { FuncionarioService } from '../../../services/funcionario.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
+import { TableColumn } from '../../../shared/tabela-interface';
+import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
+import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
@@ -15,6 +19,9 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 		ReactiveFormsModule,
 		InputTextComponent,
 		SidebarFuncionarioComponent,
+		TabelaComponent,
+		InputPesquisarComponent,
+		ButtonComponent,
 	],
 	templateUrl: './pagina-funcionarios.component.html',
 })
@@ -23,6 +30,20 @@ export class PaginaFuncionariosComponent implements OnInit {
 	funcionarioSelecionado?: Funcionario;
 	modal = false;
 	formfuncionario!: FormGroup;
+	headersTabela: TableColumn[] = [
+		{
+			fieldName: 'nome',
+			headerName: 'Nome',
+		},
+		{
+			fieldName: 'email',
+			headerName: 'Email',
+		},
+		{
+			fieldName: 'dataNasc',
+			headerName: 'Data de nascimento',
+		},
+	];
 
 	constructor(
 		private funcionarioService: FuncionarioService,
