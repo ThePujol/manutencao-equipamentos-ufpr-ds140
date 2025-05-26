@@ -64,15 +64,16 @@ export const routes: Routes = [
 		component: PaginaNaoEncontradaComponent,
 		title: 'Página Não Encontrada',
 	},
-	{ 	path: 'relatorios/receitas', 
-		component: PaginaRelatorioReceitasComponent, 
-		title: 'Relatório de Receitas (por dia)' 
+	{
+		path: 'relatorios/receitas',
+		component: PaginaRelatorioReceitasComponent,
+		title: 'Relatório de Receitas (por dia)',
 	},
 	{
-    	path: 'relatorios/receitas-categoria',
-    	component: PaginaRelatorioReceitasCategoriaComponent,
-    	title: 'Relatório de Receitas por Categoria'
-    },
+		path: 'relatorios/receitas-categoria',
+		component: PaginaRelatorioReceitasCategoriaComponent,
+		title: 'Relatório de Receitas por Categoria',
+	},
 	{
 		path: '**',
 		redirectTo: '404',
