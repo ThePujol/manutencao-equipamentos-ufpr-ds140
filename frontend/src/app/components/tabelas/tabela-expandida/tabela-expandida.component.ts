@@ -1,5 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matChevronRightOutline } from '@ng-icons/material-icons/outline';
 
 import { Solicitacao } from '../../../shared/models/solicitacao.model';
 import { AbertaCardComponent } from '../../ui/aberta-card/aberta-card.component';
@@ -19,7 +21,9 @@ import { TableLabelComponent } from '../../ui/table-label/table-label.component'
 		AprovadaCardComponent,
 		RejeitadaCardComponent,
 		DatePipe,
+		NgIcon,
 	],
+	viewProviders: [provideIcons({ matChevronRightOutline })],
 	templateUrl: './tabela-expandida.component.html',
 })
 export class TabelaExpandidaComponent {

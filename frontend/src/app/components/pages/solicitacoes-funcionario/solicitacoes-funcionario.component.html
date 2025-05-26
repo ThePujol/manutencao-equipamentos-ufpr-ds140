@@ -9,7 +9,7 @@
 		</div>
 
 		<div class="flex justify-between w-full items-center">
-			<app-input-pesquisar />
+			<app-input-pesquisar placeholder="Pesquise uma solicitação..." />
 			<div>
 				<input
 					type="date"
@@ -21,23 +21,17 @@
 
 		<!-- Tabela -->
 		@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
-			<table class="flex flex-col">
-				<app-tabela-solicitacoes-funcionario [header]="true" />
-				<tbody>
-					@for (solicitacao of listaSolicitacoes; track $index) {
-						<app-tabela-solicitacoes-funcionario
-							[solicitacao]="solicitacao"
-							[ultima]="$index + 1 === listaSolicitacoes.length"
-							(efetuarManutencaoClicked)="toggleModalManutencao($event)"
-							(redirecionarManutencaoClicked)="toggleModalRedirecionar($event)"
-							(finalizarClicked)="finalizarSolicitacao($event)"
-						/>
-					}
-				</tbody>
-				<p class="mt-3 text-sm text-gray-900/70 font-light">
-					Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
-				</p>
-			</table>
+			<app-tabela
+				[columns]="headersTabela"
+				[gridData]="listaSolicitacoes"
+				[tabelaFuncionario]="true"
+				(efetuarManutencaoClicked)="toggleModalManutencao($event)"
+				(redirecionarManutencaoClicked)="toggleModalRedirecionar($event)"
+				(finalizarClicked)="finalizarSolicitacao($event)"
+			/>
+			<p class="mt-3 text-sm text-gray-900/70 font-light">
+				Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
+			</p>
 		} @else {
 			<p>Não há nenhuma solicitação atribuída a você.</p>
 		}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matSearchOutline } from '@ng-icons/material-icons/outline';
 
@@ -8,4 +8,6 @@ import { matSearchOutline } from '@ng-icons/material-icons/outline';
 	viewProviders: [provideIcons({ matSearchOutline })],
 	templateUrl: './input-pesquisar.component.html',
 })
-export class InputPesquisarComponent {}
+export class InputPesquisarComponent {
+	@Input() placeholder!: string;
+}

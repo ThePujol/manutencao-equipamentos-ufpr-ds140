@@ -8,9 +8,10 @@
 				<h2 class="opacity-50 font-light text-[18px]">Aqui encontram-se todas as solicitações que você realizou.</h2>
 			</div>
 
+			<!-- Filtros -->
 			<div class="flex justify-between w-full items-center">
 				<div>
-					<app-input-pesquisar />
+					<app-input-pesquisar placeholder="Pesquise uma solicitação..." />
 				</div>
 				<div>
 					<label
@@ -39,21 +40,11 @@
 
 			<!-- Tabela -->
 			@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
-				<table class="flex flex-col">
-					<app-tabela-solicitacoes [header]="true" />
-					<tbody>
-						@for (solicitacao of listaSolicitacoes; track $index) {
-							<app-tabela-solicitacoes
-								tipo="regular"
-								[solicitacao]="solicitacao"
-								[ultima]="$index + 1 === listaSolicitacoes.length"
-							/>
-						}
-					</tbody>
-					<p class="mt-3 text-sm text-gray-900/70 font-light">
-						Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
-					</p>
-				</table>
+				<app-tabela-expandivel
+					[columns]="headersTabela"
+					[gridData]="listaSolicitacoes"
+					(actionButtonClick)="expandirTabela($event)"
+				/>
 			} @else {
 				<p>Você ainda não fez nenhuma solicitação.</p>
 			}

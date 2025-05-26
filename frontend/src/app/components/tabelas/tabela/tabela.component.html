@@ -1,0 +1,72 @@
+<table class="w-full">
+	<thead>
+		<th
+			class="flex justify-between w-full border-1 border-gray-900/15 text-gray-900/50 px-4 py-2.5 rounded-t-md items-center text-left font-medium"
+		>
+			@for (column of columns; track $index) {
+				<td class="w-52">{{ column.headerName }}</td>
+			}
+			<!-- Por algum motivo, se eu usar <td></td> aqui o bagulho simplesmente quebra -->
+			<p class="w-52 text-right">Ações</p>
+		</th>
+	</thead>
+
+	<tbody>
+		@for (item of gridData; track $index) {
+			<tr
+				class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center hover:bg-gray-100 duration-75"
+				[class.rounded-b-md]="$index + 1 === gridData.length"
+			>
+				@for (columnName of columns; track $index) {
+					@if (checkIfDate(item[columnName.fieldName])) {
+						<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy' }}</td>
+					} @else if (columnName.fieldName === 'cliente') {
+						<!-- Temp fix: por algum motivo, a função checkIfCliente não consegue identificar o tipo do objeto como cliente. Resolver depois. -->
+						<td class="w-52">{{ item[columnName.fieldName].nome }}</td>
+					} @else if (columnName.fieldName === 'situacao') {
+						<td class="w-52">
+							<app-situacao-tag [situacao]="item[columnName.fieldName]" />
+						</td>
+					} @else {
+						<td class="w-52">{{ item[columnName.fieldName] }}</td>
+					}
+				}
+
+				@if (tabelaFuncionario) {
+					<td>
+						<app-dropdown
+							[solicitacao]="item"
+							(efetuarManutencaoClicked)="efetuarManutencao(item)"
+							(finalizarClicked)="finalizarManutencao(item)"
+							(redirecionarManutencaoClicked)="redirecionarManutencao(item)"
+						/>
+					</td>
+				} @else if (tabelaSolicitacoesAbertas) {
+					<td>
+						<button
+							class="bg-primary text-white w-52 px-4 py-1 rounded-md hover:bg-indigo-900 hover:cursor-pointer"
+							(click)="emitirOrcamento(item)"
+						>
+							Fazer orçamento
+						</button>
+					</td>
+				} @else {
+					<td class="flex w-52 gap-3 justify-end">
+						<button
+							class="text-white bg-primary p-2 rounded-md flex justify-center items-center cursor-pointer hover:bg-indigo-950"
+							(click)="editar(item)"
+						>
+							<ng-icon name="matEditOutline" />
+						</button>
+						<button
+							class="text-red-500 outline outline-red-500 p-2 rounded-md flex justify-center items-center cursor-pointer"
+							(click)="excluir(item)"
+						>
+							<ng-icon name="matDeleteOutline" />
+						</button>
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>

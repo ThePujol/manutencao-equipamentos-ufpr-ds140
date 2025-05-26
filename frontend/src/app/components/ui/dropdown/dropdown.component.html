@@ -1,0 +1,41 @@
+<td class="w-56 text-right h-4 flex items-center justify-end text-gray-950/50 hover:text-primary duration-150">
+	<button
+		class="pl-5 pr-3 py-1 rounded-md outline text-primary outline-primary-950/20 flex justify-between gap-2 duration-150 cursor-pointer"
+		(click)="toggleDropdown()"
+	>
+		<p>Ações</p>
+		<ng-icon name="matArrowDropDownOutline" class="text-2xl" />
+	</button>
+
+	@if (dropdown) {
+		<div class="bg-white outline outline-gray-950/20 absolute mt-38 text-black rounded-md py-2 text-left">
+			<ul class="w-full">
+				<li class="hover:bg-gray-950/10 px-5 py-1">
+					<button
+						class="cursor-pointer disabled:cursor-not-allowed"
+						(click)="efetuarManutencao(solicitacao)"
+						[disabled]="solicitacao.situacao !== situacoes.aprovada"
+					>
+						Efetuar manutenção
+					</button>
+				</li>
+
+				<li class="hover:bg-gray-950/10 px-5 py-1">
+					<button class="cursor-pointer disabled:cursor-not-allowed" (click)="redirecionarManutencao(solicitacao)">
+						Redirecionar solicitação
+					</button>
+				</li>
+
+				<li class="hover:bg-gray-950/10 px-5 py-1">
+					<button
+						class="cursor-pointer disabled:cursor-not-allowed"
+						[disabled]="solicitacao.situacao !== situacoes.paga"
+						(click)="finalizarManutencao(solicitacao)"
+					>
+						Finalizar solicitação
+					</button>
+				</li>
+			</ul>
+		</div>
+	}
+</td>

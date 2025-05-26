@@ -1,57 +1,35 @@
-<div class="flex">
+<main class="flex gap-10 h-full">
 	<app-sidebar-funcionario></app-sidebar-funcionario>
 
-	<div class="flex-1 p-10 bg-gray-50 min-h-screen">
-		<div class="max-w-6xl mx-auto bg-white rounded-2xl shadow p-8">
-			<div class="flex justify-between items-center mb-6">
-				<h1 class="text-2xl font-semibold text-gray-800">Funcionarios</h1>
-				<button
-					type="button"
-					class="bg-purple-700 text-white px-4 py-2 rounded-xl hover:bg-purple-800"
-					(click)="abrirModal()"
-				>
-					Novo
-				</button>
-			</div>
+	<section class="flex flex-col py-10 gap-[30px] pr-10 w-full overflow-y-auto">
+		<div>
+			<h1 class="text-[40px] font-semibold text-[#4931A9]">Funcionários</h1>
+			<h2 class="opacity-50 font-light text-[18px]">
+				Aqui, você pode criar, editar ou remover funcionários do repair.io.
+			</h2>
+		</div>
 
-			<div class="overflow-x-auto">
-				<table class="w-full border-separate border-spacing-y-3">
-					<thead>
-						<tr class="text-left text-sm text-gray-600">
-							<th class="px-4 py-2">Nome</th>
-							<th class="px-4 py-2">Email</th>
-							<th class="px-4 py-2">Data de Nascimento</th>
-							<th class="px-4 py-2 text-center">Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let funcionario of funcionarios" class="bg-gray-50 hover:bg-gray-100 rounded-lg shadow-sm">
-							<td class="px-4 py-3 rounded-l-lg">{{ funcionario.nome }}</td>
-							<td class="px-4 py-3 rounded-l-lg">{{ funcionario.email }}</td>
-							<td class="px-4 py-3 rounded-l-lg">{{ funcionario.dataNasc }}</td>
-							<td class="px-4 py-3 text-center rounded-r-lg space-x-2">
-								<button
-									type="button"
-									(click)="abrirModal(funcionario)"
-									class="inline-flex items-center gap-1 bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded shadow"
-								>
-									Editar
-								</button>
-								<button
-									[disabled]="funcionarios.length === 1"
-									type="button"
-									(click)="removerfuncionario(funcionario.id)"
-									class="inline-flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded shadow disabled:bg-gray-400 disabled:cursor-not-allowed"
-								>
-									Excluir
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+		<div class="flex justify-between w-full items-center">
+			<app-input-pesquisar placeholder="Pesquise um funcionário..." />
+			<div class="flex gap-5">
+				<input
+					type="date"
+					value="22-01-2023"
+					class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
+				/>
+				<app-button text="Novo funcionário" (funcao)="abrirModal()" />
 			</div>
 		</div>
-	</div>
+		<app-tabela
+			[columns]="headersTabela"
+			[gridData]="funcionarios"
+			(editarClicked)="abrirModal($event)"
+			(excluirClicked)="removerfuncionario($event.id)"
+		/>
+		<p class="mt-3 text-sm text-gray-900/70 font-light">
+			Exibindo 1-{{ funcionarios.length }} itens de {{ funcionarios.length }} itens.
+		</p>
+	</section>
 
 	<div *ngIf="modal" class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
 		<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
@@ -124,4 +102,4 @@
 			</form>
 		</div>
 	</div>
-</div>
+</main>

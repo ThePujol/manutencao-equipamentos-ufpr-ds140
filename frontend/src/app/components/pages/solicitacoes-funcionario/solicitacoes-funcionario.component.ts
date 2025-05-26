@@ -14,7 +14,8 @@ import { LoggedUserService } from '../../../services/logged-user.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
-import { TabelaSolicitacoesFuncionarioComponent } from '../../tabelas/tabela-solicitacoes-funcionario/tabela-solicitacoes-funcionario.component';
+import { TableColumn } from '../../../shared/tabela-interface';
+import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
 import { ButtonComponent } from '../../ui/buttons/button/button.component';
 import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
 import { InformacaoDetalheComponent } from '../../ui/informacao-detalhe/informacao-detalhe.component';
@@ -26,7 +27,6 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 	selector: 'app-solicitacoes-funcionario',
 	imports: [
 		InputPesquisarComponent,
-		TabelaSolicitacoesFuncionarioComponent,
 		SidebarFuncionarioComponent,
 		ReactiveFormsModule,
 		InformacaoDetalheComponent,
@@ -34,6 +34,7 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 		ButtonComponent,
 		SecondaryButtonComponent,
 		DatePipe,
+		TabelaComponent,
 	],
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
@@ -45,6 +46,25 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	solicitacaoModal!: Solicitacao;
 	modalEfetuarManutencao = false;
 	modalRedirecionarManutencao = false;
+
+	headersTabela: TableColumn[] = [
+		{
+			fieldName: 'dataSolicitacao',
+			headerName: 'Data / Hora',
+		},
+		{
+			fieldName: 'cliente',
+			headerName: 'Cliente',
+		},
+		{
+			fieldName: 'descricao',
+			headerName: 'Descrição',
+		},
+		{
+			fieldName: 'situacao',
+			headerName: 'Situação Atual',
+		},
+	];
 
 	constructor(
 		private solicitacaoService: SolicitacaoService,

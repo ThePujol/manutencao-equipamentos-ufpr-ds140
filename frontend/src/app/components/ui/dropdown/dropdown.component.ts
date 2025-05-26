@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowDropDownOutline } from '@ng-icons/material-icons/outline';
@@ -6,18 +5,13 @@ import { matArrowDropDownOutline } from '@ng-icons/material-icons/outline';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 
 @Component({
-	selector: 'app-tabela-solicitacoes-funcionario',
-	imports: [DatePipe, NgIcon],
+	selector: 'app-dropdown',
+	imports: [NgIcon],
 	viewProviders: [provideIcons({ matArrowDropDownOutline })],
-	templateUrl: './tabela-solicitacoes-funcionario.component.html',
+	templateUrl: './dropdown.component.html',
 })
-export class TabelaSolicitacoesFuncionarioComponent {
-	@Input() header = false;
-	@Input() ultima = false;
+export class DropdownComponent {
 	@Input() solicitacao!: Solicitacao;
-	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
-	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
-	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
 	situacoes = {
 		aberta: Situacao.aberta,
 		orcada: Situacao.orcada,
@@ -28,6 +22,10 @@ export class TabelaSolicitacoesFuncionarioComponent {
 		paga: Situacao.paga,
 		finalizada: Situacao.finalizada,
 	};
+
+	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
+	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
+	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
 	dropdown = false;
 
 	efetuarManutencao(solicitacao: Solicitacao) {
