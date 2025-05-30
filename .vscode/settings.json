@@ -24,5 +24,7 @@
             "username": "root",
             "password": "admin"
         }
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
