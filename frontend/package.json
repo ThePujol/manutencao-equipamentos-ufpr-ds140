@@ -24,6 +24,8 @@
     "@ng-icons/core": "^31.3.0",
     "@ng-icons/material-icons": "^31.3.0",
     "@tailwindcss/postcss": "^4.0.15",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "ngx-mask": "^19.0.6",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",

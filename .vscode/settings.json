@@ -25,6 +25,11 @@
             "password": "admin"
         }
     ],
+<<<<<<< HEAD
     "java.compile.nullAnalysis.mode": "automatic",
     "java.configuration.updateBuildConfiguration": "interactive"
 }
+=======
+    "java.compile.nullAnalysis.mode": "automatic"
+}
+>>>>>>> 3daaca5b5dad9e3f2f7d6d18eacd1065270c509a
