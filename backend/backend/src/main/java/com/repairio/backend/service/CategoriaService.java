@@ -1,37 +1,45 @@
-package com.repairio.backend.service;
+package com.backend.repairio.service;
 
-import com.repairio.backend.dao.CategoriaDao;
-import com.repairio.backend.model.Categoria;
 import org.springframework.stereotype.Service;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import com.backend.repairio.dao.CategoriaDAO;
+import com.backend.repairio.model.Categoria;
 
 @Service
 public class CategoriaService {
+    @Autowired
+    private CategoriaDAO categoriaDAO;
 
-    private final CategoriaDao categoriaDao;
-
-    public CategoriaService(CategoriaDao categoriaDao) {
-        this.categoriaDao = categoriaDao;
+    public Categoria salvar(Categoria categoria) {
+        return categoriaDAO.salvar(categoria);
     }
 
-    public List<Categoria> findAll() {
-        return categoriaDao.findAll();
+    public List<Categoria> listar() {
+        return categoriaDAO.listarTodos();
     }
 
-    public Categoria findById(Long id) {
-        return categoriaDao.findById(id);
+    public void excluir(Long id) {
+        categoriaDAO.excluir(id);
     }
 
-    public void save(Categoria categoria) {
-        categoriaDao.save(categoria);
+    public Categoria buscarPorId(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarPorId'");
     }
 
-    public void update(Categoria categoria) {
-        categoriaDao.update(categoria);
+    public Categoria criar(Categoria categoria) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'criar'");
     }
 
-    public void delete(Long id) {
-        categoriaDao.delete(id);
+    public Categoria atualizar(Long id, Categoria categoria) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+    }
+
+    public void deletar(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
     }
 }
