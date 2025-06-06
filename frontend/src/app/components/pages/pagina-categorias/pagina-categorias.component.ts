@@ -1,5 +1,5 @@
 import { InputTextComponent } from './../../ui/input-text/input-text.component';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from '../../../services/categoria.service';
 import { Categoria } from '../../../shared/models/categoria.model';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 	imports: [CommonModule, SidebarClienteComponent, ReactiveFormsModule, InputTextComponent],
 	templateUrl: './pagina-categorias.component.html',
 })
-export class PaginaCategoriasComponent {
+export class PaginaCategoriasComponent implements OnInit {
 	categorias: Categoria[] = [];
 	categoriaSelecionada?: Categoria;
 	modal = false;
@@ -27,7 +27,7 @@ export class PaginaCategoriasComponent {
 	}
 
 	ngOnInit(): void {
-		this.categorias = this.listarCategorias();
+		this.listarCategorias();
 	}
 
 	abrirModal(categoria?: Categoria) {
@@ -46,8 +46,9 @@ export class PaginaCategoriasComponent {
 	}
 
 	removerCategoria(id: number) {
-		this.categoriaService.removerCategoria(id);
-		this.categorias = this.categoriaService.listarTodasCategorias();
+		this.categoriaService.removerCategoria(id).subscribe(() => {
+			this.listarCategorias();
+		});
 	}
 
 	salvarOuEditarCategoria() {
@@ -60,16 +61,21 @@ export class PaginaCategoriasComponent {
 
 		if (this.categoriaSelecionada) {
 			const categoriaEditada = { ...this.categoriaSelecionada, ...dados };
-			this.categoriaService.atualizarCategoria(categoriaEditada);
+			this.categoriaService.atualizarCategoria(categoriaEditada).subscribe(() => {
+				this.listarCategorias();
+				this.fecharModal();
+			});
 		} else {
-			this.categoriaService.addCategoria(dados);
+			this.categoriaService.addCategoria(dados).subscribe(() => {
+				this.listarCategorias();
+				this.fecharModal();
+			});
 		}
-
-		this.categorias = this.categoriaService.listarTodasCategorias();
-		this.fecharModal();
 	}
 
-	listarCategorias(): Categoria[] {
-		return this.categoriaService.listarTodasCategorias();
+	listarCategorias() {
+		this.categoriaService.listarTodasCategorias().subscribe((categorias) => {
+			this.categorias = categorias;
+		});
 	}
 }

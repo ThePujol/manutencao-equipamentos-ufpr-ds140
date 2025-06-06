@@ -1,58 +1,33 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Categoria } from '../shared/models/categoria.model';
 
-const LS_CHAVE = 'categorias';
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root',
 })
 export class CategoriaService {
+	private apiUrl = 'http://localhost:8080/api/categorias';
 
-  constructor() {
-    //Construtor vazio
-  }
+	constructor(private http: HttpClient) {}
 
-  listarTodasCategorias(): Categoria[] {
-    const categorias = localStorage[LS_CHAVE];
-    return categorias ? JSON.parse(categorias) : [];
-  }
+	listarTodasCategorias(): Observable<Categoria[]> {
+		return this.http.get<Categoria[]>(this.apiUrl);
+	}
 
-  addCategoria(categoria: Categoria): void {
-    const categorias = this.listarTodasCategorias();
-    categoria.id = new Date().getTime();
-    categorias.push(categoria);
-    localStorage[LS_CHAVE] = JSON.stringify(categorias);
-  }
+	addCategoria(categoria: Categoria): Observable<Categoria> {
+		return this.http.post<Categoria>(this.apiUrl, categoria);
+	}
 
-  categoriaPorId(id: number): Categoria {
-    const categorias = this.listarTodasCategorias();
+	categoriaPorId(id: number): Observable<Categoria> {
+		return this.http.get<Categoria>(`${this.apiUrl}/${id}`);
+	}
 
-    const categoria = categorias.find(categoria => categoria.id === id);
-    if (!categoria) {
-      throw new Error(`Categoria com id ${id} não encontrada`);
-    }
-    return categoria;
-  }
+	atualizarCategoria(categoria: Categoria): Observable<Categoria> {
+		return this.http.put<Categoria>(`${this.apiUrl}/${categoria.id}`, categoria);
+	}
 
-  atualizarCategoria(categoria: Categoria): void {
-    const categorias: Categoria[] = this.listarTodasCategorias();
-
-    categorias.forEach((obj, index, objs) => {
-      if (categoria.id === obj.id) {
-        objs[index] = categoria
-      }
-    });
-    localStorage[LS_CHAVE] = JSON.stringify(categorias);
-  }
-
-  removerCategoria(id: number): void {
-    let categorias = this.listarTodasCategorias();
-
-    categorias = categorias.filter(categoria => categoria.id !== id);
-
-    localStorage[LS_CHAVE] = JSON.stringify(categorias);
-
-
-  }
-
+	removerCategoria(id: number): Observable<void> {
+		return this.http.delete<void>(`${this.apiUrl}/${id}`);
+	}
 }
