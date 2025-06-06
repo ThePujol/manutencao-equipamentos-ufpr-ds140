@@ -1,60 +1,33 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Funcionario } from '../shared/models/funcionario.model';
 
-const LS_CHAVE = 'funcionarios';
-
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root',
 })
 export class FuncionarioService {
+	private apiUrl = 'http://localhost:8080/api/funcionarios';
 
-  constructor() {
-    //Construtor vazio
-   }
+	constructor(private http: HttpClient) {}
 
-  listarTodosFuncionarios(): Funcionario[] {
-    const funcionarios = localStorage['funcionarios'];
-    return funcionarios ? JSON.parse(funcionarios) : [];
-  }
+	listarTodosFuncionarios(): Observable<Funcionario[]> {
+		return this.http.get<Funcionario[]>(this.apiUrl);
+	}
 
-  addFuncionario(funcionario: Funcionario): void {
-    const funcionarios = this.listarTodosFuncionarios();
+	addFuncionario(funcionario: Funcionario): Observable<Funcionario> {
+		return this.http.post<Funcionario>(this.apiUrl, funcionario);
+	}
 
-    funcionario.id = new Date().getTime();
-    funcionarios.push(funcionario);
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
-  }
+	funcionarioPorId(id: number): Observable<Funcionario> {
+		return this.http.get<Funcionario>(`${this.apiUrl}/${id}`);
+	}
 
-  funcionarioPorId(id: number): Funcionario {
-    const funcionarios = this.listarTodosFuncionarios();
+	atualizarFuncionario(funcionario: Funcionario): Observable<Funcionario> {
+		return this.http.put<Funcionario>(`${this.apiUrl}/${funcionario.id}`, funcionario);
+	}
 
-    const funcionario = funcionarios.find(funcionario => funcionario.id === id);
-    if (!funcionario) {
-      throw new Error(`Funcionario com id ${id} não encontrado.`);
-    }
-    return funcionario;
-  }
-
-  atualizarFuncionario(funcionario: Funcionario): void {
-    const funcionarios = this.listarTodosFuncionarios();
-
-    funcionarios.forEach((obj, index, objs) => {
-      if (funcionario.id === obj.id) {
-        objs[index] = funcionario
-      }
-    });
-
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
-  }
-
-  removerFuncionario(id: number): void {
-    let funcionarios = this.listarTodosFuncionarios();
-
-    funcionarios = funcionarios.filter(funcionario => funcionario.id !== id);
-
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
-  }
-
+	removerFuncionario(id: number): Observable<void> {
+		return this.http.delete<void>(`${this.apiUrl}/${id}`);
+	}
 }
-

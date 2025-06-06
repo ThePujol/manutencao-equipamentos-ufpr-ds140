@@ -4,7 +4,6 @@ import com.repairio.backend.dao.PessoaDao;
 import com.repairio.backend.model.Pessoa;
 import com.repairio.backend.util.PasswordUtil;
 import org.springframework.stereotype.Service;
-import com.repairio.backend.util.PasswordUtil;
 
 import java.util.List;
 
