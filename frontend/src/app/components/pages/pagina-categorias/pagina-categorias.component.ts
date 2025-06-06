@@ -47,7 +47,7 @@ export class PaginaCategoriasComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.categorias = this.listarCategorias();
+		this.listarCategorias();
 	}
 
 	abrirModal(categoria?: Categoria) {
@@ -66,8 +66,9 @@ export class PaginaCategoriasComponent implements OnInit {
 	}
 
 	removerCategoria(id: number) {
-		this.categoriaService.removerCategoria(id);
-		this.categorias = this.categoriaService.listarTodasCategorias();
+		this.categoriaService.removerCategoria(id).subscribe(() => {
+			this.listarCategorias();
+		});
 	}
 
 	salvarOuEditarCategoria() {
@@ -80,16 +81,21 @@ export class PaginaCategoriasComponent implements OnInit {
 
 		if (this.categoriaSelecionada) {
 			const categoriaEditada = { ...this.categoriaSelecionada, ...dados };
-			this.categoriaService.atualizarCategoria(categoriaEditada);
+			this.categoriaService.atualizarCategoria(categoriaEditada).subscribe(() => {
+				this.listarCategorias();
+				this.fecharModal();
+			});
 		} else {
-			this.categoriaService.addCategoria(dados);
+			this.categoriaService.addCategoria(dados).subscribe(() => {
+				this.listarCategorias();
+				this.fecharModal();
+			});
 		}
-
-		this.categorias = this.categoriaService.listarTodasCategorias();
-		this.fecharModal();
 	}
 
-	listarCategorias(): Categoria[] {
-		return this.categoriaService.listarTodasCategorias();
+	listarCategorias() {
+		this.categoriaService.listarTodasCategorias().subscribe((categorias) => {
+			this.categorias = categorias;
+		});
 	}
 }

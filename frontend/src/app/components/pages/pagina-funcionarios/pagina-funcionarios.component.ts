@@ -58,7 +58,7 @@ export class PaginaFuncionariosComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.funcionarios = this.listarfuncionarios();
+		this.listarfuncionarios();
 	}
 
 	abrirModal(funcionario?: Funcionario) {
@@ -77,8 +77,9 @@ export class PaginaFuncionariosComponent implements OnInit {
 	}
 
 	removerfuncionario(id: number) {
-		this.funcionarioService.removerFuncionario(id);
-		this.funcionarios = this.funcionarioService.listarTodosFuncionarios();
+		this.funcionarioService.removerFuncionario(id).subscribe(() => {
+			this.listarfuncionarios();
+		});
 	}
 
 	salvarOuEditarfuncionario() {
@@ -91,16 +92,21 @@ export class PaginaFuncionariosComponent implements OnInit {
 
 		if (this.funcionarioSelecionado) {
 			const funcionarioEditado = { ...this.funcionarioSelecionado, ...dados };
-			this.funcionarioService.atualizarFuncionario(funcionarioEditado);
+			this.funcionarioService.atualizarFuncionario(funcionarioEditado).subscribe(() => {
+				this.listarfuncionarios();
+				this.fecharModal();
+			});
 		} else {
-			this.funcionarioService.addFuncionario(dados);
+			this.funcionarioService.addFuncionario(dados).subscribe(() => {
+				this.listarfuncionarios();
+				this.fecharModal();
+			});
 		}
-
-		this.funcionarios = this.funcionarioService.listarTodosFuncionarios();
-		this.fecharModal();
 	}
 
-	listarfuncionarios(): Funcionario[] {
-		return this.funcionarioService.listarTodosFuncionarios();
+	listarfuncionarios() {
+		this.funcionarioService.listarTodosFuncionarios().subscribe((funcionarios) => {
+			this.funcionarios = funcionarios;
+		});
 	}
 }
