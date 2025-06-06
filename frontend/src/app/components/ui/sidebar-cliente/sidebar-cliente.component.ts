@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLogOutOutline } from '@ng-icons/material-icons/outline';
@@ -19,7 +19,7 @@ export class SidebarClienteComponent implements OnInit {
 	loggedUser!: Pessoa | Funcionario;
 	primeiroNome!: string;
 
-	constructor(private loggedUserService: LoggedUserService) {}
+	constructor(@Inject(LoggedUserService) private loggedUserService: LoggedUserService) {}
 
 	deslogar() {
 		this.loggedUserService.clearLoggedUser();

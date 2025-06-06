@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 import { PessoaService } from '../../../services/pessoa.service';

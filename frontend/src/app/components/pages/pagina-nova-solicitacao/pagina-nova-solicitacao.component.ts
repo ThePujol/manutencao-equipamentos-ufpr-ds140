@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -19,7 +21,6 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 	selector: '´app-pagina-nova-solicitacao',
 	templateUrl: './pagina-nova-solicitacao.component.html',
 	imports: [
-		SidebarClienteComponent,
 		RouterOutlet,
 		CommonModule,
 		ReactiveFormsModule,
@@ -27,13 +28,14 @@ import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-client
 		RouterLink,
 		ButtonComponent,
 		NgIcon,
+		SidebarClienteComponent,
 	],
 	viewProviders: [provideIcons({ matAddCircleOutlineOutline, matInfoOutline })],
 })
 export class PaginaNovaSolicitacaoComponent implements OnInit {
 	title = 'Nova Solicitação';
 	novaSolicitacaoForm!: FormGroup;
-	listaCategorias: Categoria[] = [];
+	listaCategorias!: Observable<Categoria[]>;
 	loggedUser!: Pessoa;
 
 	constructor(

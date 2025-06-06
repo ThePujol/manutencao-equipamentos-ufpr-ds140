@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -40,7 +42,7 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 })
 export class SolicitacoesFuncionarioComponent implements OnInit {
 	listaSolicitacoes!: Solicitacao[];
-	listaFuncionarios!: Funcionario[];
+	listaFuncionarios!: Observable<Funcionario[]>;
 	formManutencao: FormGroup;
 	formRedirecionar: FormGroup;
 	solicitacaoModal!: Solicitacao;

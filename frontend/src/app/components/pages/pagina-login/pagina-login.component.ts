@@ -3,16 +3,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
-import { FuncionarioService } from '../../../services/funcionario.service';
-import { LoggedUserService } from '../../../services/logged-user.service';
-import { PessoaService } from '../../../services/pessoa.service';
+import { AuthService, LoginRequest } from '../../../services/auth.service';
 import { ButtonComponent } from '../../ui/buttons/button/button.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 
 @Component({
 	selector: 'app-pagina-login',
 	standalone: true,
-	imports: [RouterOutlet, RouterLink, ReactiveFormsModule, CommonModule, InputTextComponent, ButtonComponent],
+	imports: [RouterLink, ReactiveFormsModule, CommonModule, InputTextComponent, ButtonComponent, RouterOutlet],
 	templateUrl: './pagina-login.component.html',
 })
 export class PaginaLoginComponent {
@@ -21,41 +19,41 @@ export class PaginaLoginComponent {
 
 	constructor(
 		private fb: FormBuilder,
-		private loggedUserService: LoggedUserService,
-		private router: Router,
-		private pessoaService: PessoaService,
-		private funcionarioService: FuncionarioService
+		private authService: AuthService, // Injete o novo serviço de autenticação
+		private router: Router
 	) {
 		this.loginForm = this.fb.group({
 			email: ['', [Validators.required, Validators.email]],
-			password: ['', Validators.required],
+			// O nome do campo no formulário deve bater com o da interface: 'senha'
+			senha: ['', Validators.required],
 		});
 	}
 
 	onSubmit() {
-		const email = this.loginForm.value.email;
-		const listaClientes = this.pessoaService.listarTodosPessoas();
-		const listaFuncionarios = this.funcionarioService.listarTodosFuncionarios();
-		const pessoa = listaClientes.find((pessoa) => pessoa.email === email);
-		const funcionario = listaFuncionarios.find((funcionario) => funcionario.email === email);
-		if (
-			(!pessoa || pessoa.senha != this.loginForm.value.password) &&
-			(!funcionario || funcionario.senha != this.loginForm.value.password)
-		) {
-			this.invalidCredentials = true;
-		} else {
-			this.invalidCredentials = false;
+		if (this.loginForm.invalid) {
+			return;
 		}
 
-		if (this.loginForm.valid && !this.invalidCredentials) {
-			this.invalidCredentials = false;
-			if (pessoa) {
-				this.loggedUserService.setLoggedUser(pessoa.id);
-				this.router.navigate(['/solicitacoes']);
-			} else if (funcionario) {
-				this.loggedUserService.setLoggedUser(funcionario.id);
-				this.router.navigate(['/solicitacoes-abertas']);
-			}
-		}
+		this.invalidCredentials = false;
+		const credentials: LoginRequest = this.loginForm.value;
+
+		this.authService.login(credentials).subscribe({
+			next: (response) => {
+				console.log('Login bem-sucedido!', response);
+
+				localStorage.setItem('authToken', response.token);
+				localStorage.setItem('userData', JSON.stringify(response));
+
+				if (response.role === 'pessoa') {
+					this.router.navigate(['/solicitacoes']);
+				} else if (response.role === 'funcionario') {
+					this.router.navigate(['/solicitacoes-abertas']);
+				}
+			},
+			error: (err) => {
+				console.error('Falha no login', err);
+				this.invalidCredentials = true;
+			},
+		});
 	}
 }

@@ -45,7 +45,7 @@
 								required
 								formControlName="categoria"
 							>
-								@for (categoria of listaCategorias; track categoria.id) {
+								@for (categoria of listaCategorias | async; track categoria.id) {
 									<option [value]="categoria.id">{{ categoria.descricao }}</option>
 								}
 							</select>
