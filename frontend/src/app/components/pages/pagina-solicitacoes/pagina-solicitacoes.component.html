@@ -1,60 +1,54 @@
-@if (loggedUser.cpf) {
-	<main class="flex gap-10 h-full">
-		<app-sidebar-cliente nome="Guilherme" />
+<main class="flex gap-10 h-full">
+	<app-sidebar-cliente nome="Guilherme" />
 
-		<section class="flex flex-col py-10 gap-[30px] pr-10 w-full overflow-y-auto">
+	<section class="flex flex-col py-10 gap-[30px] pr-10 w-full overflow-y-auto">
+		<div>
+			<h1 class="text-[40px] font-semibold text-[#4931A9]">Suas solicitações</h1>
+			<h2 class="opacity-50 font-light text-[18px]">Aqui encontram-se todas as solicitações que você realizou.</h2>
+		</div>
+
+		<!-- Filtros -->
+		<div class="flex justify-between w-full items-center">
 			<div>
-				<h1 class="text-[40px] font-semibold text-[#4931A9]">Suas solicitações</h1>
-				<h2 class="opacity-50 font-light text-[18px]">Aqui encontram-se todas as solicitações que você realizou.</h2>
+				<app-input-pesquisar placeholder="Pesquise uma solicitação..." />
 			</div>
-
-			<!-- Filtros -->
-			<div class="flex justify-between w-full items-center">
-				<div>
-					<app-input-pesquisar placeholder="Pesquise uma solicitação..." />
-				</div>
-				<div>
-					<label
-						for="estado"
-						class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30"
-						>Estado</label
-					>
-					<select
-						name="estado"
-						id="estado"
-						class="focus:outline-primary focus:outline-2 outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
-					>
-						<option value="todos">Todos</option>
-						<option value="orcada">Orçada</option>
-						<option value="aprovada">Aprovada</option>
-						<option value="rejeitada">Rejeitada</option>
-						<option value="arrumada">Arrumada</option>
-					</select>
-					<input
-						type="date"
-						value="22-01-2023"
-						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
-					/>
-				</div>
-			</div>
-
-			<!-- Tabela -->
-			@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
-				<app-tabela-expandivel
-					[columns]="headersTabela"
-					[gridData]="listaSolicitacoes"
-					(actionButtonClick)="expandirTabela($event)"
+			<div>
+				<label
+					for="estado"
+					class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30"
+					>Estado</label
+				>
+				<select
+					name="estado"
+					id="estado"
+					class="focus:outline-primary focus:outline-2 outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
+				>
+					<option value="todos">Todos</option>
+					<option value="orcada">Orçada</option>
+					<option value="aprovada">Aprovada</option>
+					<option value="rejeitada">Rejeitada</option>
+					<option value="arrumada">Arrumada</option>
+				</select>
+				<input
+					type="date"
+					value="22-01-2023"
+					class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
 				/>
-			} @else {
-				<p>Você ainda não fez nenhuma solicitação.</p>
-			}
-		</section>
-		<app-mensagem [mensagem]="mensagem" [showMessage]="showMessage" />
-	</main>
+			</div>
+		</div>
 
-	<router-outlet></router-outlet>
-} @else {
-	<div class="w-full h-full flex justify-center items-center">
-		<p class="text-3xl font-bold text-primary">Você não tem acesso a esta pagina.</p>
-	</div>
-}
+		<!-- Tabela -->
+		@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
+			<app-tabela-expandivel
+				[columns]="headersTabela"
+				[gridData]="listaSolicitacoes"
+				(actionButtonClick)="expandirTabela($event)"
+			/>
+		} @else {
+			<p>Você ainda não fez nenhuma solicitação.</p>
+		}
+	</section>
+	<app-mensagem [mensagem]="mensagem" [showMessage]="showMessage" />
+</main>
+
+<router-outlet></router-outlet>

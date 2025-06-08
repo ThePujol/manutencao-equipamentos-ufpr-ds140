@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Pessoa } from '../shared/models/pessoa.model';
@@ -8,18 +9,25 @@ const LS_CHAVE = 'pessoas';
 	providedIn: 'root',
 })
 export class PessoaService {
+	apiUrl = 'http://localhost:8080/api/pessoas';
+
+	constructor(private http: HttpClient) {}
+
 	listarTodosPessoas(): Pessoa[] {
 		const pessoas = localStorage['pessoas'];
 		return pessoas ? JSON.parse(pessoas) : [];
 	}
 
 	addPessoa(pessoa: Pessoa): void {
-		const pessoas = this.listarTodosPessoas();
+		// const pessoas = this.listarTodosPessoas();
+		// pessoa.id = new Date().getTime();
+		// pessoa.senha = JSON.stringify(Math.floor(1000 + Math.random() * 9000));
+		// pessoas.push(pessoa);
+		// localStorage[LS_CHAVE] = JSON.stringify(pessoas);
 
-		pessoa.id = new Date().getTime();
-		pessoa.senha = JSON.stringify(Math.floor(1000 + Math.random() * 9000));
-		pessoas.push(pessoa);
-		localStorage[LS_CHAVE] = JSON.stringify(pessoas);
+		this.http.post<Pessoa>(this.apiUrl, pessoa).subscribe((response) => {
+			console.log(response);
+		});
 	}
 
 	pessoaPorId(id: number): Pessoa {

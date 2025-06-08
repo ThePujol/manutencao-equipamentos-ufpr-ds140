@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { LoggedUserService } from '../../../services/logged-user.service';
+import { AuthService } from '../../../services/auth.service';
 import { OrcamentoService } from '../../../services/orcamento.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Pessoa } from '../../../shared/models/pessoa.model';
@@ -46,7 +46,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 
 	constructor(
 		private solicitacaoService: SolicitacaoService,
-		private loggedUserService: LoggedUserService,
+		private authService: AuthService,
 		private orcamentoAction: OrcamentoService
 	) {}
 
@@ -60,7 +60,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loggedUser = this.loggedUserService.getLoggedUser();
+		this.loggedUser = this.authService.getUserData();
 		this.listaSolicitacoes = this.listarSolicitacoesCliente();
 		this.orcamentoAction.setFuncoes({
 			aprovar: this.aprovarOrcamento.bind(this),

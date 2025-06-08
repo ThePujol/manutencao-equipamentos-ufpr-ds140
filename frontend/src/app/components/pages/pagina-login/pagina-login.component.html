@@ -10,7 +10,7 @@
 			(ngSubmit)="onSubmit()"
 			class="flex flex-col w-[513px] rounded-lg shadow-xl bg-white p-10 gap-8"
 		>
-			<div class="">
+			<div>
 				<app-input-text
 					label="Email"
 					type="email"
@@ -27,19 +27,15 @@
 			</div>
 
 			<div>
-				<app-input-text
-					label="Senha"
-					type="password"
-					placeholder="Sua senha"
-					controlName="password"
-					[required]="true"
-				/>
+				<app-input-text label="Senha" type="password" placeholder="Sua senha" controlName="senha" [required]="true" />
 
 				@if (
 					loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)
 				) {
 					<div class="text-red-500 text-sm mt-1">
-						<span *ngIf="loginForm.get('password')?.errors?.['required']">Senha é obrigatória</span>
+						@if (loginForm.get('password')?.errors?.['required']) {
+							<span>Senha é obrigatória</span>
+						}
 					</div>
 				}
 			</div>

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
 	AbstractControl,
@@ -11,8 +11,8 @@ import {
 	Validators,
 } from '@angular/forms';
 
+import { AuthService } from '../../../services/auth.service';
 import { FuncionarioService } from '../../../services/funcionario.service';
-import { LoggedUserService } from '../../../services/logged-user.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
@@ -37,6 +37,7 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 		SecondaryButtonComponent,
 		DatePipe,
 		TabelaComponent,
+		AsyncPipe,
 	],
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
@@ -70,7 +71,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 	constructor(
 		private solicitacaoService: SolicitacaoService,
-		private loggedUserService: LoggedUserService,
+		private authService: AuthService,
 		private funcionarioService: FuncionarioService,
 		private fBuilder: FormBuilder
 	) {
@@ -90,7 +91,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	funcionarioDestinoValidator(group: AbstractControl): ValidationErrors | null {
 		const funcionarioDestino = group.get('funcionarioDestino')?.value;
 
-		if (funcionarioDestino && funcionarioDestino.id === this.loggedUserService.getLoggedUser().id) {
+		if (funcionarioDestino && funcionarioDestino.id === this.authService.getUserData().id) {
 			return { mesmoFuncionario: true };
 		}
 
@@ -101,8 +102,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		const lista = this.solicitacaoService.listarSolicitacoes();
 		this.listaFuncionarios = this.funcionarioService.listarTodosFuncionarios();
 		this.listaSolicitacoes = lista.filter(
-			(solicitacao) =>
-				solicitacao.funcionario && solicitacao.funcionario.id === this.loggedUserService.getLoggedUser().id
+			(solicitacao) => solicitacao.funcionario && solicitacao.funcionario.id === this.authService.getUserData().id
 		);
 	}
 

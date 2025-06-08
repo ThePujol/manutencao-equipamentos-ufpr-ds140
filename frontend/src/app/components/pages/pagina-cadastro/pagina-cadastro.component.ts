@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import emailjs from '@emailjs/browser';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matCheckCircleOutline, matHandymanOutline, matSecurityOutline } from '@ng-icons/material-icons/outline';
 
@@ -40,7 +39,7 @@ export class PaginaCadastroComponent implements OnInit {
 			cidade: ['', Validators.required],
 			cep: ['', Validators.required],
 			endereco: ['', Validators.required],
-			numero: ['', Validators.required],
+			num: ['', Validators.required],
 			complemento: [''],
 		});
 	}
@@ -87,13 +86,6 @@ export class PaginaCadastroComponent implements OnInit {
 		if (this.cadastroForm.valid) {
 			const dados = this.cadastroForm.value;
 			this.pessoaService.addPessoa(dados);
-			const templateParams = {
-				nome: dados.nome,
-				email: dados.email,
-				senha: dados.senha,
-			};
-			emailjs.init({ publicKey: 'wbzDVAF4QthaU0Vci' });
-			emailjs.send('service_766bf4u', 'template_764and7', templateParams);
 			this.submitted = true;
 			this.cadastroForm.reset();
 			this.modal = true;

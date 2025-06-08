@@ -1,9 +1,9 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLogOutOutline } from '@ng-icons/material-icons/outline';
 
-import { LoggedUserService } from '../../../services/logged-user.service';
+import { AuthService } from '../../../services/auth.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
 import { Pessoa } from '../../../shared/models/pessoa.model';
 import { SidebarButtonComponent } from '../buttons/sidebar-button/sidebar-button.component';
@@ -19,14 +19,14 @@ export class SidebarClienteComponent implements OnInit {
 	loggedUser!: Pessoa | Funcionario;
 	primeiroNome!: string;
 
-	constructor(@Inject(LoggedUserService) private loggedUserService: LoggedUserService) {}
+	constructor(private authService: AuthService) {}
 
 	deslogar() {
-		this.loggedUserService.clearLoggedUser();
+		this.authService.logout();
 	}
 
 	ngOnInit() {
-		this.loggedUser = this.loggedUserService.getLoggedUser();
+		this.loggedUser = this.authService.getUserData();
 		this.primeiroNome = this.loggedUser.nome.split(' ')[0];
 	}
 }

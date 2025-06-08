@@ -16,6 +16,8 @@ export interface LoginResponse {
 	email: string;
 }
 
+const LS_CHAVE = 'userData';
+
 @Injectable({
 	providedIn: 'root',
 })
@@ -26,5 +28,14 @@ export class AuthService {
 
 	login(credentials: LoginRequest): Observable<LoginResponse> {
 		return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials);
+	}
+
+	getUserData() {
+		const userData = localStorage.getItem(LS_CHAVE);
+		return userData ? JSON.parse(userData) : undefined;
+	}
+
+	logout() {
+		delete localStorage[LS_CHAVE];
 	}
 }

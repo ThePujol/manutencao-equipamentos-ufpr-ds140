@@ -7,8 +7,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matAddCircleOutlineOutline, matInfoOutline } from '@ng-icons/material-icons/outline';
 
+import { AuthService } from '../../../services/auth.service';
 import { CategoriaService } from '../../../services/categoria.service';
-import { LoggedUserService } from '../../../services/logged-user.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Categoria } from '../../../shared/models/categoria.model';
 import { Pessoa } from '../../../shared/models/pessoa.model';
@@ -42,7 +42,7 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 		private fBuilder: FormBuilder,
 		private categoriaService: CategoriaService,
 		private solicitacaoService: SolicitacaoService,
-		private loggedUserService: LoggedUserService
+		private authService: AuthService
 	) {
 		this.novaSolicitacaoForm = this.fBuilder.group({
 			descricao: ['', Validators.required],
@@ -53,7 +53,7 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 
 	ngOnInit() {
 		this.listaCategorias = this.listarCategorias();
-		this.loggedUser = this.loggedUserService.getLoggedUser();
+		this.loggedUser = this.authService.getUserData();
 	}
 
 	listarCategorias() {

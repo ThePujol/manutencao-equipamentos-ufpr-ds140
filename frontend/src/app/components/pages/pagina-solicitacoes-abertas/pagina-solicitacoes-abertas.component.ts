@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { LoggedUserService } from '../../../services/logged-user.service';
+import { AuthService } from '../../../services/auth.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TableColumn } from '../../../shared/tabela-interface';
@@ -53,7 +53,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 
 	constructor(
 		private solicitacaoService: SolicitacaoService,
-		private loggedUserService: LoggedUserService,
+		private authService: AuthService,
 		private fBuilder: FormBuilder
 	) {
 		this.formOrcamento = this.fBuilder.group({
@@ -71,7 +71,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 			return;
 		}
 
-		solicitacao.funcionario = this.loggedUserService.getLoggedUser();
+		solicitacao.funcionario = this.authService.getUserData();
 		solicitacao.dataOrcamento = new Date();
 		solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
 		solicitacao.situacao = Situacao.orcada;

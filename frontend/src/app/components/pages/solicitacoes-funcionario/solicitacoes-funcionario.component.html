@@ -153,7 +153,7 @@
 									required
 									formControlName="funcionarioDestino"
 								>
-									@for (funcionario of listaFuncionarios; track funcionario.id) {
+									@for (funcionario of listaFuncionarios | async; track funcionario.id) {
 										<option [ngValue]="funcionario">{{ funcionario.nome }}</option>
 									}
 								</select>
