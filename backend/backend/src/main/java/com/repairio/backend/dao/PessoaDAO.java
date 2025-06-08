@@ -1,13 +1,16 @@
 package com.repairio.backend.dao;
 
-import com.repairio.backend.model.Pessoa;
+import java.util.List;
+
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.repairio.backend.model.Pessoa;
 
 @Repository
 public class PessoaDao {
+
     private final JdbcTemplate jdbcTemplate;
 
     public PessoaDao(JdbcTemplate jdbcTemplate) {
@@ -77,23 +80,27 @@ public class PessoaDao {
     }
 
     public Pessoa findByEmail(String email) {
-        return jdbcTemplate.queryForObject("SELECT * FROM pessoa WHERE email = ?",
-                (rs, rowNum) -> {
-                    Pessoa p = new Pessoa();
-                    p.setId(rs.getLong("id"));
-                    p.setEmail(rs.getString("email"));
-                    p.setSenha(rs.getString("senha"));
-                    p.setSalt(rs.getString("salt"));
-                    p.setNome(rs.getString("nome"));
-                    p.setCpf(rs.getString("cpf"));
-                    p.setTel(rs.getString("tel"));
-                    p.setCep(rs.getString("cep"));
-                    p.setEstado(rs.getString("estado"));
-                    p.setCidade(rs.getString("cidade"));
-                    p.setEndereco(rs.getString("endereco"));
-                    p.setNum(rs.getString("num"));
-                    p.setComplemento(rs.getString("complemento"));
-                    return p;
-                }, email);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM pessoa WHERE email = ?",
+                    (rs, rowNum) -> {
+                        Pessoa p = new Pessoa();
+                        p.setId(rs.getLong("id"));
+                        p.setEmail(rs.getString("email"));
+                        p.setSenha(rs.getString("senha"));
+                        p.setSalt(rs.getString("salt"));
+                        p.setNome(rs.getString("nome"));
+                        p.setCpf(rs.getString("cpf"));
+                        p.setTel(rs.getString("tel"));
+                        p.setCep(rs.getString("cep"));
+                        p.setEstado(rs.getString("estado"));
+                        p.setCidade(rs.getString("cidade"));
+                        p.setEndereco(rs.getString("endereco"));
+                        p.setNum(rs.getString("num"));
+                        p.setComplemento(rs.getString("complemento"));
+                        return p;
+                    }, email);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }

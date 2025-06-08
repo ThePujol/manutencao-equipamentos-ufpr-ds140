@@ -1,13 +1,15 @@
 package com.repairio.backend.dao;
 
-import com.repairio.backend.model.Categoria;
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.repairio.backend.model.Categoria;
 
 @Repository
 public class CategoriaDao {
+
     private final JdbcTemplate jdbcTemplate;
 
     public CategoriaDao(JdbcTemplate jdbcTemplate) {

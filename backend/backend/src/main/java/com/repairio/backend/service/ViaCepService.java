@@ -1,16 +1,15 @@
 package com.repairio.backend.service;
 
-import com.repairio.backend.model.ViaCepResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.repairio.backend.model.ViaCepResponse;
 
 @Service
 public class ViaCepService {
 
     private final RestTemplate restTemplate;
 
-    @Autowired
     public ViaCepService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }

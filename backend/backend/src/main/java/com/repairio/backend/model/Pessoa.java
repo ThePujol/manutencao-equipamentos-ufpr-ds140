@@ -1,23 +1,23 @@
 package com.repairio.backend.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Pattern;
 
 @Data
 @EqualsAndHashCode(of = "id")
 public class Pessoa {
+
     private Long id;
 
     @NotBlank(message = "Email é obrigatório")
     @Email(message = "Email inválido")
     private String email;
 
-    @NotBlank(message = "Senha é obrigatória")
+    // @NotBlank(message = "Senha é obrigatória")
     private String senha;
 
     private String salt;

@@ -1,20 +1,26 @@
 package com.repairio.backend.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.repairio.backend.dto.LoginRequest;
 import com.repairio.backend.dto.LoginResponse;
-import com.repairio.backend.model.Pessoa;
 import com.repairio.backend.model.Funcionario;
-import com.repairio.backend.service.PessoaService;
+import com.repairio.backend.model.Pessoa;
 import com.repairio.backend.service.FuncionarioService;
+import com.repairio.backend.service.PessoaService;
 import com.repairio.backend.util.JwtUtil;
 import com.repairio.backend.util.PasswordUtil;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
+
     private final PessoaService pessoaService;
     private final FuncionarioService funcionarioService;
 
@@ -29,6 +35,7 @@ public class AuthController {
         Pessoa pessoa = pessoaService.findByEmail(loginRequest.getEmail());
         if (pessoa != null) {
             String hash = PasswordUtil.hashPassword(loginRequest.getSenha(), pessoa.getSalt());
+
             if (hash.equals(pessoa.getSenha())) {
                 String token = JwtUtil.generateToken(pessoa.getEmail(), "pessoa");
                 return ResponseEntity
