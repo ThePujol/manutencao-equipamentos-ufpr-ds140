@@ -36,8 +36,8 @@ public class FuncionarioController {
     @PostMapping
     public ResponseEntity<Funcionario> create(@Valid @RequestBody Funcionario funcionario) {
         String plainPassword = funcionario.getSenha();
-        funcionarioService.save(funcionario, plainPassword);
-        return ResponseEntity.status(201).body(funcionario);
+        Funcionario saved = funcionarioService.save(funcionario, plainPassword);
+        return ResponseEntity.status(201).body(saved);
     }
 
     @PutMapping("/{id}")

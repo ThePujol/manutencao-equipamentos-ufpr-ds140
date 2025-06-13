@@ -2,8 +2,12 @@ package com.repairio.backend.dao;
 
 import com.repairio.backend.model.*;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -59,16 +63,27 @@ public class SolicitacaoDao {
                 }, id);
     }
 
-    public void save(Solicitacao solicitacao) {
-        jdbcTemplate.update(
-                "INSERT INTO solicitacao (descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                solicitacao.getDescricao(),
-                solicitacao.getCategoria().getId(),
-                solicitacao.getDefeito(),
-                solicitacao.getOrcamento(),
-                solicitacao.getSituacao().name(),
-                solicitacao.getCliente().getId(),
-                solicitacao.getFuncionario() != null ? solicitacao.getFuncionario().getId() : null);
+    public Solicitacao save(Solicitacao solicitacao) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO solicitacao (descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, solicitacao.getDescricao());
+            ps.setLong(2, solicitacao.getCategoria().getId());
+            ps.setString(3, solicitacao.getDefeito());
+            ps.setDouble(4, solicitacao.getOrcamento());
+            ps.setString(5, solicitacao.getSituacao().name());
+            ps.setLong(6, solicitacao.getCliente().getId());
+            if (solicitacao.getFuncionario() != null) {
+                ps.setLong(7, solicitacao.getFuncionario().getId());
+            } else {
+                ps.setNull(7, java.sql.Types.BIGINT);
+            }
+            return ps;
+        }, keyHolder);
+        solicitacao.setId(keyHolder.getKey().longValue());
+        return solicitacao;
     }
 
     public void update(Solicitacao solicitacao) {

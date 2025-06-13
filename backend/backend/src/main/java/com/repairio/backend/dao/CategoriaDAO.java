@@ -2,8 +2,12 @@ package com.repairio.backend.dao;
 
 import com.repairio.backend.model.Categoria;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -34,9 +38,17 @@ public class CategoriaDao {
                 }, id);
     }
 
-    public void save(Categoria categoria) {
-        jdbcTemplate.update("INSERT INTO categoria (descricao) VALUES (?)",
-                categoria.getDescricao());
+    public Categoria save(Categoria categoria) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO categoria (descricao) VALUES (?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, categoria.getDescricao());
+            return ps;
+        }, keyHolder);
+        categoria.setId(keyHolder.getKey().longValue());
+        return categoria;
     }
 
     public void update(Categoria categoria) {

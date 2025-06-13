@@ -51,12 +51,10 @@ public class PessoaController {
                 pessoa.setEstado(viaCep.getUf());
             }
         }
-
         String plainPassword = PasswordUtil.generateRandomPassword();
-        pessoaService.save(pessoa, plainPassword);
-        emailService.sendPasswordEmail(pessoa.getEmail(), plainPassword);
-
-        return ResponseEntity.status(201).body(pessoa);
+        Pessoa saved = pessoaService.save(pessoa, plainPassword);
+        emailService.sendPasswordEmail(saved.getEmail(), plainPassword);
+        return ResponseEntity.status(201).body(saved);
     }
 
     @PutMapping("/{id}")

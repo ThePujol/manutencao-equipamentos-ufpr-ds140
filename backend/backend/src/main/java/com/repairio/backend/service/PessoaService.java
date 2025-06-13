@@ -23,12 +23,12 @@ public class PessoaService {
         return pessoaDao.findById(id);
     }
 
-    public void save(Pessoa pessoa, String plainPassword) {
+    public Pessoa save(Pessoa pessoa, String plainPassword) {
         String salt = PasswordUtil.generateSalt();
         String hashed = PasswordUtil.hashPassword(plainPassword, salt);
         pessoa.setSenha(hashed);
         pessoa.setSalt(salt);
-        pessoaDao.save(pessoa);
+        return pessoaDao.save(pessoa);
     }
 
     public void update(Pessoa pessoa) {

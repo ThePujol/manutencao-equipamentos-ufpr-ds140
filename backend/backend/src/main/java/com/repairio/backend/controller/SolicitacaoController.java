@@ -34,8 +34,8 @@ public class SolicitacaoController {
 
     @PostMapping
     public ResponseEntity<Solicitacao> create(@RequestBody Solicitacao solicitacao) {
-        solicitacaoService.save(solicitacao);
-        return ResponseEntity.status(201).body(solicitacao);
+        Solicitacao saved = solicitacaoService.save(solicitacao);
+        return ResponseEntity.status(201).body(saved);
     }
 
     @PutMapping("/{id}")

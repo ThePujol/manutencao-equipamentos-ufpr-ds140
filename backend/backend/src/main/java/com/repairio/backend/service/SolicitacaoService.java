@@ -22,8 +22,8 @@ public class SolicitacaoService {
         return solicitacaoDao.findById(id);
     }
 
-    public void save(Solicitacao solicitacao) {
-        solicitacaoDao.save(solicitacao);
+    public Solicitacao save(Solicitacao solicitacao) {
+        return solicitacaoDao.save(solicitacao);
     }
 
     public void update(Solicitacao solicitacao) {

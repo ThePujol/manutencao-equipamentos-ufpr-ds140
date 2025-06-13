@@ -22,8 +22,8 @@ public class CategoriaService {
         return categoriaDao.findById(id);
     }
 
-    public void save(Categoria categoria) {
-        categoriaDao.save(categoria);
+    public Categoria save(Categoria categoria) {
+        return categoriaDao.save(categoria);
     }
 
     public void update(Categoria categoria) {
