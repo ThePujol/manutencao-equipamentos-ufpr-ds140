@@ -1,16 +1,28 @@
 package com.repairio.backend.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+/**
+ * Serviço responsável pelo envio de e-mails.
+ */
 @Service
 public class EmailService {
+    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
+
     @Autowired
     private JavaMailSender mailSender;
 
+    /**
+     * Envia um e-mail contendo a senha para o usuário.
+     * @param to destinatário
+     * @param password senha a ser enviada
+     */
     public void sendPasswordEmail(String to, String password) {
         try {
             if (to == null || to.trim().isEmpty()) {
@@ -29,14 +41,15 @@ public class EmailService {
             message.setText(
                     "Olá!\n\nSua senha de acesso é: " + password + "\n\nPor favor, altere-a após o primeiro login.");
             mailSender.send(message);
+            logger.info("E-mail enviado com sucesso para {}", to);
         } catch (IllegalArgumentException e) {
-            System.err.println("Erro de validação ao enviar e-mail: " + e.getMessage());
+            logger.warn("Erro de validação ao enviar e-mail: {}", e.getMessage());
             throw e;
         } catch (MailException e) {
-            System.err.println("Erro ao enviar e-mail: " + e.getMessage());
+            logger.error("Erro ao enviar e-mail para {}: {}", to, e.getMessage());
             throw new RuntimeException("Erro ao enviar e-mail", e);
         } catch (Exception e) {
-            System.err.println("Erro inesperado ao enviar e-mail: " + e.getMessage());
+            logger.error("Erro inesperado ao enviar e-mail para {}: {}", to, e.getMessage());
             throw new RuntimeException("Erro inesperado ao enviar e-mail", e);
         }
     }
