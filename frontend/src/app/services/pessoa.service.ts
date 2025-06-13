@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { Pessoa } from '../shared/models/pessoa.model';
+import { catchError, Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const LS_CHAVE = 'pessoas';
 
@@ -8,47 +10,58 @@ const LS_CHAVE = 'pessoas';
 	providedIn: 'root',
 })
 export class PessoaService {
-	listarTodosPessoas(): Pessoa[] {
-		const pessoas = localStorage['pessoas'];
-		return pessoas ? JSON.parse(pessoas) : [];
+	private readonly BASE_URL = 'http://localhost:8080/api/pessoas';
+	private readonly httpOptions = {
+		headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+	};
+
+	constructor(private http: HttpClient) {}
+
+	listarTodosPessoas(): Observable<Pessoa[]> {
+		return this.http.get<Pessoa[]>(this.BASE_URL).pipe(
+			catchError((err) => {
+				console.error('Erro ao listar pessoas', err);
+				return of([] as Pessoa[]);
+			})
+		);
 	}
 
-	addPessoa(pessoa: Pessoa): void {
-		const pessoas = this.listarTodosPessoas();
-
-		pessoa.id = new Date().getTime();
-		pessoa.senha = JSON.stringify(Math.floor(1000 + Math.random() * 9000));
-		pessoas.push(pessoa);
-		localStorage[LS_CHAVE] = JSON.stringify(pessoas);
+	addPessoa(pessoa: Pessoa): Observable<Pessoa> {
+		return this.http.post<Pessoa>(this.BASE_URL, pessoa, this.httpOptions).pipe(
+			catchError((err) => {
+				console.error('Erro ao criar pessoa', err);
+				return of(null as any);
+			})
+		);
 	}
 
-	pessoaPorId(id: number): Pessoa {
-		const pessoas = this.listarTodosPessoas();
-
-		const pessoa = pessoas.find((pessoa) => pessoa.id === id);
-		if (!pessoa) {
-			throw new Error(`Pessoa com id ${id} não encontrado.`);
-		}
-		return pessoa;
+	pessoaPorId(id: number): Observable<Pessoa> {
+		const url = `${this.BASE_URL}/${id}`;
+		return this.http.get<Pessoa>(url).pipe(
+			catchError((err) => {
+				console.error(`Erro ao buscar pessoa id=${id}`, err);
+				return of(null as any);
+			})
+		);
 	}
 
-	atualizarPessoa(pessoa: Pessoa): void {
-		const pessoas = this.listarTodosPessoas();
-
-		pessoas.forEach((obj, index, objs) => {
-			if (pessoa.id === obj.id) {
-				objs[index] = pessoa;
-			}
-		});
-
-		localStorage[LS_CHAVE] = JSON.stringify(pessoas);
+	atualizarPessoa(pessoa: Pessoa): Observable<Pessoa> {
+		const url = `${this.BASE_URL}/${pessoa.id}`;
+		return this.http.put<Pessoa>(url, pessoa, this.httpOptions).pipe(
+			catchError((err) => {
+				console.error(`Erro ao atualizar pessoa id=${pessoa.id}`, err);
+				return of(null as any);
+			})
+		);
 	}
 
-	removerPessoa(id: number): void {
-		let pessoas = this.listarTodosPessoas();
-
-		pessoas = pessoas.filter((pessoa) => pessoa.id !== id);
-
-		localStorage[LS_CHAVE] = JSON.stringify(pessoas);
+	removerPessoa(id: number): Observable<void> {
+		const url = `${this.BASE_URL}/${id}`;
+		return this.http.delete<void>(url, this.httpOptions).pipe(
+			catchError((err) => {
+				console.error(`Erro ao remover pessoa id=${id}`, err);
+				return of(void 0);
+			})
+		);
 	}
 }

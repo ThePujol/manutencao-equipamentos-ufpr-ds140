@@ -1,40 +1,39 @@
+// src/app/services/logged-user.service.ts
+
 import { Injectable } from '@angular/core';
-
-import { FuncionarioService } from './funcionario.service';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { PessoaService } from './pessoa.service';
+import { Pessoa } from '../shared/models/pessoa.model';
+import { Funcionario } from '../shared/models/funcionario.model';
+import { FuncionarioService } from './funcionario.service';
 
-const LS_LOGGED_USER = 'loggedUser';
-
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class LoggedUserService {
+	private loggedUserId: number | null = null;
+
 	constructor(
 		private pessoaService: PessoaService,
 		private funcionarioService: FuncionarioService
 	) {}
 
-	clearLoggedUser() {
-		localStorage[LS_LOGGED_USER] = {};
+	setLoggedUser(id: number): void {
+		this.loggedUserId = id;
 	}
 
-	setLoggedUser(id: number) {
-		const pessoas = this.pessoaService.listarTodosPessoas();
-		const funcionarios = this.funcionarioService.listarTodosFuncionarios();
-		const loggedUser = pessoas.find((p) => p.id === id) || funcionarios.find((f) => f.id === id);
-		if (!loggedUser) {
-			throw new Error(`Não foi possível setar este usuário como logado: id ${id} não encontrado.`);
-		}
-
-		localStorage[LS_LOGGED_USER] = JSON.stringify(loggedUser);
+	clearLoggedUser(): void {
+		this.loggedUserId = null;
 	}
 
-	getLoggedUser() {
-		const loggedUser = JSON.parse(localStorage[LS_LOGGED_USER]);
-		if (!loggedUser) {
-			throw new Error('Nenhum usuario logado.');
+	/** retorna um Observable do usuário logado (Pessoa | Funcionario), ou null */
+	getLoggedUser$(): Observable<Pessoa | Funcionario | null> {
+		if (this.loggedUserId == null) {
+			return of(null);
 		}
-
-		return loggedUser;
+		// tentar buscar como Pessoa
+		return this.pessoaService.listarTodosPessoas().pipe(
+			map((ps: Pessoa[]) => ps.find((p) => p.id === this.loggedUserId) || null),
+			catchError(() => of(null))
+		);
 	}
 }

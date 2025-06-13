@@ -1,106 +1,119 @@
-import { CommonModule } from '@angular/common';
+// src/app/components/pages/pagina-funcionarios/pagina-funcionarios.component.ts
+
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule, NgIf, NgFor } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+
+import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
+import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
+import { InputTextComponent } from '../../ui/input-text/input-text.component';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
+import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
 
 import { FuncionarioService } from '../../../services/funcionario.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
 import { TableColumn } from '../../../shared/tabela-interface';
-import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
-import { ButtonComponent } from '../../ui/buttons/button/button.component';
-import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
-import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-funcionarios',
+	standalone: true,
 	imports: [
 		CommonModule,
-		SidebarFuncionarioComponent,
+		NgIf,
+		NgFor,
 		ReactiveFormsModule,
-		InputTextComponent,
+		RouterLink,
 		SidebarFuncionarioComponent,
-		TabelaComponent,
 		InputPesquisarComponent,
+		InputTextComponent,
 		ButtonComponent,
+		TabelaComponent,
 	],
 	templateUrl: './pagina-funcionarios.component.html',
 })
 export class PaginaFuncionariosComponent implements OnInit {
 	funcionarios: Funcionario[] = [];
-	funcionarioSelecionado?: Funcionario;
-	modal = false;
-	formfuncionario!: FormGroup;
 	headersTabela: TableColumn[] = [
-		{
-			fieldName: 'nome',
-			headerName: 'Nome',
-		},
-		{
-			fieldName: 'email',
-			headerName: 'Email',
-		},
-		{
-			fieldName: 'dataNasc',
-			headerName: 'Data de nascimento',
-		},
+		{ field: 'id', header: 'ID' },
+		{ field: 'nome', header: 'Nome' },
+		{ field: 'email', header: 'Email' },
+		{ field: 'dataNasc', header: 'Data Nasc.' },
+		{ field: 'acoes', header: 'Ações' }, // ou outro field que seu componente use para ações
 	];
 
+	modal = false;
+	formfuncionario!: FormGroup;
+	funcionarioSelecionado: Funcionario | null = null;
+
 	constructor(
-		private funcionarioService: FuncionarioService,
-		private fBuilder: FormBuilder
-	) {
-		this.formfuncionario = this.fBuilder.group({
-			email: ['', [Validators.required, Validators.email]],
+		private fb: FormBuilder,
+		private service: FuncionarioService
+	) {}
+
+	ngOnInit(): void {
+		this.initForm();
+		this.loadFuncionarios();
+	}
+
+	private initForm(): void {
+		this.formfuncionario = this.fb.group({
+			id: [null],
 			nome: ['', Validators.required],
+			email: ['', [Validators.required, Validators.email]],
 			senha: ['', Validators.required],
 			dataNasc: ['', Validators.required],
 		});
 	}
 
-	ngOnInit(): void {
-		this.funcionarios = this.listarfuncionarios();
+	private loadFuncionarios(): void {
+		this.service.listarTodosFuncionarios().subscribe({
+			next: (lista) => (this.funcionarios = lista),
+			error: (err) => console.error('Erro ao carregar funcionários', err),
+		});
 	}
 
-	abrirModal(funcionario?: Funcionario) {
-		this.modal = true;
-		if (funcionario) {
-			this.funcionarioSelecionado = funcionario;
-			this.formfuncionario.patchValue(funcionario);
-		} else {
-			this.funcionarioSelecionado = undefined;
-			this.formfuncionario.reset();
+	abrirModal(func?: Funcionario): void {
+		this.funcionarioSelecionado = func ?? null;
+		this.formfuncionario.reset();
+
+		if (func) {
+			this.formfuncionario.patchValue({
+				id: func.id,
+				nome: func.nome,
+				email: func.email,
+				senha: func.senha,
+				dataNasc: func.dataNasc.toISOString().slice(0, 10),
+			});
 		}
+		this.modal = true;
 	}
 
-	fecharModal() {
+	fecharModal(): void {
 		this.modal = false;
 	}
 
-	removerfuncionario(id: number) {
-		this.funcionarioService.removerFuncionario(id);
-		this.funcionarios = this.funcionarioService.listarTodosFuncionarios();
-	}
-
-	salvarOuEditarfuncionario() {
+	salvarOuEditarfuncionario(): void {
 		if (this.formfuncionario.invalid) {
-			this.formfuncionario.markAllAsTouched();
 			return;
 		}
+		const dados: Funcionario = this.formfuncionario.value;
 
-		const dados = this.formfuncionario.value;
+		const operacao$ = this.funcionarioSelecionado ? this.service.atualizar(dados) : this.service.criar(dados);
 
-		if (this.funcionarioSelecionado) {
-			const funcionarioEditado = { ...this.funcionarioSelecionado, ...dados };
-			this.funcionarioService.atualizarFuncionario(funcionarioEditado);
-		} else {
-			this.funcionarioService.addFuncionario(dados);
-		}
-
-		this.funcionarios = this.funcionarioService.listarTodosFuncionarios();
-		this.fecharModal();
+		operacao$.subscribe({
+			next: () => {
+				this.modal = false;
+				this.loadFuncionarios();
+			},
+			error: (err) => console.error('Erro ao salvar funcionário', err),
+		});
 	}
 
-	listarfuncionarios(): Funcionario[] {
-		return this.funcionarioService.listarTodosFuncionarios();
+	removerfuncionario(id: number): void {
+		this.service.remover(id).subscribe({
+			next: () => this.loadFuncionarios(),
+			error: (err) => console.error('Erro ao remover funcionário', err),
+		});
 	}
 }
