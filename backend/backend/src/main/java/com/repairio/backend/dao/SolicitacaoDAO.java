@@ -32,13 +32,20 @@ public class SolicitacaoDao {
                     s.setDescricao(rs.getString("descricao"));
                     s.setCategoria(categoriaDao.findById(rs.getLong("categoria_id")));
                     s.setDefeito(rs.getString("defeito"));
-                    s.setOrcamento(rs.getDouble("orcamento"));
+                    s.setOrcamento(rs.getObject("orcamento", Double.class));
                     s.setSituacao(Situacao.valueOf(rs.getString("situacao")));
                     s.setCliente(pessoaDao.findById(rs.getLong("cliente_id")));
                     Long funcionarioId = rs.getLong("funcionario_id");
                     if (!rs.wasNull()) {
                         s.setFuncionario(funcionarioDao.findById(funcionarioId));
                     }
+                    s.setDataSolicitacao(rs.getDate("dataSolicitacao"));
+                    s.setDataOrcamento(rs.getDate("dataOrcamento"));
+                    s.setDescricaoManutencao(rs.getString("descricaoManutencao"));
+                    s.setDataManutencao(rs.getDate("dataManutencao"));
+                    s.setOrientacoes(rs.getString("orientacoes"));
+                    s.setDataFinalizacao(rs.getDate("dataFinalizacao"));
+                    s.setMotivoRejeicao(rs.getString("motivoRejeicao"));
                     return s;
                 });
     }
@@ -51,32 +58,31 @@ public class SolicitacaoDao {
                     s.setDescricao(rs.getString("descricao"));
                     s.setCategoria(categoriaDao.findById(rs.getLong("categoria_id")));
                     s.setDefeito(rs.getString("defeito"));
-                    s.setOrcamento(rs.getDouble("orcamento"));
+                    s.setOrcamento(rs.getObject("orcamento", Double.class));
                     s.setSituacao(Situacao.valueOf(rs.getString("situacao")));
                     s.setCliente(pessoaDao.findById(rs.getLong("cliente_id")));
                     Long funcionarioId = rs.getLong("funcionario_id");
                     if (!rs.wasNull()) {
                         s.setFuncionario(funcionarioDao.findById(funcionarioId));
                     }
+                    s.setDataSolicitacao(rs.getDate("dataSolicitacao"));
+                    s.setDataOrcamento(rs.getDate("dataOrcamento"));
+                    s.setDescricaoManutencao(rs.getString("descricaoManutencao"));
+                    s.setDataManutencao(rs.getDate("dataManutencao"));
+                    s.setOrientacoes(rs.getString("orientacoes"));
+                    s.setDataFinalizacao(rs.getDate("dataFinalizacao"));
+                    s.setMotivoRejeicao(rs.getString("motivoRejeicao"));
                     return s;
                 }, id);
     }
 
     public void save(Solicitacao solicitacao) {
         jdbcTemplate.update(
-                "INSERT INTO solicitacao (descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                solicitacao.getDescricao(),
-                solicitacao.getCategoria().getId(),
-                solicitacao.getDefeito(),
-                solicitacao.getOrcamento(),
-                solicitacao.getSituacao().name(),
-                solicitacao.getCliente().getId(),
-                solicitacao.getFuncionario() != null ? solicitacao.getFuncionario().getId() : null);
-    }
-
-    public void update(Solicitacao solicitacao) {
-        jdbcTemplate.update(
-                "UPDATE solicitacao SET descricao = ?, categoria_id = ?, defeito = ?, orcamento = ?, situacao = ?, cliente_id = ?, funcionario_id = ? WHERE id = ?",
+                "INSERT INTO solicitacao (" +
+                    "descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id, " +
+                    "dataSolicitacao, dataOrcamento, descricaoManutencao, dataManutencao, " +
+                    "orientacoes, dataFinalizacao, motivoRejeicao" +
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 solicitacao.getDescricao(),
                 solicitacao.getCategoria().getId(),
                 solicitacao.getDefeito(),
@@ -84,6 +90,36 @@ public class SolicitacaoDao {
                 solicitacao.getSituacao().name(),
                 solicitacao.getCliente().getId(),
                 solicitacao.getFuncionario() != null ? solicitacao.getFuncionario().getId() : null,
+                solicitacao.getDataSolicitacao(),
+                solicitacao.getDataOrcamento(),
+                solicitacao.getDescricaoManutencao(),
+                solicitacao.getDataManutencao(),
+                solicitacao.getOrientacoes(),
+                solicitacao.getDataFinalizacao(),
+                solicitacao.getMotivoRejeicao());
+    }
+
+    public void update(Solicitacao solicitacao) {
+        jdbcTemplate.update(
+                "UPDATE solicitacao SET " +
+                    "descricao = ?, categoria_id = ?, defeito = ?, orcamento = ?, situacao = ?, cliente_id = ?, funcionario_id = ?, " +
+                    "dataSolicitacao = ?, dataOrcamento = ?, descricaoManutencao = ?, dataManutencao = ?, " +
+                    "orientacoes = ?, dataFinalizacao = ?, motivoRejeicao = ? " +
+                    "WHERE id = ?",
+                solicitacao.getDescricao(),
+                solicitacao.getCategoria().getId(),
+                solicitacao.getDefeito(),
+                solicitacao.getOrcamento(),
+                solicitacao.getSituacao().name(),
+                solicitacao.getCliente().getId(),
+                solicitacao.getFuncionario() != null ? solicitacao.getFuncionario().getId() : null,
+                solicitacao.getDataSolicitacao(),
+                solicitacao.getDataOrcamento(),
+                solicitacao.getDescricaoManutencao(),
+                solicitacao.getDataManutencao(),
+                solicitacao.getOrientacoes(),
+                solicitacao.getDataFinalizacao(),
+                solicitacao.getMotivoRejeicao(),
                 solicitacao.getId());
     }
 

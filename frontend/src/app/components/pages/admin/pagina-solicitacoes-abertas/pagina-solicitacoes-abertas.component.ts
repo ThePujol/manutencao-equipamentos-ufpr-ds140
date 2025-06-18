@@ -1,18 +1,20 @@
+import { map } from 'rxjs';
+
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { AuthService } from '../../../services/auth.service';
-import { SolicitacaoService } from '../../../services/solicitacao.service';
-import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
-import { TableColumn } from '../../../shared/tabela-interface';
-import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
-import { ButtonComponent } from '../../ui/buttons/button/button.component';
-import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
-import { InformacaoDetalheComponent } from '../../ui/informacao-detalhe/informacao-detalhe.component';
-import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
-import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
+import { AuthService } from '../../../../services/auth.service';
+import { SolicitacaoService } from '../../../../services/solicitacao.service';
+import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
+import { TableColumn } from '../../../../shared/tabela-interface';
+import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
+import { ButtonComponent } from '../../../ui/buttons/button/button.component';
+import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
+import { InformacaoDetalheComponent } from '../../../ui/informacao-detalhe/informacao-detalhe.component';
+import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
+import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-solicitacoes-abertas',
@@ -75,14 +77,20 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 		solicitacao.dataOrcamento = new Date();
 		solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
 		solicitacao.situacao = Situacao.orcada;
-		this.solicitacaoService.atualizarSolicitacao(solicitacao);
-		this.formOrcamento.reset();
-		this.toggleModal();
+		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((response) => {
+			console.log(response);
+			this.formOrcamento.reset();
+			this.toggleModal();
+		});
 	}
 
 	ngOnInit() {
-		this.listaSolicitacoes = this.solicitacaoService.listarSolicitacoes();
-		this.solicitacoesAbertas = this.listaSolicitacoes.filter((solicitacao) => solicitacao.situacao === Situacao.aberta);
+		this.solicitacaoService
+			.listarSolicitacoes()
+			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.situacao === Situacao.aberta)))
+			.subscribe((solicitacoes) => {
+				this.solicitacoesAbertas = solicitacoes;
+			});
 	}
 
 	toggleModal(solicitacao?: Solicitacao) {

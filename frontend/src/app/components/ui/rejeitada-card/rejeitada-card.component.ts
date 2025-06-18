@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+import { OrcamentoService } from '../../../services/orcamento.service';
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 import { ButtonComponent } from '../buttons/button/button.component';
@@ -12,11 +13,14 @@ import { ButtonComponent } from '../buttons/button/button.component';
 export class RejeitadaCardComponent {
 	@Input() solicitacao!: Solicitacao;
 
-	constructor(private solicitacaoService: SolicitacaoService) {}
+	constructor(
+		private solicitacaoService: SolicitacaoService,
+		private orcamentoActions: OrcamentoService
+	) {}
 
 	resgatarServico() {
 		this.solicitacao.situacao = Situacao.orcada;
 		this.solicitacao.motivoRejeicao = undefined;
-		this.solicitacaoService.atualizarSolicitacao(this.solicitacao);
+		this.orcamentoActions.resgatarServicoFn?.(this.solicitacao);
 	}
 }

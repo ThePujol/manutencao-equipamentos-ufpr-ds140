@@ -2,7 +2,7 @@ package com.repairio.backend.model;
 
 public enum Situacao {
     ABERTA,
-    ORCADA,
+    ORÇADA,
     REJEITADA,
     REDIRECIONADA,
     APROVADA,

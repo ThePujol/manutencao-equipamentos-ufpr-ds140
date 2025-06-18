@@ -9,7 +9,7 @@
 		</div>
 
 		<div class="flex justify-between w-full items-center">
-			<app-input-pesquisar placeholder="Pesquise uma solicitação..." />
+			<app-input-pesquisar placeholder="Pesquise uma solicitação..." (pesquisarClick)="pesquisarFuncionarios($event)" />
 			<div>
 				<input
 					type="date"
@@ -153,7 +153,7 @@
 									required
 									formControlName="funcionarioDestino"
 								>
-									@for (funcionario of listaFuncionarios | async; track funcionario.id) {
+									@for (funcionario of listaFuncionarios; track funcionario.id) {
 										<option [ngValue]="funcionario">{{ funcionario.nome }}</option>
 									}
 								</select>
@@ -177,4 +177,5 @@
 			</div>
 		}
 	</section>
+	<app-mensagem [mensagem]="mensagem" [showMessage]="showMessage" />
 </main>

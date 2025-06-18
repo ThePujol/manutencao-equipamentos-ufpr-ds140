@@ -31,7 +31,6 @@
 				</select>
 				<input
 					type="date"
-					value="22-01-2023"
 					class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
 				/>
 			</div>
@@ -39,11 +38,7 @@
 
 		<!-- Tabela -->
 		@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
-			<app-tabela-expandivel
-				[columns]="headersTabela"
-				[gridData]="listaSolicitacoes"
-				(actionButtonClick)="expandirTabela($event)"
-			/>
+			<app-tabela-expandivel [columns]="headersTabela" [gridData]="listaSolicitacoes" />
 		} @else {
 			<p>Você ainda não fez nenhuma solicitação.</p>
 		}

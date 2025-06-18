@@ -8,9 +8,19 @@ import { Solicitacao } from '../shared/models/solicitacao.model';
 export class OrcamentoService {
 	aprovarOrcamentoFn?: (solicitacao: Solicitacao) => void;
 	rejeitarOrcamentoFn?: (solicitacao: Solicitacao) => void;
+	resgatarServicoFn?: (solicitacao: Solicitacao) => void;
 
-	setFuncoes({ aprovar, rejeitar }: { aprovar: (s: Solicitacao) => void; rejeitar: (s: Solicitacao) => void }) {
+	setFuncoes({
+		aprovar,
+		rejeitar,
+		resgatar,
+	}: {
+		aprovar: (s: Solicitacao) => void;
+		rejeitar: (s: Solicitacao) => void;
+		resgatar: (s: Solicitacao) => void;
+	}) {
 		this.aprovarOrcamentoFn = aprovar;
 		this.rejeitarOrcamentoFn = rejeitar;
+		this.resgatarServicoFn = resgatar;
 	}
 }

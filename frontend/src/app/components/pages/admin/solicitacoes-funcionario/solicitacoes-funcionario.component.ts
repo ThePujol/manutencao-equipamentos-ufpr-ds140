@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import { map } from 'rxjs';
 
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
 	AbstractControl,
@@ -11,19 +11,20 @@ import {
 	Validators,
 } from '@angular/forms';
 
-import { AuthService } from '../../../services/auth.service';
-import { FuncionarioService } from '../../../services/funcionario.service';
-import { SolicitacaoService } from '../../../services/solicitacao.service';
-import { Funcionario } from '../../../shared/models/funcionario.model';
-import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
-import { TableColumn } from '../../../shared/tabela-interface';
-import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
-import { ButtonComponent } from '../../ui/buttons/button/button.component';
-import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
-import { InformacaoDetalheComponent } from '../../ui/informacao-detalhe/informacao-detalhe.component';
-import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
-import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
+import { AuthService } from '../../../../services/auth.service';
+import { FuncionarioService } from '../../../../services/funcionario.service';
+import { SolicitacaoService } from '../../../../services/solicitacao.service';
+import { Funcionario } from '../../../../shared/models/funcionario.model';
+import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
+import { TableColumn } from '../../../../shared/tabela-interface';
+import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
+import { ButtonComponent } from '../../../ui/buttons/button/button.component';
+import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
+import { InformacaoDetalheComponent } from '../../../ui/informacao-detalhe/informacao-detalhe.component';
+import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
+import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
+import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-solicitacoes-funcionario',
@@ -37,18 +38,21 @@ import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sideba
 		SecondaryButtonComponent,
 		DatePipe,
 		TabelaComponent,
-		AsyncPipe,
+		MensagemComponent,
 	],
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
 export class SolicitacoesFuncionarioComponent implements OnInit {
 	listaSolicitacoes!: Solicitacao[];
-	listaFuncionarios!: Observable<Funcionario[]>;
+	listaTodosFuncionarios!: Funcionario[];
+	listaFuncionarios!: Funcionario[];
 	formManutencao: FormGroup;
 	formRedirecionar: FormGroup;
 	solicitacaoModal!: Solicitacao;
 	modalEfetuarManutencao = false;
 	modalRedirecionarManutencao = false;
+	showMessage = false;
+	mensagem = '';
 
 	headersTabela: TableColumn[] = [
 		{
@@ -98,12 +102,30 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		return null;
 	}
 
+	listarSolicitacoesPorFuncionario() {
+		this.solicitacaoService
+			.listarSolicitacoes()
+			.pipe(
+				map((solicitacoes) =>
+					solicitacoes.filter((s) => s.funcionario && s.funcionario.id === this.authService.getUserData().id)
+				)
+			)
+			.subscribe((solicitacoes) => {
+				this.listaSolicitacoes = solicitacoes;
+			});
+	}
+
 	ngOnInit() {
-		const lista = this.solicitacaoService.listarSolicitacoes();
-		this.listaFuncionarios = this.funcionarioService.listarTodosFuncionarios();
-		this.listaSolicitacoes = lista.filter(
-			(solicitacao) => solicitacao.funcionario && solicitacao.funcionario.id === this.authService.getUserData().id
-		);
+		this.listarSolicitacoesPorFuncionario();
+
+		this.funcionarioService
+			.listarTodosFuncionarios()
+			.pipe(map((funcionarios) => funcionarios.filter((f) => f.id != this.authService.getUserData().id)))
+			.subscribe((funcionarios) => {
+				this.listaTodosFuncionarios = funcionarios;
+			});
+
+		this.listaFuncionarios = this.listaTodosFuncionarios;
 	}
 
 	toggleModalManutencao(solicitacao?: Solicitacao) {
@@ -137,9 +159,11 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		solicitacao.descricaoManutencao = this.formManutencao.value.descricaoManutencao;
 		solicitacao.orientacoes = this.formManutencao.value.orientacoes;
 		solicitacao.situacao = Situacao.arrumada;
-		this.solicitacaoService.atualizarSolicitacao(solicitacao);
-		this.formManutencao.reset();
-		this.toggleModalManutencao();
+		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
+			console.log(res);
+			this.formManutencao.reset();
+			this.toggleModalManutencao();
+		});
 	}
 
 	redirecionarManutencao(solicitacao: Solicitacao) {
@@ -152,15 +176,34 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 			return;
 		}
 
+		this.showMessage = true;
+		this.mensagem = 'Solicitação redirecionada.';
+
 		solicitacao.funcionario = this.formRedirecionar.value.funcionarioDestino;
-		this.solicitacaoService.atualizarSolicitacao(solicitacao);
-		this.formRedirecionar.reset();
-		this.toggleModalRedirecionar();
+		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
+			console.log(res);
+			this.formRedirecionar.reset();
+			this.toggleModalRedirecionar();
+		});
+
+		// Atualizar lista de solicitacoes
+		this.listarSolicitacoesPorFuncionario();
+
+		// Intervalo para a mensagem desaparecer
+		setTimeout(() => {
+			this.showMessage = false;
+		}, 3000);
 	}
 
 	finalizarSolicitacao(solicitacao: Solicitacao) {
 		solicitacao.situacao = Situacao.finalizada;
 		solicitacao.dataFinalizacao = new Date();
-		this.solicitacaoService.atualizarSolicitacao(solicitacao);
+		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
+			console.log(res);
+		});
+	}
+
+	pesquisarFuncionarios(query: string) {
+		console.log(query);
 	}
 }

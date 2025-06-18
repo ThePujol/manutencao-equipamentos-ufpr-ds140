@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
-import { PessoaService } from '../../../services/pessoa.service';
-import { ViaCepService } from '../../../services/via-cep.service';
-import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
+import { PessoaService } from '../../../../services/pessoa.service';
+import { ViaCepService } from '../../../../services/via-cep.service';
+import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cliente.component';
 
 @Component({
 	selector: 'app-perfil',

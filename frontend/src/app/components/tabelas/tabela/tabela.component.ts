@@ -22,6 +22,7 @@ export class TabelaComponent {
 	@Input() mostrarHora = false;
 	@Input() tabelaFuncionario = false;
 	@Input() tabelaSolicitacoesAbertas = false;
+	@Input() excluirDisabledCondition = false;
 
 	dropdown = false;
 

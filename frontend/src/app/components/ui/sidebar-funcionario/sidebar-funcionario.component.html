@@ -41,15 +41,15 @@
 			<app-sidebar-button routerLink="/relatorios/receitas" icon="matTodayOutline" text="Por dia" />
 			<app-sidebar-button routerLink="/relatorios/receitas-categoria" icon="matCategoryOutline" text="Por categoria" />
 		</div>
-
-		<a
-			routerLink="/login"
-			class="rounded-md px-2.5 py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-2.5"
-		>
-			<span class="text-xl flex items-center"><ng-icon name="matLogOutOutline" /></span>
-			<p>Sair</p>
-		</a>
-
-		<router-outlet></router-outlet>
 	</div>
+
+	<a
+		routerLink="/login"
+		(click)="deslogar()"
+		class="rounded-md px-2.5 py-2.5 w-full hover:bg-[#3e2996] duration-150 flex items-center gap-2.5"
+	>
+		<span class="text-xl flex items-center"><ng-icon name="matLogOutOutline" /></span>
+		<p>Sair</p>
+	</a>
 </div>
+<router-outlet></router-outlet>

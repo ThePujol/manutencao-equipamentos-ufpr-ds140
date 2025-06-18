@@ -25,8 +25,10 @@ export class PagamentoPopUpComponent {
 	finalizarPgto() {
 		const solicitacao = this.data.solicitacao;
 		solicitacao.situacao = Situacao.paga;
-		this.solicitacaoService.atualizarSolicitacao(solicitacao);
-		this.dialogRef.close();
+		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
+			console.log(res);
+			this.dialogRef.close();
+		});
 	}
 
 	atualizaPgto(event: Event) {

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,7 +14,14 @@ export class FuncionarioService {
 	constructor(private http: HttpClient) {}
 
 	listarTodosFuncionarios(): Observable<Funcionario[]> {
-		return this.http.get<Funcionario[]>(this.apiUrl);
+		return this.http.get<Funcionario[]>(this.apiUrl).pipe(
+			map((funcionarios) =>
+				funcionarios.map((f) => ({
+					...f,
+					dataNasc: new Date(f.dataNasc),
+				}))
+			)
+		);
 	}
 
 	addFuncionario(funcionario: Funcionario): Observable<Funcionario> {

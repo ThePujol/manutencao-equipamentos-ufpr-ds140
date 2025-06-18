@@ -21,7 +21,11 @@
 				</li>
 
 				<li class="hover:bg-gray-950/10 px-5 py-1">
-					<button class="cursor-pointer disabled:cursor-not-allowed" (click)="redirecionarManutencao(solicitacao)">
+					<button
+						class="cursor-pointer disabled:cursor-not-allowed"
+						(click)="redirecionarManutencao(solicitacao)"
+						[disabled]="solicitacao.situacao === situacoes.finalizada"
+					>
 						Redirecionar solicitação
 					</button>
 				</li>

@@ -2,14 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { FuncionarioService } from '../../../services/funcionario.service';
-import { Funcionario } from '../../../shared/models/funcionario.model';
-import { TableColumn } from '../../../shared/tabela-interface';
-import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
-import { ButtonComponent } from '../../ui/buttons/button/button.component';
-import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
-import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
+import { AuthService } from '../../../../services/auth.service';
+import { FuncionarioService } from '../../../../services/funcionario.service';
+import { Funcionario } from '../../../../shared/models/funcionario.model';
+import { TableColumn } from '../../../../shared/tabela-interface';
+import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
+import { ButtonComponent } from '../../../ui/buttons/button/button.component';
+import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
+import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-funcionarios',
@@ -47,7 +48,8 @@ export class PaginaFuncionariosComponent implements OnInit {
 
 	constructor(
 		private funcionarioService: FuncionarioService,
-		private fBuilder: FormBuilder
+		private fBuilder: FormBuilder,
+		private authService: AuthService
 	) {
 		this.formfuncionario = this.fBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
@@ -77,9 +79,13 @@ export class PaginaFuncionariosComponent implements OnInit {
 	}
 
 	removerfuncionario(id: number) {
-		this.funcionarioService.removerFuncionario(id).subscribe(() => {
-			this.listarfuncionarios();
-		});
+		if (this.authService.getUserData().id != id) {
+			this.funcionarioService.removerFuncionario(id).subscribe(() => {
+				this.listarfuncionarios();
+			});
+		} else {
+			console.error('Um funcionario nao pode deletar ele mesmo.');
+		}
 	}
 
 	salvarOuEditarfuncionario() {

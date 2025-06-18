@@ -1,47 +1,42 @@
+import { map, Observable } from 'rxjs';
+
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Pessoa } from '../shared/models/pessoa.model';
-import { Situacao, Solicitacao } from '../shared/models/solicitacao.model';
-
-const LS_CHAVE = 'solicitacoes';
+import { Solicitacao } from '../shared/models/solicitacao.model';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class SolicitacaoService {
-	listarSolicitacoes(): Solicitacao[] {
-		const solicitacoes = localStorage[LS_CHAVE];
-		const parsedSolicitacoes = solicitacoes ? JSON.parse(solicitacoes) : [];
+	constructor(private http: HttpClient) {}
 
-		// Re-converter datas armazenadas no local storage
-		if (parsedSolicitacoes) {
-			parsedSolicitacoes.forEach((solicitacao: Solicitacao) => {
-				solicitacao.dataSolicitacao = new Date(solicitacao.dataSolicitacao);
-			});
-		}
-		return parsedSolicitacoes;
+	apiUrl = 'http://localhost:8080/api/solicitacoes';
+
+	listarSolicitacoes(): Observable<Solicitacao[]> {
+		// Transforma as datas de String pra Date antes de retornar
+		return this.http.get<Solicitacao[]>(this.apiUrl).pipe(
+			map((solicitacoes) =>
+				solicitacoes.map((s) => ({
+					...s,
+					dataSolicitacao: new Date(s.dataSolicitacao),
+					dataOrcamento: s.dataOrcamento ? new Date(s.dataOrcamento) : undefined,
+					dataManutencao: s.dataManutencao ? new Date(s.dataManutencao) : undefined,
+					dataFinalizacao: s.dataFinalizacao ? new Date(s.dataFinalizacao) : undefined,
+				}))
+			)
+		);
 	}
 
-	addSolicitacao(solicitacao: Solicitacao, cliente: Pessoa): void {
-		const solicitacoes = this.listarSolicitacoes();
-
-		solicitacao.id = new Date().getTime();
-		solicitacao.situacao = Situacao.aberta;
-		solicitacao.dataSolicitacao = new Date();
-		solicitacao.cliente = cliente;
-		solicitacoes.push(solicitacao);
-		localStorage[LS_CHAVE] = JSON.stringify(solicitacoes);
+	addSolicitacao(solicitacao: Solicitacao): Observable<Solicitacao> {
+		return this.http.post<Solicitacao>(this.apiUrl, solicitacao);
 	}
 
-	atualizarSolicitacao(solicitacao: Solicitacao) {
-		const solicitacoes = this.listarSolicitacoes();
+	atualizarSolicitacao(solicitacao: Solicitacao): Observable<Solicitacao> {
+		return this.http.put<Solicitacao>(`${this.apiUrl}/${solicitacao.id}`, solicitacao);
+	}
 
-		solicitacoes.forEach((obj, index, objs) => {
-			if (solicitacao.id === obj.id) {
-				objs[index] = solicitacao;
-			}
-		});
-
-		localStorage[LS_CHAVE] = JSON.stringify(solicitacoes);
+	removerSolicitacao(id: number): Observable<void> {
+		return this.http.delete<void>(`${this.apiUrl}/${id}`);
 	}
 }

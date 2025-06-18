@@ -9,6 +9,7 @@ import {
 	matTodayOutline,
 } from '@ng-icons/material-icons/outline';
 
+import { AuthService } from '../../../services/auth.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
 import { Pessoa } from '../../../shared/models/pessoa.model';
 import { SidebarButtonComponent } from '../buttons/sidebar-button/sidebar-button.component';
@@ -31,6 +32,8 @@ export class SidebarFuncionarioComponent implements OnInit {
 	loggedUser!: Pessoa | Funcionario;
 	primeiroNome!: string;
 
+	constructor(private authService: AuthService) {}
+
 	// Variável para controlar a expansão do submenu de relatórios
 	relatoriosExpanded = false;
 
@@ -39,7 +42,12 @@ export class SidebarFuncionarioComponent implements OnInit {
 		this.relatoriosExpanded = !this.relatoriosExpanded;
 	}
 
+	deslogar() {
+		this.authService.logout();
+	}
+
 	ngOnInit() {
+		this.loggedUser = this.authService.getUserData();
 		this.primeiroNome = this.loggedUser.nome.split(' ')[0];
 	}
 }

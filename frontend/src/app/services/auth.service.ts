@@ -16,7 +16,8 @@ export interface LoginResponse {
 	email: string;
 }
 
-const LS_CHAVE = 'userData';
+const LS_USER = 'userData';
+const LS_TOKEN = 'authToken';
 
 @Injectable({
 	providedIn: 'root',
@@ -31,11 +32,16 @@ export class AuthService {
 	}
 
 	getUserData() {
-		const userData = localStorage.getItem(LS_CHAVE);
+		const userData = localStorage.getItem(LS_USER);
 		return userData ? JSON.parse(userData) : undefined;
 	}
 
+	getCurrentToken() {
+		return localStorage[LS_TOKEN];
+	}
+
 	logout() {
-		delete localStorage[LS_CHAVE];
+		delete localStorage[LS_USER];
+		delete localStorage[LS_TOKEN];
 	}
 }

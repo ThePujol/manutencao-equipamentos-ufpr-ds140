@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { CategoriaService } from '../../../services/categoria.service';
-import { Categoria } from '../../../shared/models/categoria.model';
-import { TableColumn } from '../../../shared/tabela-interface';
-import { TabelaComponent } from '../../tabelas/tabela/tabela.component';
-import { ButtonComponent } from '../../ui/buttons/button/button.component';
-import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
-import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
+import { CategoriaService } from '../../../../services/categoria.service';
+import { Categoria } from '../../../../shared/models/categoria.model';
+import { TableColumn } from '../../../../shared/tabela-interface';
+import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
+import { ButtonComponent } from '../../../ui/buttons/button/button.component';
+import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
+import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-categorias',

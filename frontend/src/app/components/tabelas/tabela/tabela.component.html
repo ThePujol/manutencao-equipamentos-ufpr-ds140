@@ -61,6 +61,7 @@
 						<button
 							class="text-red-500 outline outline-red-500 p-2 rounded-md flex justify-center items-center cursor-pointer"
 							(click)="excluir(item)"
+							[disabled]="excluirDisabledCondition"
 						>
 							<ng-icon name="matDeleteOutline" />
 						</button>

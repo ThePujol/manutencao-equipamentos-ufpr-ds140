@@ -7,15 +7,15 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matAddCircleOutlineOutline, matInfoOutline } from '@ng-icons/material-icons/outline';
 
-import { AuthService } from '../../../services/auth.service';
-import { CategoriaService } from '../../../services/categoria.service';
-import { SolicitacaoService } from '../../../services/solicitacao.service';
-import { Categoria } from '../../../shared/models/categoria.model';
-import { Pessoa } from '../../../shared/models/pessoa.model';
-import { Solicitacao } from '../../../shared/models/solicitacao.model';
-import { ButtonComponent } from '../../ui/buttons/button/button.component';
-import { InputTextComponent } from '../../ui/input-text/input-text.component';
-import { SidebarClienteComponent } from '../../ui/sidebar-cliente/sidebar-cliente.component';
+import { AuthService } from '../../../../services/auth.service';
+import { CategoriaService } from '../../../../services/categoria.service';
+import { SolicitacaoService } from '../../../../services/solicitacao.service';
+import { Categoria } from '../../../../shared/models/categoria.model';
+import { Pessoa } from '../../../../shared/models/pessoa.model';
+import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
+import { ButtonComponent } from '../../../ui/buttons/button/button.component';
+import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cliente.component';
 
 @Component({
 	selector: '´app-pagina-nova-solicitacao',
@@ -63,17 +63,22 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 	onSubmit() {
 		if (this.novaSolicitacaoForm.valid) {
 			const formValue = this.novaSolicitacaoForm.value;
-			const categoriaSelecionada = this.categoriaService.categoriaPorId(Number(formValue.categoria));
+			const categoriaSelecionada = new Categoria(Number(formValue.categoria), 'Teste');
 
 			// Salvar categoria como objeto
 			const solicitacao: Solicitacao = {
 				...formValue,
-				categoria: categoriaSelecionada!,
+				categoria: categoriaSelecionada,
+				situacao: Situacao.aberta,
+				dataSolicitacao: new Date(),
 			};
 
-			this.solicitacaoService.addSolicitacao(solicitacao, this.loggedUser);
+			solicitacao.cliente = this.loggedUser;
 
-			this.novaSolicitacaoForm.reset();
+			this.solicitacaoService.addSolicitacao(solicitacao).subscribe((response) => {
+				console.log(response);
+				this.novaSolicitacaoForm.reset();
+			});
 		} else {
 			this.novaSolicitacaoForm.markAllAsTouched();
 		}

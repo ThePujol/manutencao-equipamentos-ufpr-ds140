@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matChevronRightOutline } from '@ng-icons/material-icons/outline';
 
-import { Solicitacao } from '../../../shared/models/solicitacao.model';
+import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 import { AbertaCardComponent } from '../../ui/aberta-card/aberta-card.component';
 import { AprovadaCardComponent } from '../../ui/aprovada-card/aprovada-card.component';
 import { ArrumadoCardComponent } from '../../ui/arrumado-card/arrumado-card.component';
@@ -32,6 +32,17 @@ export class TabelaExpandidaComponent {
 	@Input() ultima = false;
 
 	@Output() toggleExpansionEvent = new EventEmitter<void>();
+
+	situacoes = {
+		aberta: Situacao.aberta,
+		orcada: Situacao.orcada,
+		rejeitada: Situacao.rejeitada,
+		redirecionada: Situacao.redirecionada,
+		aprovada: Situacao.aprovada,
+		arrumada: Situacao.arrumada,
+		paga: Situacao.paga,
+		finalizada: Situacao.finalizada,
+	};
 
 	toggleExpansion() {
 		this.toggleExpansionEvent.emit();
