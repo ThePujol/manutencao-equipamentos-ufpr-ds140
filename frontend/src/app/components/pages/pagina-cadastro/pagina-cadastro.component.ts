@@ -32,16 +32,16 @@ export class PaginaCadastroComponent implements OnInit {
 		private pessoaService: PessoaService
 	) {
 		this.cadastroForm = this.fBuilder.group({
-			nome: ['', Validators.required],
+			nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
 			email: ['', [Validators.required, Validators.email]],
-			cpf: ['', Validators.required],
-			tel: ['', Validators.required],
-			estado: ['', Validators.required],
-			cidade: ['', Validators.required],
-			cep: ['', Validators.required],
-			endereco: ['', Validators.required],
-			numero: ['', Validators.required],
-			complemento: [''],
+			cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
+			tel: ['', [Validators.required, Validators.pattern(/^\(\d{2}\) \d{5}-\d{4}$/)]],
+			estado: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+			cidade: ['', [Validators.required, Validators.maxLength(100)]],
+			cep: ['', [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+			endereco: ['', [Validators.required, Validators.maxLength(150)]],
+			numero: ['', [Validators.required, Validators.maxLength(10)]],
+			complemento: ['', [Validators.maxLength(50)]],
 		});
 	}
 

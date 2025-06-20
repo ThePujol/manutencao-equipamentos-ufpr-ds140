@@ -144,6 +144,11 @@
 				</div>
 			</form>
 
+			<div *ngIf="cadastroForm.get('email')?.touched && cadastroForm.get('email')?.invalid" class="text-red-600 text-xs">
+				<span *ngIf="cadastroForm.get('email')?.errors?.['required']">Email é obrigatório.</span>
+				<span *ngIf="cadastroForm.get('email')?.errors?.['email']">Formato de email inválido.</span>
+			</div>
+
 			<p class="text-sm text-center mt-10">
 				Já possui uma conta?
 				<a routerLink="/login" class="text-indigo-600 hover:underline">Faça o login</a>
