@@ -5,8 +5,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CategoriaService } from '../../../../services/categoria.service';
 import { Categoria } from '../../../../shared/models/categoria.model';
 import { TableColumn } from '../../../../shared/tabela-interface';
+import { Util } from '../../../../shared/util';
 import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
 import { ButtonComponent } from '../../../ui/buttons/button/button.component';
+import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../../ui/input-text/input-text.component';
 import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
@@ -20,12 +22,13 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		SidebarFuncionarioComponent,
 		TabelaComponent,
 		InputPesquisarComponent,
-		ButtonComponent,
+		SecondaryButtonComponent,
 	],
 	templateUrl: './pagina-categorias.component.html',
 })
 export class PaginaCategoriasComponent implements OnInit {
-	categorias: Categoria[] = [];
+	todasCategorias!: Categoria[];
+	listaCategorias!: Categoria[];
 	categoriaSelecionada?: Categoria;
 	modal = false;
 	formCategoria!: FormGroup;
@@ -95,7 +98,12 @@ export class PaginaCategoriasComponent implements OnInit {
 
 	listarCategorias() {
 		this.categoriaService.listarTodasCategorias().subscribe((categorias) => {
-			this.categorias = categorias;
+			this.todasCategorias = categorias;
+			this.listaCategorias = categorias;
 		});
+	}
+
+	pesquisarCategoria(query: string) {
+		this.listaCategorias = Util.pesquisarCategoria(this.todasCategorias, query);
 	}
 }

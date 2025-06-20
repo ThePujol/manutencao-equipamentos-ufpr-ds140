@@ -8,6 +8,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { SolicitacaoService } from '../../../../services/solicitacao.service';
 import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
 import { TableColumn } from '../../../../shared/tabela-interface';
+import { Util } from '../../../../shared/util';
 import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
 import { ButtonComponent } from '../../../ui/buttons/button/button.component';
 import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
@@ -32,7 +33,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 	templateUrl: './pagina-solicitacoes-abertas.component.html',
 })
 export class PaginaSolicitacoesAbertasComponent implements OnInit {
-	listaSolicitacoes!: Solicitacao[];
+	todasSolicitacoes!: Solicitacao[];
 	solicitacoesAbertas!: Solicitacao[];
 	formOrcamento!: FormGroup;
 	solicitacaoModal!: Solicitacao;
@@ -77,8 +78,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 		solicitacao.dataOrcamento = new Date();
 		solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
 		solicitacao.situacao = Situacao.orcada;
-		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((response) => {
-			console.log(response);
+		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe(() => {
 			this.formOrcamento.reset();
 			this.toggleModal();
 		});
@@ -89,6 +89,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 			.listarSolicitacoes()
 			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.situacao === Situacao.aberta)))
 			.subscribe((solicitacoes) => {
+				this.todasSolicitacoes = solicitacoes;
 				this.solicitacoesAbertas = solicitacoes;
 			});
 	}
@@ -100,5 +101,10 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 		} else if (this.modal && !solicitacao) {
 			throw new Error('Não é possível abrir o modal sem uma solicitação selecionada!');
 		}
+	}
+
+	pesquisarSolicitacao(query: string) {
+		this.solicitacoesAbertas = Util.pesquisarSolicitacao(this.todasSolicitacoes, query);
+		console.log('oi');
 	}
 }

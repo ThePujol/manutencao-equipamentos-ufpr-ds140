@@ -7,6 +7,7 @@ import { SolicitacaoService } from '../../../../services/solicitacao.service';
 import { Pessoa } from '../../../../shared/models/pessoa.model';
 import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
 import { TableColumn } from '../../../../shared/tabela-interface';
+import { Util } from '../../../../shared/util';
 import { TabelaExpandivelComponent } from '../../../tabelas/tabela-expandivel/tabela-expandivel.component';
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
@@ -24,6 +25,7 @@ import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cli
 	templateUrl: './pagina-solicitacoes.component.html',
 })
 export class PaginaSolicitacoesComponent implements OnInit {
+	todasSolicitacoes: Solicitacao[] = [];
 	listaSolicitacoes: Solicitacao[] = [];
 	loggedUser!: Pessoa;
 	showMessage = false;
@@ -53,10 +55,10 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	ngOnInit() {
 		this.loggedUser = this.authService.getUserData();
 		this.solicitacaoService.listarSolicitacoes().subscribe((solicitacoes) => {
+			this.todasSolicitacoes = solicitacoes;
 			this.listaSolicitacoes = solicitacoes;
-			console.log(this.listaSolicitacoes);
 		});
-		this.listaSolicitacoes.filter((solicitacao) => solicitacao.cliente.id === this.loggedUser.id);
+		this.todasSolicitacoes.filter((solicitacao) => solicitacao.cliente.id === this.loggedUser.id);
 		this.orcamentoAction.setFuncoes({
 			aprovar: this.aprovarOrcamento.bind(this),
 			rejeitar: this.rejeitarOrcamento.bind(this),
@@ -108,5 +110,10 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		setTimeout(() => {
 			this.showMessage = false;
 		}, 3000);
+	}
+
+	pesquisarSolicitacao(query: string) {
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, query);
+		console.log('a');
 	}
 }

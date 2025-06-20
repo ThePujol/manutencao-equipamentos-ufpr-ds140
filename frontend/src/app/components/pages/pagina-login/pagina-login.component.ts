@@ -19,12 +19,11 @@ export class PaginaLoginComponent {
 
 	constructor(
 		private fb: FormBuilder,
-		private authService: AuthService, // Injete o novo serviço de autenticação
+		private authService: AuthService,
 		private router: Router
 	) {
 		this.loginForm = this.fb.group({
 			email: ['', [Validators.required, Validators.email]],
-			// O nome do campo no formulário deve bater com o da interface: 'senha'
 			senha: ['', Validators.required],
 		});
 	}

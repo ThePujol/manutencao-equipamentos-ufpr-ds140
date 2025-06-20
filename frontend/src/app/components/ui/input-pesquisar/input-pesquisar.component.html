@@ -1,16 +1,18 @@
-<ng-icon
-	name="matSearchOutline"
-	class="text-2xl text-gray-900/15 absolute w-[18px] h-[18px] mt-[11px] ml-3 opacity-40"
-/>
-<input
-	class="focus:outline-none border-1 border-gray-900/15 p-2.5 pl-10 w-[351px] rounded-md rounded-r-none"
-	type="text"
-	[placeholder]="placeholder"
-	[(ngModel)]="searchValue"
-/>
-<button
-	class="w-[125px] bg-[#4931A9] outline-1 outline-[#4931A9] cursor-pointer hover:bg-[#3e2996] duration-150 text-white rounded-md rounded-l-none p-2.5"
-	(click)="pesquisarClick.emit(searchValue)"
->
-	Pesquisar
-</button>
+<form [formGroup]="pesquisarForm" (ngSubmit)="onSubmit()">
+	<ng-icon
+		name="matSearchOutline"
+		class="text-2xl text-gray-900/15 absolute w-[18px] h-[18px] mt-[11px] ml-3 opacity-40"
+	/>
+	<input
+		class="focus:outline-none border-1 border-gray-900/15 p-2.5 pl-10 w-[351px] rounded-md rounded-r-none"
+		type="text"
+		[placeholder]="placeholder"
+		formControlName="query"
+	/>
+	<button
+		class="w-[125px] bg-[#4931A9] outline-1 outline-[#4931A9] cursor-pointer hover:bg-[#3e2996] duration-150 text-white rounded-md rounded-l-none p-2.5"
+		type="submit"
+	>
+		Pesquisar
+	</button>
+</form>

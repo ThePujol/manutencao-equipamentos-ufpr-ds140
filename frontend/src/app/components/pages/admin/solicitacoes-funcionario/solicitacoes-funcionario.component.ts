@@ -17,6 +17,7 @@ import { SolicitacaoService } from '../../../../services/solicitacao.service';
 import { Funcionario } from '../../../../shared/models/funcionario.model';
 import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
 import { TableColumn } from '../../../../shared/tabela-interface';
+import { Util } from '../../../../shared/util';
 import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
 import { ButtonComponent } from '../../../ui/buttons/button/button.component';
 import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
@@ -43,8 +44,8 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
 export class SolicitacoesFuncionarioComponent implements OnInit {
+	todasSolicitacoes!: Solicitacao[];
 	listaSolicitacoes!: Solicitacao[];
-	listaTodosFuncionarios!: Funcionario[];
 	listaFuncionarios!: Funcionario[];
 	formManutencao: FormGroup;
 	formRedirecionar: FormGroup;
@@ -111,6 +112,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 				)
 			)
 			.subscribe((solicitacoes) => {
+				this.todasSolicitacoes = solicitacoes;
 				this.listaSolicitacoes = solicitacoes;
 			});
 	}
@@ -122,10 +124,8 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 			.listarTodosFuncionarios()
 			.pipe(map((funcionarios) => funcionarios.filter((f) => f.id != this.authService.getUserData().id)))
 			.subscribe((funcionarios) => {
-				this.listaTodosFuncionarios = funcionarios;
+				this.listaFuncionarios = funcionarios;
 			});
-
-		this.listaFuncionarios = this.listaTodosFuncionarios;
 	}
 
 	toggleModalManutencao(solicitacao?: Solicitacao) {
@@ -203,7 +203,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		});
 	}
 
-	pesquisarFuncionarios(query: string) {
-		console.log(query);
+	pesquisarSolicitacao(query: string) {
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, query);
 	}
 }

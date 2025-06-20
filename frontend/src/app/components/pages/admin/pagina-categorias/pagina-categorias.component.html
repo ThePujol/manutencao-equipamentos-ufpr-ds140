@@ -9,24 +9,17 @@
 		</div>
 
 		<div class="flex justify-between w-full items-center">
-			<app-input-pesquisar placeholder="Pesquise uma categoria..." />
-			<div class="flex gap-5">
-				<input
-					type="date"
-					value="22-01-2023"
-					class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
-				/>
-				<app-button text="Nova categoria" (funcao)="abrirModal()" />
-			</div>
+			<app-input-pesquisar placeholder="Pesquise uma categoria..." (pesquisarClick)="pesquisarCategoria($event)" />
+			<app-secondary-button text="Nova categoria" (funcao)="abrirModal()" />
 		</div>
 		<app-tabela
 			[columns]="headersTabela"
-			[gridData]="categorias"
+			[gridData]="listaCategorias"
 			(editarClicked)="abrirModal($event)"
 			(excluirClicked)="removerCategoria($event.id)"
 		/>
 		<p class="mt-3 text-sm text-gray-900/70 font-light">
-			Exibindo 1-{{ categorias.length }} itens de {{ categorias.length }} itens.
+			Exibindo 1-{{ listaCategorias.length }} itens de {{ listaCategorias.length }} itens.
 		</p>
 	</section>
 

@@ -6,6 +6,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { FuncionarioService } from '../../../../services/funcionario.service';
 import { Funcionario } from '../../../../shared/models/funcionario.model';
 import { TableColumn } from '../../../../shared/tabela-interface';
+import { Util } from '../../../../shared/util';
 import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
 import { ButtonComponent } from '../../../ui/buttons/button/button.component';
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
@@ -27,7 +28,8 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 	templateUrl: './pagina-funcionarios.component.html',
 })
 export class PaginaFuncionariosComponent implements OnInit {
-	funcionarios: Funcionario[] = [];
+	todosFuncionarios!: Funcionario[];
+	listaFuncionarios!: Funcionario[];
 	funcionarioSelecionado?: Funcionario;
 	modal = false;
 	formfuncionario!: FormGroup;
@@ -112,7 +114,12 @@ export class PaginaFuncionariosComponent implements OnInit {
 
 	listarfuncionarios() {
 		this.funcionarioService.listarTodosFuncionarios().subscribe((funcionarios) => {
-			this.funcionarios = funcionarios;
+			this.todosFuncionarios = funcionarios;
+			this.listaFuncionarios = funcionarios;
 		});
+	}
+
+	pesquisarFuncionario(query: string) {
+		this.listaFuncionarios = Util.pesquisarFuncionario(this.todosFuncionarios, query);
 	}
 }
