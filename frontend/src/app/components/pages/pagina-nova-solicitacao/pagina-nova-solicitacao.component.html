@@ -34,7 +34,14 @@
 							[type]="'text'"
 							[placeholder]="'iPhone, Notebook Acer...'"
 							[required]="true"
+							autofocus
 						/>
+
+						<div *ngIf="novaSolicitacaoForm.get('descricao')?.touched && novaSolicitacaoForm.get('descricao')?.invalid" class="text-red-500 text-sm mt-1">
+							<span *ngIf="novaSolicitacaoForm.get('descricao')?.errors?.['required']">Descrição é obrigatória.</span>
+							<span *ngIf="novaSolicitacaoForm.get('descricao')?.errors?.['minlength']">Mínimo de 3 caracteres.</span>
+							<span *ngIf="novaSolicitacaoForm.get('descricao')?.errors?.['maxlength']">Máximo de 100 caracteres.</span>
+						</div>
 
 						<div class="flex flex-col w-full">
 							<label for="categoria" class="mb-1 text-sm font-medium text-gray-700">Categoria do equipamento</label>
@@ -58,10 +65,19 @@
 							[placeholder]="'Tela trincada, não liga...'"
 							[required]="true"
 						/>
+
+						<div *ngIf="novaSolicitacaoForm.get('defeito')?.touched && novaSolicitacaoForm.get('defeito')?.invalid" class="text-red-500 text-sm mt-1">
+							<span *ngIf="novaSolicitacaoForm.get('defeito')?.errors?.['required']">Defeito é obrigatório.</span>
+							<span *ngIf="novaSolicitacaoForm.get('defeito')?.errors?.['minlength']">Mínimo de 3 caracteres.</span>
+							<span *ngIf="novaSolicitacaoForm.get('defeito')?.errors?.['maxlength']">Máximo de 200 caracteres.</span>
+						</div>
 					</div>
 
 					<div class="flex flex-col gap-2">
-						<app-button text="Solicitar manutenção" type="submit" [disabledCondition]="novaSolicitacaoForm.invalid" />
+						<app-button text="Solicitar manutenção" type="submit" [disabledCondition]="novaSolicitacaoForm.invalid || carregando" />
+						<div *ngIf="carregando" class="flex justify-center mt-2">
+						  <span class="loader"></span>
+						</div>
 						<a
 							routerLink="/solicitacoes"
 							class="justify-center text-center cursor-pointer text-[#4931A9] text-sm font-semibold w-full p-2.5 rounded-md outline outline-[#4931A9] hover:outline-indigo-800 hover:text-indigo-800 duration-150"
@@ -70,6 +86,9 @@
 						</a>
 					</div>
 				</form>
+
+				<div *ngIf="mensagem" class="bg-green-100 text-green-700 p-2 rounded mb-2 text-center">{{ mensagem }}</div>
+				<div *ngIf="mensagemErro" class="bg-red-100 text-red-700 p-2 rounded mb-2 text-center">{{ mensagemErro }}</div>
 			</section>
 
 			<img
