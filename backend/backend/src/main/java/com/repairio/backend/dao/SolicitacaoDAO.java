@@ -1,5 +1,6 @@
 package com.repairio.backend.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -85,13 +86,17 @@ public class SolicitacaoDao {
     public void save(Solicitacao solicitacao) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            java.sql.PreparedStatement ps = connection.prepareStatement(
+            var ps = connection.prepareStatement(
                     "INSERT INTO solicitacao (descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id, dataSolicitacao, dataOrcamento, descricaoManutencao, dataManutencao, orientacoes, dataFinalizacao, motivoRejeicao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    java.sql.Statement.RETURN_GENERATED_KEYS);
+                    new String[] { "id" });
             ps.setString(1, solicitacao.getDescricao());
             ps.setLong(2, solicitacao.getCategoria().getId());
             ps.setString(3, solicitacao.getDefeito());
-            ps.setObject(4, solicitacao.getOrcamento());
+            if (solicitacao.getOrcamento() != null) {
+                ps.setDouble(4, solicitacao.getOrcamento());
+            } else {
+                ps.setNull(4, java.sql.Types.DOUBLE);
+            }
             ps.setString(5, solicitacao.getSituacao().name());
             ps.setLong(6, solicitacao.getCliente().getId());
             if (solicitacao.getFuncionario() != null) {
@@ -99,20 +104,17 @@ public class SolicitacaoDao {
             } else {
                 ps.setNull(7, java.sql.Types.BIGINT);
             }
-            ps.setTimestamp(8,
-                    solicitacao.getDataSolicitacao() != null
-                            ? java.sql.Timestamp.valueOf(solicitacao.getDataSolicitacao())
-                            : null);
-            ps.setObject(9,
-                    solicitacao.getDataOrcamento() != null ? new java.sql.Date(solicitacao.getDataOrcamento().getTime())
+            // Corrigido: setar dataSolicitacao corretamente
+            ps.setTimestamp(8, Timestamp.valueOf(solicitacao.getDataSolicitacao()));
+            ps.setTimestamp(9,
+                    solicitacao.getDataOrcamento() != null ? new Timestamp(solicitacao.getDataOrcamento().getTime())
                             : null);
             ps.setString(10, solicitacao.getDescricaoManutencao());
-            ps.setObject(11,
-                    solicitacao.getDataManutencao() != null
-                            ? new java.sql.Date(solicitacao.getDataManutencao().getTime())
+            ps.setTimestamp(11,
+                    solicitacao.getDataManutencao() != null ? new Timestamp(solicitacao.getDataManutencao().getTime())
                             : null);
             ps.setString(12, solicitacao.getOrientacoes());
-            ps.setObject(13,
+            ps.setDate(13,
                     solicitacao.getDataFinalizacao() != null
                             ? new java.sql.Date(solicitacao.getDataFinalizacao().getTime())
                             : null);
@@ -138,7 +140,7 @@ public class SolicitacaoDao {
                 solicitacao.getSituacao().name(),
                 solicitacao.getCliente().getId(),
                 solicitacao.getFuncionario() != null ? solicitacao.getFuncionario().getId() : null,
-                solicitacao.getDataSolicitacao(),
+                Timestamp.valueOf(solicitacao.getDataSolicitacao()),
                 solicitacao.getDataOrcamento(),
                 solicitacao.getDescricaoManutencao(),
                 solicitacao.getDataManutencao(),

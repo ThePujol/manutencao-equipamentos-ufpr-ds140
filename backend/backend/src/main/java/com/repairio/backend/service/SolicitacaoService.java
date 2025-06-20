@@ -6,6 +6,7 @@ import com.repairio.backend.model.SolicitacaoStatusHistorico;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -34,7 +35,7 @@ public class SolicitacaoService {
         SolicitacaoStatusHistorico historico = new SolicitacaoStatusHistorico();
         historico.setSolicitacao(solicitacao);
         historico.setSituacao(solicitacao.getSituacao());
-        historico.setDataHora(LocalDateTime.now());
+        historico.setDataHora(LocalDateTime.now(ZoneId.systemDefault()));
         historico.setObservacao("Solicitação criada");
         historicoService.registrarHistorico(historico);
     }
@@ -45,7 +46,8 @@ public class SolicitacaoService {
             SolicitacaoStatusHistorico historico = new SolicitacaoStatusHistorico();
             historico.setSolicitacao(solicitacao);
             historico.setSituacao(solicitacao.getSituacao());
-            historico.setDataHora(LocalDateTime.now());
+            // Usa o horário do sistema local
+            historico.setDataHora(LocalDateTime.now(ZoneId.systemDefault()));
             historico.setObservacao("Alteração de status");
             historicoService.registrarHistorico(historico);
         }
