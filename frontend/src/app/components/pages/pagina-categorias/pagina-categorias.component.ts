@@ -19,13 +19,15 @@ export class PaginaCategoriasComponent implements OnInit {
 	categoriaSelecionada?: Categoria;
 	modal = false;
 	formCategoria!: FormGroup;
+	mensagem = '';
+	mensagemErro = '';
 
 	constructor(
 		private categoriaService: CategoriaService,
 		private fBuilder: FormBuilder
 	) {
 		this.formCategoria = this.fBuilder.group({
-			descricao: ['', Validators.required],
+			descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
 		});
 	}
 
@@ -49,13 +51,16 @@ export class PaginaCategoriasComponent implements OnInit {
 	}
 
 	removerCategoria(id: number) {
-		this.categoriaService.removerCategoria(id);
-		this.categorias = this.categoriaService.listarTodasCategorias();
+		if (confirm('Tem certeza que deseja excluir esta categoria?')) {
+			this.categoriaService.removerCategoria(id);
+			this.categorias = this.categoriaService.listarTodasCategorias();
+		}
 	}
 
 	salvarOuEditarCategoria() {
 		if (this.formCategoria.invalid) {
 			this.formCategoria.markAllAsTouched();
+			this.mensagemErro = 'Preencha corretamente o nome da categoria.';
 			return;
 		}
 
@@ -70,6 +75,8 @@ export class PaginaCategoriasComponent implements OnInit {
 
 		this.categorias = this.categoriaService.listarTodasCategorias();
 		this.fecharModal();
+		this.mensagem = this.categoriaSelecionada ? 'Categoria atualizada!' : 'Categoria criada!';
+		setTimeout(() => this.mensagem = '', 3000);
 	}
 
 	listarCategorias(): Categoria[] {

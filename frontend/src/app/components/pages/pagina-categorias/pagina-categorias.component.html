@@ -75,7 +75,9 @@
 						*ngIf="formCategoria.get('descricao')?.touched && formCategoria.get('descricao')?.invalid"
 						class="text-red-500 text-sm mt-1"
 					>
-						Campo obrigatório.
+						<span *ngIf="formCategoria.get('descricao')?.errors?.['required']">Campo obrigatório.</span>
+						<span *ngIf="formCategoria.get('descricao')?.errors?.['minlength']">Mínimo de 3 caracteres.</span>
+						<span *ngIf="formCategoria.get('descricao')?.errors?.['maxlength']">Máximo de 100 caracteres.</span>
 					</div>
 				</div>
 
@@ -87,11 +89,14 @@
 					>
 						Cancelar
 					</button>
-					<button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
+					<button type="submit" [disabled]="formCategoria.invalid" class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
 						Salvar
 					</button>
 				</div>
 			</form>
 		</div>
 	</div>
+
+	<div *ngIf="mensagem" class="bg-green-100 text-green-700 p-2 rounded mb-2 text-center">{{ mensagem }}</div>
+	<div *ngIf="mensagemErro" class="bg-red-100 text-red-700 p-2 rounded mb-2 text-center">{{ mensagemErro }}</div>
 </div>
