@@ -1,3 +1,4 @@
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -11,6 +12,10 @@ import { TabelaExpandivelComponent } from '../../../tabelas/tabela-expandivel/ta
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cliente.component';
+import {
+	SolicitacaoHistoricoService,
+	SolicitacaoStatusHistorico,
+} from '../../../../services/solicitacao-status-historico.service';
 
 @Component({
 	selector: 'app-pagina-solicitacoes',
@@ -20,8 +25,11 @@ import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cli
 		InputPesquisarComponent,
 		MensagemComponent,
 		TabelaExpandivelComponent,
+		CommonModule, // Adicionado para diretivas ngIf/ngFor
+		DatePipe, // Adicionado para pipe 'date'
 	],
 	templateUrl: './pagina-solicitacoes.component.html',
+	providers: [DatePipe], // Garante que o DatePipe está disponível
 })
 export class PaginaSolicitacoesComponent implements OnInit {
 	listaSolicitacoes: Solicitacao[] = [];
@@ -30,38 +38,44 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	mensagem!: string;
 
 	headersTabela: TableColumn[] = [
-		{
-			fieldName: 'dataSolicitacao',
-			headerName: 'Data',
-		},
-		{
-			fieldName: 'descricao',
-			headerName: 'Descrição',
-		},
-		{
-			fieldName: 'situacao',
-			headerName: 'Situação',
-		},
+		{ fieldName: 'dataSolicitacao', headerName: 'Data' },
+		{ fieldName: 'descricao', headerName: 'Descrição' },
+		{ fieldName: 'situacao', headerName: 'Situação' },
 	];
+
+	// NOVO: para histórico
+	historico: SolicitacaoStatusHistorico[] = [];
+	mostrarModalHistorico = false;
 
 	constructor(
 		private solicitacaoService: SolicitacaoService,
 		private authService: AuthService,
-		private orcamentoAction: OrcamentoService
+		private orcamentoAction: OrcamentoService,
+		private historicoService: SolicitacaoHistoricoService // NOVO
 	) {}
 
 	ngOnInit() {
 		this.loggedUser = this.authService.getUserData();
 		this.solicitacaoService.listarSolicitacoes().subscribe((solicitacoes) => {
 			this.listaSolicitacoes = solicitacoes;
-			console.log(this.listaSolicitacoes);
 		});
-		this.listaSolicitacoes.filter((solicitacao) => solicitacao.cliente.id === this.loggedUser.id);
 		this.orcamentoAction.setFuncoes({
 			aprovar: this.aprovarOrcamento.bind(this),
 			rejeitar: this.rejeitarOrcamento.bind(this),
 			resgatar: this.resgatarOrcamento.bind(this),
 		});
+	}
+
+	abrirHistorico(solicitacaoId: number) {
+		this.historicoService.listarHistorico(solicitacaoId).subscribe((h) => {
+			this.historico = h;
+			this.mostrarModalHistorico = true;
+		});
+	}
+
+	fecharModalHistorico() {
+		this.mostrarModalHistorico = false;
+		this.historico = [];
 	}
 
 	aprovarOrcamento(solicitacao: Solicitacao) {

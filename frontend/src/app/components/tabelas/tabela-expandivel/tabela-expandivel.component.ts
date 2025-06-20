@@ -16,6 +16,7 @@ import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.c
 export class TabelaExpandivelComponent {
 	@Input() columns!: TableColumn[];
 	@Input() gridData!: any[];
+	@Input() abrirHistorico?: (id: number) => void;
 	itemSelecionado!: any;
 
 	toggleExpansao(item: any) {

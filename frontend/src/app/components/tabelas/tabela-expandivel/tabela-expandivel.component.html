@@ -36,6 +36,12 @@
 					}
 
 					<td class="w-52 text-right">
+						<button
+							class="text-primary underline text-sm font-medium hover:opacity-80 mr-2"
+							(click)="$event.stopPropagation(); abrirHistorico && abrirHistorico(item.id)"
+						>
+							Ver histórico
+						</button>
 						<button class="text-3xl text-black/50 cursor-pointer" (click)="toggleExpansao(item)">
 							<ng-icon name="matChevronLeftOutline" />
 						</button>

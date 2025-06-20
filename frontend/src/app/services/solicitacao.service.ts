@@ -14,7 +14,6 @@ export class SolicitacaoService {
 	apiUrl = 'http://localhost:8080/api/solicitacoes';
 
 	listarSolicitacoes(): Observable<Solicitacao[]> {
-		// Transforma as datas de String pra Date antes de retornar
 		return this.http.get<Solicitacao[]>(this.apiUrl).pipe(
 			map((solicitacoes) =>
 				solicitacoes.map((s) => ({
