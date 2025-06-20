@@ -1,29 +1,34 @@
+<!-- src/app/components/ui/sidebar-cliente/sidebar-cliente.component.html -->
 <div class="flex flex-col items-start justify-between w-[283px] bg-[#4931A9] text-white h-screen p-1.5 pt-2.5">
-	<div class="flex gap-1 flex-col w-full h-full">
-		<a
-			routerLink="/"
-			class="flex items-center p-2.5 pb-8 gap-4 cursor-pointer opacity-70 hover:opacity-100 duration-150"
-		>
-			<img src="logo-branco.png" alt="Logo" class="w-[30px]" />
-			<p class="text-white font-bold">repair.io</p>
-		</a>
+	<!-- bloco de navegação e greeting só aparece se loggedUser estiver definido -->
+	<ng-container *ngIf="loggedUser">
+		<div class="flex gap-1 flex-col w-full h-full">
+			<a
+				routerLink="/"
+				class="flex items-center p-2.5 pb-8 gap-4 cursor-pointer opacity-70 hover:opacity-100 duration-150"
+			>
+				<img src="logo-branco.png" alt="Logo" class="w-[30px]" />
+				<p class="text-white font-bold">repair.io</p>
+			</a>
 
-		<div class="flex p-2.5 gap-4 items-center">
-			<img
-				src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
-				alt="Foto perfil"
-				class="rounded-full w-[42px] h-[42px]"
-			/>
-			<div>
-				<h1 class="text-[20px] font-semibold">Olá, {{ primeiroNome }}.</h1>
-				<h2 class="opacity-50 text-sm">Selecione uma página.</h2>
+			<div class="flex p-2.5 gap-4 items-center">
+				<img
+					src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+					alt="Foto perfil"
+					class="rounded-full w-[42px] h-[42px]"
+				/>
+				<div>
+					<h1 class="text-[20px] font-semibold">Olá, {{ primeiroNome }}.</h1>
+					<h2 class="opacity-50 text-sm">Selecione uma página.</h2>
+				</div>
 			</div>
+
+			<app-sidebar-button routerLink="/solicitacoes" text="Solicitações" icon="matBuildOutline" />
+			<app-sidebar-button routerLink="/nova-solicitacao" icon="matAddCircleOutlineOutline" text="Nova solicitação" />
 		</div>
+	</ng-container>
 
-		<app-sidebar-button routerLink="/solicitacoes" text="Solicitações" icon="matBuildOutline" />
-		<app-sidebar-button routerLink="/nova-solicitacao" icon="matAddCircleOutlineOutline" text="Nova solicitação" />
-	</div>
-
+	<!-- botão de logout sempre visível -->
 	<a
 		routerLink="/login"
 		(click)="deslogar()"
@@ -32,6 +37,4 @@
 		<ng-icon class="text-2xl" name="matLogOutOutline" />
 		<p>Sair</p>
 	</a>
-
-	<router-outlet></router-outlet>
 </div>

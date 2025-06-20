@@ -1,6 +1,8 @@
-@if (loggedUser.cpf) {
+<!-- src/app/components/pages/pagina-solicitacoes/pagina-solicitacoes.component.html -->
+
+<ng-container *ngIf="loggedUser?.cpf; else noAccess">
 	<main class="flex gap-10 h-full">
-		<app-sidebar-cliente nome="Guilherme" />
+		<app-sidebar-cliente nome="Guilherme"></app-sidebar-cliente>
 
 		<section class="flex flex-col py-10 gap-[30px] pr-10 w-full overflow-y-auto">
 			<div>
@@ -11,14 +13,15 @@
 			<!-- Filtros -->
 			<div class="flex justify-between w-full items-center">
 				<div>
-					<app-input-pesquisar placeholder="Pesquise uma solicitação..." />
+					<app-input-pesquisar placeholder="Pesquise uma solicitação..."></app-input-pesquisar>
 				</div>
 				<div>
 					<label
 						for="estado"
 						class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30"
-						>Estado</label
 					>
+						Estado
+					</label>
 					<select
 						name="estado"
 						id="estado"
@@ -38,23 +41,27 @@
 				</div>
 			</div>
 
-			<!-- Tabela -->
-			@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
+			<!-- Tabela ou mensagem de vazio -->
+			<ng-container *ngIf="listaSolicitacoes?.length; else noSolicitacoes">
 				<app-tabela-expandivel
 					[columns]="headersTabela"
 					[gridData]="listaSolicitacoes"
 					(actionButtonClick)="expandirTabela($event)"
-				/>
-			} @else {
+				></app-tabela-expandivel>
+			</ng-container>
+			<ng-template #noSolicitacoes>
 				<p>Você ainda não fez nenhuma solicitação.</p>
-			}
+			</ng-template>
 		</section>
-		<app-mensagem [mensagem]="mensagem" [showMessage]="showMessage" />
+
+		<app-mensagem [mensagem]="mensagem" [showMessage]="showMessage"></app-mensagem>
 	</main>
 
 	<router-outlet></router-outlet>
-} @else {
+</ng-container>
+
+<ng-template #noAccess>
 	<div class="w-full h-full flex justify-center items-center">
-		<p class="text-3xl font-bold text-primary">Você não tem acesso a esta pagina.</p>
+		<p class="text-3xl font-bold text-primary">Você não tem acesso a esta página.</p>
 	</div>
-}
+</ng-template>

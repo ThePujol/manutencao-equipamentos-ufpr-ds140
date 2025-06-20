@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+// src/app/services/default-values.service.ts
 
+import { Injectable } from '@angular/core';
 import { Funcionario } from '../shared/models/funcionario.model';
 import { FuncionarioService } from './funcionario.service';
 
@@ -7,21 +8,22 @@ import { FuncionarioService } from './funcionario.service';
 	providedIn: 'root',
 })
 export class DefaultValuesService {
-	defaultFuncionarios: Funcionario[] = [
-		new Funcionario(1, 'mario@gmail.com', 'Mario', 'mario123', new Date('01/01/1980')),
-		new Funcionario(2, 'maria@gmail.com', 'Maria', 'maria123', new Date('01/01/1980')),
+	private defaultFuncionarios: Funcionario[] = [
+		new Funcionario(1, 'mario@gmail.com', 'Mario', 'mario123', new Date('1980-01-01')),
+		new Funcionario(2, 'maria@gmail.com', 'Maria', 'maria123', new Date('1980-01-01')),
 	];
 
 	constructor(private funcionarioService: FuncionarioService) {}
 
-	setarDefaultFuncionarios() {
-		const listaFuncionarios = this.funcionarioService.listarTodosFuncionarios();
+	setarDefaultFuncionarios(): void {
+		// Usa o stub síncrono para obter o array puro
+		const lista: Funcionario[] = this.funcionarioService.listarTodosFuncionariosSync();
 
-		if (!listaFuncionarios.find((funcionario: Funcionario) => funcionario.id === 1)) {
-			this.funcionarioService.addFuncionario(this.defaultFuncionarios[0]);
-		}
-		if (!listaFuncionarios.find((funcionario: Funcionario) => funcionario.id === 2)) {
-			this.funcionarioService.addFuncionario(this.defaultFuncionarios[1]);
-		}
+		// Adiciona só se não existir
+		this.defaultFuncionarios.forEach((def) => {
+			if (!lista.find((f) => f.id === def.id)) {
+				this.funcionarioService.addFuncionario(def);
+			}
+		});
 	}
 }

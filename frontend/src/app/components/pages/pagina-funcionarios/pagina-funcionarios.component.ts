@@ -1,9 +1,8 @@
 // src/app/components/pages/pagina-funcionarios/pagina-funcionarios.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgIf, NgFor } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 
 import { SidebarFuncionarioComponent } from '../../ui/sidebar-funcionario/sidebar-funcionario.component';
 import { InputPesquisarComponent } from '../../ui/input-pesquisar/input-pesquisar.component';
@@ -21,9 +20,7 @@ import { TableColumn } from '../../../shared/tabela-interface';
 	imports: [
 		CommonModule,
 		NgIf,
-		NgFor,
 		ReactiveFormsModule,
-		RouterLink,
 		SidebarFuncionarioComponent,
 		InputPesquisarComponent,
 		InputTextComponent,
@@ -34,12 +31,13 @@ import { TableColumn } from '../../../shared/tabela-interface';
 })
 export class PaginaFuncionariosComponent implements OnInit {
 	funcionarios: Funcionario[] = [];
+
 	headersTabela: TableColumn[] = [
-		{ field: 'id', header: 'ID' },
-		{ field: 'nome', header: 'Nome' },
-		{ field: 'email', header: 'Email' },
-		{ field: 'dataNasc', header: 'Data Nasc.' },
-		{ field: 'acoes', header: 'Ações' }, // ou outro field que seu componente use para ações
+		{ fieldName: 'id', headerName: 'ID' },
+		{ fieldName: 'nome', headerName: 'Nome' },
+		{ fieldName: 'email', headerName: 'Email' },
+		{ fieldName: 'dataNasc', headerName: 'Data Nasc.' },
+		{ fieldName: 'acoes', headerName: 'Ações' },
 	];
 
 	modal = false;
@@ -68,8 +66,8 @@ export class PaginaFuncionariosComponent implements OnInit {
 
 	private loadFuncionarios(): void {
 		this.service.listarTodosFuncionarios().subscribe({
-			next: (lista) => (this.funcionarios = lista),
-			error: (err) => console.error('Erro ao carregar funcionários', err),
+			next: (lista: Funcionario[]) => (this.funcionarios = lista),
+			error: (err: any) => console.error('Erro ao carregar funcionários', err),
 		});
 	}
 
@@ -106,14 +104,14 @@ export class PaginaFuncionariosComponent implements OnInit {
 				this.modal = false;
 				this.loadFuncionarios();
 			},
-			error: (err) => console.error('Erro ao salvar funcionário', err),
+			error: (err: any) => console.error('Erro ao salvar funcionário', err),
 		});
 	}
 
 	removerfuncionario(id: number): void {
 		this.service.remover(id).subscribe({
 			next: () => this.loadFuncionarios(),
-			error: (err) => console.error('Erro ao remover funcionário', err),
+			error: (err: any) => console.error('Erro ao remover funcionário', err),
 		});
 	}
 }

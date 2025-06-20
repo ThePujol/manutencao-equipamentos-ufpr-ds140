@@ -1,4 +1,4 @@
-@if (loggedUser.cpf) {
+<ng-container *ngIf="loggedUser?.cpf; else noAccess">
 	<main class="flex gap-10 h-screen w-full">
 		<app-sidebar-cliente></app-sidebar-cliente>
 
@@ -6,17 +6,16 @@
 			<section class="flex flex-col py-10 gap-[30px] h-screen">
 				<div>
 					<h1 class="flex gap-4 items-center text-[40px] font-semibold text-[#4931A9]">
-						<ng-icon name="matAddCircleOutlineOutline" />
-						Nova Solicitação
+						<ng-icon name="matAddCircleOutline" />
+						{{ title }}
 					</h1>
 					<h2 class="opacity-50 font-light">Crie uma nova solicitação de manutenção para o seu equipamento.</h2>
 				</div>
 
 				<form
 					(ngSubmit)="onSubmit()"
-					#solicitacaoForm="ngForm"
-					class="flex flex-col justify-between h-[550px] p-8 rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.25)] max-w-[500px]"
 					[formGroup]="novaSolicitacaoForm"
+					class="flex flex-col justify-between h-[550px] p-8 rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.25)] max-w-[500px]"
 				>
 					<div>
 						<h2 class="flex items-center gap-2 text-xl font-semibold text-[#4931A9]">
@@ -29,33 +28,31 @@
 
 					<div class="flex flex-col gap-5">
 						<app-input-text
-							[label]="'Descrição do equipamento'"
+							label="Descrição do equipamento"
 							controlName="descricao"
-							[type]="'text'"
-							[placeholder]="'iPhone, Notebook Acer...'"
+							type="text"
+							placeholder="iPhone, Notebook Acer..."
 							[required]="true"
 						/>
 
 						<div class="flex flex-col w-full">
 							<label for="categoria" class="mb-1 text-sm font-medium text-gray-700">Categoria do equipamento</label>
 							<select
-								name="categoria"
 								id="categoria"
-								class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
-								required
 								formControlName="categoria"
+								class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
 							>
-								@for (categoria of listaCategorias; track categoria.id) {
-									<option [value]="categoria.id">{{ categoria.descricao }}</option>
-								}
+								<option *ngFor="let categoria of listaCategorias; trackBy: trackByCategoria" [value]="categoria.id">
+									{{ categoria.descricao }}
+								</option>
 							</select>
 						</div>
 
 						<app-input-text
-							[label]="'Descrição do defeito'"
+							label="Descrição do defeito"
 							controlName="defeito"
-							[type]="'text'"
-							[placeholder]="'Tela trincada, não liga...'"
+							type="text"
+							placeholder="Tela trincada, não liga..."
 							[required]="true"
 						/>
 					</div>
@@ -81,8 +78,10 @@
 	</main>
 
 	<router-outlet></router-outlet>
-} @else {
+</ng-container>
+
+<ng-template #noAccess>
 	<div class="w-full h-full flex justify-center items-center">
-		<p class="text-3xl font-bold text-primary">Você não tem acesso a esta pagina.</p>
+		<p class="text-3xl font-bold text-primary">Você não tem acesso a esta página.</p>
 	</div>
-}
+</ng-template>

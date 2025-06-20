@@ -36,4 +36,9 @@ export class LoggedUserService {
 			catchError(() => of(null))
 		);
 	}
+
+	/** alias síncrono para compatibilidade com código antigo */
+	getLoggedUser(): Observable<Pessoa | Funcionario | null> {
+		return this.getLoggedUser$();
+	}
 }

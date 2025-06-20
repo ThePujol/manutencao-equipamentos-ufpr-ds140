@@ -1,17 +1,32 @@
+// src/app/components/ui/sidebar-funcionario/sidebar-funcionario.component.ts
+
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { CommonModule, NgIf } from '@angular/common';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matExpandLessOutline, matExpandMoreOutline, matLogOutOutline, matTodayOutline } from '@ng-icons/material-icons/outline';
-import { CommonModule } from '@angular/common';
+import {
+	matLogOutOutline,
+	matExpandMoreOutline,
+	matExpandLessOutline,
+	matTodayOutline,
+} from '@ng-icons/material-icons/outline';
+
 import { LoggedUserService } from '../../../services/logged-user.service';
 import { Funcionario } from '../../../shared/models/funcionario.model';
-import { Pessoa } from '../../../shared/models/pessoa.model';
 import { SidebarButtonComponent } from '../buttons/sidebar-button/sidebar-button.component';
 
 @Component({
 	selector: 'app-sidebar-funcionario',
-	imports: [CommonModule, RouterLink, RouterOutlet, RouterModule, SidebarButtonComponent, NgIcon],
-		viewProviders: [
+	standalone: true,
+	imports: [
+		CommonModule,
+		NgIf,
+		RouterLink,
+		RouterOutlet, // <- adicionado aqui
+		SidebarButtonComponent,
+		NgIcon,
+	],
+	viewProviders: [
 		provideIcons({
 			matLogOutOutline,
 			matExpandMoreOutline,
@@ -23,25 +38,28 @@ import { SidebarButtonComponent } from '../buttons/sidebar-button/sidebar-button
 })
 export class SidebarFuncionarioComponent implements OnInit {
 	@Input() selected = 0;
-	loggedUser!: Pessoa | Funcionario;
-	primeiroNome!: string;
-
-	// Variável para controlar a expansão do submenu de relatórios
+	loggedUser: Funcionario | null = null;
+	primeiroNome = '';
 	relatoriosExpanded = false;
 
-	constructor(private readonly loggedUserService: LoggedUserService) { }
+	constructor(private readonly loggedUserService: LoggedUserService) {}
 
-	// Método para alternar o submenu de relatórios
-	toggleRelatorios() {
+	toggleRelatorios(): void {
 		this.relatoriosExpanded = !this.relatoriosExpanded;
 	}
 
-	deslogar() {
+	deslogar(): void {
 		this.loggedUserService.clearLoggedUser();
 	}
 
-	ngOnInit() {
-		this.loggedUser = this.loggedUserService.getLoggedUser();
-		this.primeiroNome = this.loggedUser.nome.split(' ')[0];
+	ngOnInit(): void {
+		this.loggedUserService.getLoggedUser$().subscribe((user) => {
+			if (user && 'dataNasc' in user) {
+				this.loggedUser = user as Funcionario;
+				this.primeiroNome = this.loggedUser.nome.split(' ')[0];
+			} else {
+				this.loggedUser = null;
+			}
+		});
 	}
 }

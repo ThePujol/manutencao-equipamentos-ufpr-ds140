@@ -1,0 +1,43 @@
+<!-- src/app/components/teste-pessoa/teste-pessoa.component.html -->
+<section class="p-4 space-y-6">
+	<h2 class="text-xl font-bold">Teste CRUD de Pessoa</h2>
+
+	<!-- Formulário de criação -->
+	<form [formGroup]="form" (ngSubmit)="create()" class="grid grid-cols-2 gap-2">
+		<input formControlName="email" placeholder="Email" class="border p-1" />
+		<input formControlName="senha" placeholder="Senha" class="border p-1" />
+		<input formControlName="nome" placeholder="Nome" class="border p-1" />
+		<input formControlName="cpf" placeholder="CPF" class="border p-1" />
+		<input formControlName="tel" placeholder="Tel" class="border p-1" />
+		<input formControlName="cep" placeholder="CEP" class="border p-1" />
+		<input formControlName="estado" placeholder="Estado" class="border p-1" />
+		<input formControlName="cidade" placeholder="Cidade" class="border p-1" />
+		<input formControlName="endereco" placeholder="Endereço" class="border p-1" />
+		<input formControlName="num" placeholder="Número" class="border p-1" />
+		<input formControlName="complemento" placeholder="Compl." class="border p-1" />
+		<button type="submit" [disabled]="form.invalid" class="col-span-2 bg-blue-500 text-white p-1">Criar Pessoa</button>
+	</form>
+
+	<!-- Tabela de Pessoas -->
+	<table class="w-full border-collapse">
+		<thead>
+			<tr>
+				<th class="border p-1">ID</th>
+				<th class="border p-1">Nome</th>
+				<th class="border p-1">Email</th>
+				<th class="border p-1">Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let p of pessoas">
+				<td class="border p-1">{{ p.id }}</td>
+				<td class="border p-1">{{ p.nome }}</td>
+				<td class="border p-1">{{ p.email }}</td>
+				<td class="border p-1 space-x-1">
+					<button (click)="update(p)" class="bg-yellow-400 px-2">Editar</button>
+					<button (click)="delete(p)" class="bg-red-500 text-white px-2">Excluir</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</section>
