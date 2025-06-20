@@ -78,11 +78,11 @@ public class SolicitacaoDao {
 
     public void save(Solicitacao solicitacao) {
         jdbcTemplate.update(
-                "INSERT INTO solicitacao (" +
-                    "descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id, " +
-                    "dataSolicitacao, dataOrcamento, descricaoManutencao, dataManutencao, " +
-                    "orientacoes, dataFinalizacao, motivoRejeicao" +
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO solicitacao ("
+                + "descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id, "
+                + "dataSolicitacao, dataOrcamento, descricaoManutencao, dataManutencao, "
+                + "orientacoes, dataFinalizacao, motivoRejeicao"
+                + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 solicitacao.getDescricao(),
                 solicitacao.getCategoria().getId(),
                 solicitacao.getDefeito(),
@@ -101,11 +101,11 @@ public class SolicitacaoDao {
 
     public void update(Solicitacao solicitacao) {
         jdbcTemplate.update(
-                "UPDATE solicitacao SET " +
-                    "descricao = ?, categoria_id = ?, defeito = ?, orcamento = ?, situacao = ?, cliente_id = ?, funcionario_id = ?, " +
-                    "dataSolicitacao = ?, dataOrcamento = ?, descricaoManutencao = ?, dataManutencao = ?, " +
-                    "orientacoes = ?, dataFinalizacao = ?, motivoRejeicao = ? " +
-                    "WHERE id = ?",
+                "UPDATE solicitacao SET "
+                + "descricao = ?, categoria_id = ?, defeito = ?, orcamento = ?, situacao = ?, cliente_id = ?, funcionario_id = ?, "
+                + "dataSolicitacao = ?, dataOrcamento = ?, descricaoManutencao = ?, dataManutencao = ?, "
+                + "orientacoes = ?, dataFinalizacao = ?, motivoRejeicao = ? "
+                + "WHERE id = ?",
                 solicitacao.getDescricao(),
                 solicitacao.getCategoria().getId(),
                 solicitacao.getDefeito(),

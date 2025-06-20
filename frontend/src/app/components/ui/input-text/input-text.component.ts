@@ -16,6 +16,8 @@ export class InputTextComponent implements OnInit {
 	@Input() controlName = '';
 	@Input() required = false;
 	@Input() mask = '';
+	@Input() errorMessage?: string;
+	@Input() error = false;
 	formControl!: FormControl;
 
 	constructor(private formGroupDirective: FormGroupDirective) {}

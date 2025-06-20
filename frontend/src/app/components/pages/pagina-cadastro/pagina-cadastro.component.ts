@@ -23,6 +23,8 @@ export class PaginaCadastroComponent implements OnInit {
 	cepNaoEncontrado = false;
 	modal = false;
 	cadastroForm!: FormGroup;
+	emailJaExiste = false;
+	cpfJaExiste = false;
 
 	constructor(
 		private fBuilder: FormBuilder,
@@ -85,10 +87,31 @@ export class PaginaCadastroComponent implements OnInit {
 	onSubmit() {
 		if (this.cadastroForm.valid) {
 			const dados = this.cadastroForm.value;
-			this.pessoaService.addPessoa(dados);
-			this.submitted = true;
-			this.cadastroForm.reset();
-			this.modal = true;
+			this.pessoaService.addPessoa(dados).subscribe({
+				next: () => {
+					this.submitted = true;
+					this.cadastroForm.reset();
+					this.modal = true;
+					this.emailJaExiste = false;
+				},
+				error: (err) => {
+					if (err.status === 400) {
+						const msg = err.error.toLowerCase();
+						if (msg.includes('email')) {
+							this.emailJaExiste = true;
+							this.cadastroForm.get('email')?.setErrors({ jaExiste: true });
+						}
+						if (msg.includes('cpf')) {
+							this.cpfJaExiste = true;
+							this.cadastroForm.get('cpf')?.setErrors({ jaExiste: true });
+						}
+
+						console.error(err.error);
+					} else {
+						console.error('Erro inesperado');
+					}
+				},
+			});
 		} else {
 			this.cadastroForm.markAllAsTouched();
 		}

@@ -48,6 +48,8 @@
 						[placeholder]="'email@example.com'"
 						[required]="true"
 						class="col-span-2"
+						[error]="emailJaExiste"
+						[errorMessage]="'Um usuário com este email já existe.'"
 					></app-input-text>
 					<app-input-text
 						[label]="'CPF:'"
@@ -57,6 +59,8 @@
 						[mask]="'000.000.000-00'"
 						[required]="true"
 						class="col-span-2"
+						[error]="cpfJaExiste"
+						[errorMessage]="'Um usuário com este cpf já existe.'"
 					></app-input-text>
 					<app-input-text
 						[label]="'Telefone:'"

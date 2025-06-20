@@ -103,4 +103,16 @@ public class PessoaDao {
             return null;
         }
     }
+
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT COUNT(*) FROM pessoa WHERE email = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
+    }
+
+    public boolean existsByCpf(String cpf) {
+        String sql = "SELECT COUNT(*) FROM pessoa WHERE cpf = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, cpf);
+        return count != null && count > 0;
+    }
 }

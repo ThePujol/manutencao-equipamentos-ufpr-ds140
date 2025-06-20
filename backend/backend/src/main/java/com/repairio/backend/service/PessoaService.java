@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.repairio.backend.dao.PessoaDao;
+import com.repairio.backend.exception.CpfJaCadastradoException;
+import com.repairio.backend.exception.EmailJaCadastradoException;
 import com.repairio.backend.model.Pessoa;
 import com.repairio.backend.util.PasswordUtil;
 
@@ -26,6 +28,14 @@ public class PessoaService {
     }
 
     public void save(Pessoa pessoa, String plainPassword) {
+        if (pessoaDao.existsByEmail(pessoa.getEmail())) {
+            throw new EmailJaCadastradoException("Um usuário com este email já existe.");
+        }
+
+        if (pessoaDao.existsByCpf(pessoa.getCpf())) {
+            throw new CpfJaCadastradoException("Um usuário com este cpf já existe.");
+        }
+
         String salt = PasswordUtil.generateSalt();
         String hashed = PasswordUtil.hashPassword(plainPassword, salt);
         pessoa.setSenha(hashed);
