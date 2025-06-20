@@ -29,7 +29,7 @@ export class TabelaExpandivelComponent {
 	}
 
 	checkIfDate(obj: unknown) {
-		if (obj instanceof Date) {
+		if (obj instanceof Date && !isNaN(obj.getTime())) {
 			return true;
 		}
 		return false;

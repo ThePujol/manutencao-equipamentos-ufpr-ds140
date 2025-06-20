@@ -38,7 +38,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	mensagem!: string;
 
 	headersTabela: TableColumn[] = [
-		{ fieldName: 'dataSolicitacao', headerName: 'Data' },
+		{ fieldName: 'dataSolicitacaoAbertura', headerName: 'Data' },
 		{ fieldName: 'descricao', headerName: 'Descrição' },
 		{ fieldName: 'situacao', headerName: 'Situação' },
 	];

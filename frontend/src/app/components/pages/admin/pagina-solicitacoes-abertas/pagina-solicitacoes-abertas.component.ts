@@ -40,7 +40,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 
 	headersTabela: TableColumn[] = [
 		{
-			fieldName: 'dataSolicitacao',
+			fieldName: 'dataSolicitacaoAbertura',
 			headerName: 'Data / Hora',
 		},
 		{

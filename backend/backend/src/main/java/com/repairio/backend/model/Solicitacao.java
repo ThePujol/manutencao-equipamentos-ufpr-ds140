@@ -1,6 +1,5 @@
 package com.repairio.backend.model;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
@@ -25,9 +24,6 @@ public class Solicitacao {
     @NotBlank(message = "Situação é obrigatória")
     private Situacao situacao;
 
-    @NotBlank(message = "Data da solicitação é obrigatória")
-    private LocalDateTime dataSolicitacao;
-
     @NotBlank(message = "Cliente é obrigatório")
     private Pessoa cliente;
 
@@ -39,4 +35,13 @@ public class Solicitacao {
     private String orientacoes;
     private Date dataFinalizacao;
     private String motivoRejeicao;
+    private Date dataSolicitacaoAbertura; // Não persistente, apenas para exibição
+
+    public Date getDataSolicitacaoAbertura() {
+        return dataSolicitacaoAbertura;
+    }
+
+    public void setDataSolicitacaoAbertura(Date dataSolicitacaoAbertura) {
+        this.dataSolicitacaoAbertura = dataSolicitacaoAbertura;
+    }
 }

@@ -16,13 +16,17 @@ export class SolicitacaoService {
 	listarSolicitacoes(): Observable<Solicitacao[]> {
 		return this.http.get<Solicitacao[]>(this.apiUrl).pipe(
 			map((solicitacoes) =>
-				solicitacoes.map((s) => ({
-					...s,
-					dataSolicitacao: new Date(s.dataSolicitacao),
-					dataOrcamento: s.dataOrcamento ? new Date(s.dataOrcamento) : undefined,
-					dataManutencao: s.dataManutencao ? new Date(s.dataManutencao) : undefined,
-					dataFinalizacao: s.dataFinalizacao ? new Date(s.dataFinalizacao) : undefined,
-				}))
+				solicitacoes.map(
+					(s) =>
+						({
+							...s,
+							// Garante que dataSolicitacaoAbertura é Date ou null
+							dataSolicitacaoAbertura: s.dataSolicitacaoAbertura ? new Date(s.dataSolicitacaoAbertura) : null,
+							dataOrcamento: s.dataOrcamento ? new Date(s.dataOrcamento) : undefined,
+							dataManutencao: s.dataManutencao ? new Date(s.dataManutencao) : undefined,
+							dataFinalizacao: s.dataFinalizacao ? new Date(s.dataFinalizacao) : undefined,
+						}) as Solicitacao
+				)
 			)
 		);
 	}

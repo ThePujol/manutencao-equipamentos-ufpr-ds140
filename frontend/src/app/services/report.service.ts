@@ -26,7 +26,13 @@ export class ReportService {
 				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.paga);
 
 				const solicitacoesFiltradas = solicitacoesPagas.filter((s) => {
-					const dataDaSolicitacao = s.dataFinalizacao ? new Date(s.dataFinalizacao) : new Date(s.dataSolicitacao);
+					const dataDaSolicitacao = s.dataFinalizacao
+						? new Date(s.dataFinalizacao)
+						: s.dataSolicitacaoAbertura
+							? new Date(s.dataSolicitacaoAbertura)
+							: null;
+
+					if (!dataDaSolicitacao) return false;
 
 					const aposInicio = !dataInicio || dataDaSolicitacao >= dataInicio;
 					const antesFim = !dataFim || dataDaSolicitacao <= dataFim;
@@ -36,7 +42,12 @@ export class ReportService {
 
 				const mapa = new Map<string, number>();
 				solicitacoesFiltradas.forEach((s) => {
-					const dataDaSolicitacao = s.dataFinalizacao ? new Date(s.dataFinalizacao) : new Date(s.dataSolicitacao);
+					const dataDaSolicitacao = s.dataFinalizacao
+						? new Date(s.dataFinalizacao)
+						: s.dataSolicitacaoAbertura
+							? new Date(s.dataSolicitacaoAbertura)
+							: null;
+					if (!dataDaSolicitacao) return;
 					// A chave do mapa será a data no formato 'YYYY-MM-DD' para garantir o agrupamento correto
 					const key = dataDaSolicitacao.toISOString().substring(0, 10);
 					mapa.set(key, (mapa.get(key) || 0) + (s.orcamento ?? 0));

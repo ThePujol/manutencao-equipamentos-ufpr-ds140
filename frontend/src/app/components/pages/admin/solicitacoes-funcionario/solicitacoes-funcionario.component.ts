@@ -56,7 +56,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 	headersTabela: TableColumn[] = [
 		{
-			fieldName: 'dataSolicitacao',
+			fieldName: 'dataSolicitacaoAbertura',
 			headerName: 'Data / Hora',
 		},
 		{

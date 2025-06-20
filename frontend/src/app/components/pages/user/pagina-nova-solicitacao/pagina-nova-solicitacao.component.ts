@@ -70,7 +70,7 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 				...formValue,
 				categoria: categoriaSelecionada,
 				situacao: Situacao.aberta,
-				dataSolicitacao: new Date(),
+				// Removido dataSolicitacao, pois agora a data de abertura é controlada pelo backend via histórico
 			};
 
 			solicitacao.cliente = this.loggedUser;

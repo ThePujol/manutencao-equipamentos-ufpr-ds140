@@ -19,8 +19,12 @@ export class Solicitacao {
 		public categoria: Categoria,
 		public defeito: string,
 		public situacao: Situacao,
-		public dataSolicitacao: Date,
 		public cliente: Pessoa,
+		/**
+		 * Campo vindo do backend, representa a data da primeira entrada no histórico de status.
+		 * Pode ser null se não houver histórico.
+		 */
+		public dataSolicitacaoAbertura?: Date | null,
 		public funcionario?: Funcionario,
 		public orcamento?: number,
 		public dataOrcamento?: Date,
