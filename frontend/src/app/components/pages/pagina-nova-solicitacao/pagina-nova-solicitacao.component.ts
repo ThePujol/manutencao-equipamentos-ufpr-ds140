@@ -35,6 +35,9 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 	novaSolicitacaoForm!: FormGroup;
 	listaCategorias: Categoria[] = [];
 	loggedUser!: Pessoa;
+	mensagem = '';
+	mensagemErro = '';
+	carregando = false;
 
 	constructor(
 		private fBuilder: FormBuilder,
@@ -43,9 +46,9 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 		private loggedUserService: LoggedUserService
 	) {
 		this.novaSolicitacaoForm = this.fBuilder.group({
-			descricao: ['', Validators.required],
+			descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
 			categoria: ['', Validators.required],
-			defeito: ['', Validators.required],
+			defeito: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(200)]],
 		});
 	}
 
@@ -59,21 +62,28 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 	}
 
 	onSubmit() {
-		if (this.novaSolicitacaoForm.valid) {
+		if (this.novaSolicitacaoForm.invalid) {
+			this.novaSolicitacaoForm.markAllAsTouched();
+			this.mensagemErro = 'Preencha todos os campos corretamente.';
+			setTimeout(() => this.mensagemErro = '', 3000);
+			return;
+		}
+		this.carregando = true;
+		try {
 			const formValue = this.novaSolicitacaoForm.value;
 			const categoriaSelecionada = this.categoriaService.categoriaPorId(Number(formValue.categoria));
-
-			// Salvar categoria como objeto
 			const solicitacao: Solicitacao = {
 				...formValue,
 				categoria: categoriaSelecionada!,
 			};
-
 			this.solicitacaoService.addSolicitacao(solicitacao, this.loggedUser);
-
 			this.novaSolicitacaoForm.reset();
-		} else {
-			this.novaSolicitacaoForm.markAllAsTouched();
+			this.mensagem = 'Solicitação enviada com sucesso!';
+			setTimeout(() => this.mensagem = '', 3000);
+		} catch (e) {
+			this.mensagemErro = 'Erro ao enviar solicitação.';
+		} finally {
+			this.carregando = false;
 		}
 	}
 }
