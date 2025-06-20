@@ -16,22 +16,7 @@
 				/>
 			</div>
 			<div>
-				<label
-					for="estado"
-					class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30"
-					>Estado</label
-				>
-				<select
-					name="estado"
-					id="estado"
-					class="focus:outline-primary focus:outline-2 outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
-				>
-					<option value="todos">Todos</option>
-					<option value="orcada">Orçada</option>
-					<option value="aprovada">Aprovada</option>
-					<option value="rejeitada">Rejeitada</option>
-					<option value="arrumada">Arrumada</option>
-				</select>
+				<app-select-estado (selectChange)="filtrarPorEstado($event)" />
 				<input
 					type="date"
 					class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
@@ -40,10 +25,14 @@
 		</div>
 
 		<!-- Tabela -->
-		@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
+		@if (todasSolicitacoes && todasSolicitacoes.length > 0 && listaSolicitacoes.length > 0) {
 			<app-tabela-expandivel [columns]="headersTabela" [gridData]="listaSolicitacoes" />
-		} @else {
+		} @else if (todasSolicitacoes.length <= 0) {
 			<p>Você ainda não fez nenhuma solicitação.</p>
+		}
+
+		@if (listaSolicitacoes.length <= 0) {
+			<p>Nenhum resultado para a pesquisa.</p>
 		}
 	</section>
 	<app-mensagem [mensagem]="mensagem" [showMessage]="showMessage" />

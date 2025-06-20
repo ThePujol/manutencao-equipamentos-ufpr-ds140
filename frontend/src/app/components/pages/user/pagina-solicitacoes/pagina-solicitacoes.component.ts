@@ -1,3 +1,5 @@
+import { map } from 'rxjs';
+
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -11,6 +13,7 @@ import { Util } from '../../../../shared/util';
 import { TabelaExpandivelComponent } from '../../../tabelas/tabela-expandivel/tabela-expandivel.component';
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
+import { SelectEstadoComponent } from '../../../ui/select-estado/select-estado.component';
 import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cliente.component';
 
 @Component({
@@ -21,6 +24,7 @@ import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cli
 		InputPesquisarComponent,
 		MensagemComponent,
 		TabelaExpandivelComponent,
+		SelectEstadoComponent,
 	],
 	templateUrl: './pagina-solicitacoes.component.html',
 })
@@ -30,6 +34,9 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	loggedUser!: Pessoa;
 	showMessage = false;
 	mensagem!: string;
+
+	query = '';
+	estado = 'todos';
 
 	headersTabela: TableColumn[] = [
 		{
@@ -54,10 +61,13 @@ export class PaginaSolicitacoesComponent implements OnInit {
 
 	ngOnInit() {
 		this.loggedUser = this.authService.getUserData();
-		this.solicitacaoService.listarSolicitacoes().subscribe((solicitacoes) => {
-			this.todasSolicitacoes = solicitacoes;
-			this.listaSolicitacoes = solicitacoes;
-		});
+		this.solicitacaoService
+			.listarSolicitacoes()
+			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.cliente.id === this.authService.getUserData().id)))
+			.subscribe((solicitacoes) => {
+				this.todasSolicitacoes = solicitacoes;
+				this.listaSolicitacoes = solicitacoes;
+			});
 		this.todasSolicitacoes.filter((solicitacao) => solicitacao.cliente.id === this.loggedUser.id);
 		this.orcamentoAction.setFuncoes({
 			aprovar: this.aprovarOrcamento.bind(this),
@@ -113,7 +123,12 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	}
 
 	pesquisarSolicitacao(query: string) {
-		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, query);
-		console.log('a');
+		this.query = query;
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
+	}
+
+	filtrarPorEstado(estado: string) {
+		this.estado = estado;
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
 	}
 }

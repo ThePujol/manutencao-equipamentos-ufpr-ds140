@@ -8,10 +8,8 @@ export class Util {
 		return Math.floor(new Date().getTime() / 1000) >= expiry;
 	}
 
-	public static pesquisarSolicitacao(listaCompleta: Solicitacao[], query: string) {
-		const listaFiltrada = listaCompleta.filter(
-			(s) => s.cliente.nome.toLowerCase().includes(query) || s.descricao.toLowerCase().includes(query)
-		);
+	public static pesquisarSolicitacao(listaCompleta: Solicitacao[], query: string, estado: string) {
+		const listaFiltrada = listaCompleta.filter((s) => this.checkEstado(s, estado) && this.checkQuery(s, query));
 		return listaFiltrada;
 	}
 
@@ -25,5 +23,14 @@ export class Util {
 	public static pesquisarCategoria(listaCompleta: Categoria[], query: string) {
 		const listaFiltrada = listaCompleta.filter((c) => c.descricao.toLowerCase().includes(query));
 		return listaFiltrada;
+	}
+
+	// Funções para usar dentro das pesquisas
+	private static checkEstado(s: Solicitacao, estado: string): boolean {
+		return estado === 'todos' ? true : s.situacao.toLowerCase() === estado.toLowerCase();
+	}
+
+	private static checkQuery(s: Solicitacao, query: string) {
+		return s.cliente.nome.toLowerCase().includes(query) || s.descricao.toLowerCase().includes(query);
 	}
 }

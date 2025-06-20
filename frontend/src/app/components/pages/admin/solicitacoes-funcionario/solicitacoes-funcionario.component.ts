@@ -25,6 +25,7 @@ import { InformacaoDetalheComponent } from '../../../ui/informacao-detalhe/infor
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../../ui/input-text/input-text.component';
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
+import { SelectEstadoComponent } from '../../../ui/select-estado/select-estado.component';
 import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
@@ -40,6 +41,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		DatePipe,
 		TabelaComponent,
 		MensagemComponent,
+		SelectEstadoComponent,
 	],
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
@@ -54,6 +56,9 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	modalRedirecionarManutencao = false;
 	showMessage = false;
 	mensagem = '';
+
+	estado = 'todos';
+	query = '';
 
 	headersTabela: TableColumn[] = [
 		{
@@ -204,6 +209,12 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	}
 
 	pesquisarSolicitacao(query: string) {
-		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, query);
+		this.query = query;
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
+	}
+
+	filtrarPorEstado(estado: string) {
+		this.estado = estado;
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
 	}
 }

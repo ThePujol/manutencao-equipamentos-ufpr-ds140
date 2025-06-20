@@ -11,6 +11,7 @@
 		<div class="flex justify-between w-full items-center">
 			<app-input-pesquisar placeholder="Pesquise uma solicitação..." (pesquisarClick)="pesquisarSolicitacao($event)" />
 			<div>
+				<app-select-estado (selectChange)="filtrarPorEstado($event)" />
 				<input
 					type="date"
 					value="22-01-2023"
@@ -20,7 +21,7 @@
 		</div>
 
 		<!-- Tabela -->
-		@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
+		@if (todasSolicitacoes && todasSolicitacoes.length > 0 && listaSolicitacoes.length > 0) {
 			<app-tabela
 				[columns]="headersTabela"
 				[gridData]="listaSolicitacoes"
@@ -32,8 +33,12 @@
 			<p class="mt-3 text-sm text-gray-900/70 font-light">
 				Exibindo 1-{{ listaSolicitacoes.length }} itens de {{ listaSolicitacoes.length }} itens.
 			</p>
-		} @else {
+		} @else if (todasSolicitacoes.length <= 0) {
 			<p>Não há nenhuma solicitação atribuída a você.</p>
+		}
+
+		@if (listaSolicitacoes.length <= 0) {
+			<p>Nenhum resultado para a pesquisa.</p>
 		}
 
 		<!-- Modal Efetuar Manutenção -->

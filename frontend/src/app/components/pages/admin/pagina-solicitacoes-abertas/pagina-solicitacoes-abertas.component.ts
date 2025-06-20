@@ -39,6 +39,9 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	solicitacaoModal!: Solicitacao;
 	modal = false;
 
+	estado = 'todos';
+	query = '';
+
 	headersTabela: TableColumn[] = [
 		{
 			fieldName: 'dataSolicitacao',
@@ -104,7 +107,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	}
 
 	pesquisarSolicitacao(query: string) {
-		this.solicitacoesAbertas = Util.pesquisarSolicitacao(this.todasSolicitacoes, query);
-		console.log('oi');
+		this.query = query;
+		this.solicitacoesAbertas = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
 	}
 }

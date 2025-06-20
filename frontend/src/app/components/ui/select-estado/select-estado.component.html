@@ -1,0 +1,19 @@
+<label
+	for="estado"
+	class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30"
+	>Situação</label
+>
+<select
+	name="estado"
+	id="estado"
+	class="focus:outline-primary focus:outline-2 outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
+	(change)="onChangeEstado($event)"
+>
+	<option value="todos">Todas</option>
+	<option value="aberta">Aberta</option>
+	<option value="orçada">Orçada</option>
+	<option value="aprovada">Aprovada</option>
+	<option value="rejeitada">Rejeitada</option>
+	<option value="arrumada">Arrumada</option>
+	<option value="finalizada">Finalizada</option>
+</select>
