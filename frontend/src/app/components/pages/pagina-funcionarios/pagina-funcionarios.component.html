@@ -14,6 +14,13 @@
 				</button>
 			</div>
 
+			<div *ngIf="mensagem" class="bg-green-100 text-green-700 p-2 rounded mb-2 text-center">
+				{{ mensagem }}
+			</div>
+			<div *ngIf="mensagemErro" class="bg-red-100 text-red-700 p-2 rounded mb-2 text-center">
+				{{ mensagemErro }}
+			</div>
+
 			<div class="overflow-x-auto">
 				<table class="w-full border-separate border-spacing-y-3">
 					<thead>
@@ -70,6 +77,7 @@
 						[type]="'text'"
 						[placeholder]="'Ex: Geraldo Alckmin'"
 						[required]="true"
+						autofocus
 					/>
 					<app-input-text
 						[label]="'Email'"
@@ -91,21 +99,27 @@
 						*ngIf="formfuncionario.get('nome')?.touched && formfuncionario.get('nome')?.invalid"
 						class="text-red-500 text-sm mt-1"
 					>
-						Nome é obrigatório.
+						<span *ngIf="formfuncionario.get('nome')?.errors?.['required']">Nome é obrigatório.</span>
+						<span *ngIf="formfuncionario.get('nome')?.errors?.['minlength']">Nome deve ter pelo menos 3 caracteres.</span>
+						<span *ngIf="formfuncionario.get('nome')?.errors?.['maxlength']">Nome deve ter no máximo 100 caracteres.</span>
 					</div>
 
 					<div
 						*ngIf="formfuncionario.get('email')?.touched && formfuncionario.get('email')?.invalid"
 						class="text-red-500 text-sm mt-1"
 					>
-						Email é obrigatório.
+						<span *ngIf="formfuncionario.get('email')?.errors?.['required']">Email é obrigatório.</span>
+						<span *ngIf="formfuncionario.get('email')?.errors?.['email']">Formato de email inválido.</span>
+						<span *ngIf="formfuncionario.get('email')?.errors?.['maxlength']">Email deve ter no máximo 100 caracteres.</span>
 					</div>
 
 					<div
 						*ngIf="formfuncionario.get('senha')?.touched && formfuncionario.get('senha')?.invalid"
 						class="text-red-500 text-sm mt-1"
 					>
-						Senha é obrigatória.
+						<span *ngIf="formfuncionario.get('senha')?.errors?.['required']">Senha é obrigatória.</span>
+						<span *ngIf="formfuncionario.get('senha')?.errors?.['minlength']">Senha deve ter pelo menos 6 caracteres.</span>
+						<span *ngIf="formfuncionario.get('senha')?.errors?.['maxlength']">Senha deve ter no máximo 100 caracteres.</span>
 					</div>
 				</div>
 
@@ -117,7 +131,8 @@
 					>
 						Cancelar
 					</button>
-					<button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
+					<button type="submit" [disabled]="formfuncionario.invalid || carregando" class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
+						<span *ngIf="carregando" class="loader"></span>
 						Salvar
 					</button>
 				</div>
