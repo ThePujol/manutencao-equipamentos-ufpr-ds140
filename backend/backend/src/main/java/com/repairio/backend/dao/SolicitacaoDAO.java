@@ -41,7 +41,9 @@ public class SolicitacaoDao {
                     if (!rs.wasNull()) {
                         s.setFuncionario(funcionarioDao.findById(funcionarioId));
                     }
-                    s.setDataSolicitacao(rs.getDate("dataSolicitacao"));
+                    s.setDataSolicitacao(rs.getTimestamp("dataSolicitacao") != null
+                            ? rs.getTimestamp("dataSolicitacao").toLocalDateTime()
+                            : null);
                     s.setDataOrcamento(rs.getDate("dataOrcamento"));
                     s.setDescricaoManutencao(rs.getString("descricaoManutencao"));
                     s.setDataManutencao(rs.getDate("dataManutencao"));
@@ -67,7 +69,9 @@ public class SolicitacaoDao {
                     if (!rs.wasNull()) {
                         s.setFuncionario(funcionarioDao.findById(funcionarioId));
                     }
-                    s.setDataSolicitacao(rs.getDate("dataSolicitacao"));
+                    s.setDataSolicitacao(rs.getTimestamp("dataSolicitacao") != null
+                            ? rs.getTimestamp("dataSolicitacao").toLocalDateTime()
+                            : null);
                     s.setDataOrcamento(rs.getDate("dataOrcamento"));
                     s.setDescricaoManutencao(rs.getString("descricaoManutencao"));
                     s.setDataManutencao(rs.getDate("dataManutencao"));
@@ -78,7 +82,6 @@ public class SolicitacaoDao {
                 }, id);
     }
 
-    @SuppressWarnings("null")
     public void save(Solicitacao solicitacao) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -96,7 +99,10 @@ public class SolicitacaoDao {
             } else {
                 ps.setNull(7, java.sql.Types.BIGINT);
             }
-            ps.setDate(8, new java.sql.Date(solicitacao.getDataSolicitacao().getTime()));
+            ps.setTimestamp(8,
+                    solicitacao.getDataSolicitacao() != null
+                            ? java.sql.Timestamp.valueOf(solicitacao.getDataSolicitacao())
+                            : null);
             ps.setObject(9,
                     solicitacao.getDataOrcamento() != null ? new java.sql.Date(solicitacao.getDataOrcamento().getTime())
                             : null);

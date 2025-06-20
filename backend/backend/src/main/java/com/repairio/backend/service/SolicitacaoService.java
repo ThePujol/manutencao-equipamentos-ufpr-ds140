@@ -27,12 +27,12 @@ public class SolicitacaoService {
     }
 
     public void save(Solicitacao solicitacao) {
-        solicitacaoDao.save(solicitacao); // Aqui o ID é preenchido
+        solicitacaoDao.save(solicitacao);
         if (solicitacao.getId() == null) {
             throw new IllegalStateException("ID da solicitação não foi gerado!");
         }
         SolicitacaoStatusHistorico historico = new SolicitacaoStatusHistorico();
-        historico.setSolicitacao(solicitacao); // solicitacao.getId() já está preenchido
+        historico.setSolicitacao(solicitacao);
         historico.setSituacao(solicitacao.getSituacao());
         historico.setDataHora(LocalDateTime.now());
         historico.setObservacao("Solicitação criada");
