@@ -69,7 +69,7 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 			const solicitacao: Solicitacao = {
 				...formValue,
 				categoria: categoriaSelecionada,
-				situacao: Situacao.aberta,
+				situacao: Situacao.ABERTA,
 				// Removido dataSolicitacao, pois agora a data de abertura é controlada pelo backend via histórico
 			};
 

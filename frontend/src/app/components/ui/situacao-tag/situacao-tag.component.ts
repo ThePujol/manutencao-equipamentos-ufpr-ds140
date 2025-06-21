@@ -10,13 +10,13 @@ import { Situacao } from '../../../shared/models/solicitacao.model';
 export class SituacaoTagComponent {
 	@Input() situacao!: Situacao;
 	situacoes = {
-		aberta: Situacao.aberta,
-		orcada: Situacao.orcada,
-		rejeitada: Situacao.rejeitada,
-		aprovada: Situacao.aprovada,
-		redirecionada: Situacao.redirecionada,
-		arrumada: Situacao.arrumada,
-		paga: Situacao.paga,
-		finalizada: Situacao.finalizada,
+		aberta: Situacao.ABERTA,
+		orcada: Situacao.ORÇADA,
+		rejeitada: Situacao.REJEITADA,
+		aprovada: Situacao.APROVADA,
+		redirecionada: Situacao.REDIRECIONADA,
+		arrumada: Situacao.ARRUMADA,
+		paga: Situacao.PAGA,
+		finalizada: Situacao.FINALIZADA,
 	};
 }

@@ -176,7 +176,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 		solicitacao.descricaoManutencao = this.formManutencao.value.descricaoManutencao;
 		solicitacao.orientacoes = this.formManutencao.value.orientacoes;
-		solicitacao.situacao = Situacao.arrumada;
+		solicitacao.situacao = Situacao.ARRUMADA;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
 			console.log(res);
 			this.formManutencao.reset();
@@ -214,7 +214,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	}
 
 	finalizarSolicitacao(solicitacao: Solicitacao) {
-		solicitacao.situacao = Situacao.finalizada;
+		solicitacao.situacao = Situacao.FINALIZADA;
 		solicitacao.dataFinalizacao = new Date();
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
 			console.log(res);

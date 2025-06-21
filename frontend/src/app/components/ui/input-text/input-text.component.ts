@@ -18,6 +18,7 @@ export class InputTextComponent implements OnInit {
 	@Input() mask = '';
 	@Input() errorMessage?: string;
 	@Input() error = false;
+	@Input() min?: number;
 	formControl!: FormControl;
 
 	constructor(private formGroupDirective: FormGroupDirective) {}

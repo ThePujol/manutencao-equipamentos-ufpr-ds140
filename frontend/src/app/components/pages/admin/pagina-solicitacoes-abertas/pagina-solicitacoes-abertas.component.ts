@@ -39,6 +39,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	formOrcamento!: FormGroup;
 	solicitacaoModal!: Solicitacao;
 	modal = false;
+	mensagemErroOrcamento = '';
 
 	// Paginação
 	itensPorPagina = 8;
@@ -94,10 +95,19 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 			return;
 		}
 
+		const valor = Number(this.formOrcamento.value.orcamento);
+		if (valor < 0) {
+			this.mensagemErroOrcamento = 'O valor do orçamento não pode ser negativo!';
+			setTimeout(() => {
+				this.mensagemErroOrcamento = '';
+			}, 4000);
+			return;
+		}
+
 		solicitacao.funcionario = this.authService.getUserData();
 		solicitacao.dataOrcamento = new Date();
-		solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
-		solicitacao.situacao = Situacao.orcada;
+		solicitacao.orcamento = valor;
+		solicitacao.situacao = Situacao.ORÇADA;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((response) => {
 			console.log(response);
 			this.formOrcamento.reset();
@@ -108,7 +118,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	ngOnInit() {
 		this.solicitacaoService
 			.listarSolicitacoes()
-			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.situacao === Situacao.aberta)))
+			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.situacao === Situacao.ABERTA)))
 			.subscribe((solicitacoes) => {
 				this.solicitacoesAbertas = solicitacoes;
 			});

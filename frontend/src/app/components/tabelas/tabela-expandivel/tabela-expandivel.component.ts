@@ -6,6 +6,7 @@ import { matChevronLeftOutline } from '@ng-icons/material-icons/outline';
 
 import { TableColumn } from '../../../shared/tabela-interface';
 import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.component';
+import { Situacao } from '../../../shared/models/solicitacao.model';
 
 @Component({
 	selector: 'app-tabela-expandivel',
@@ -34,4 +35,12 @@ export class TabelaExpandivelComponent {
 		}
 		return false;
 	}
+	aberta: Situacao = Situacao.ABERTA;
+	orcada: Situacao = Situacao.ORÇADA;
+	rejeitada: Situacao = Situacao.REJEITADA;
+	redirecionada: Situacao = Situacao.REDIRECIONADA;
+	aprovada: Situacao = Situacao.APROVADA;
+	arrumada: Situacao = Situacao.ARRUMADA;
+	paga: Situacao = Situacao.PAGA;
+	finalizada: Situacao = Situacao.FINALIZADA;
 }

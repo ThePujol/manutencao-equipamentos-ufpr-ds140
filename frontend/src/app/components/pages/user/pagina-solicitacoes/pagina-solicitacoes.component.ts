@@ -90,7 +90,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	}
 
 	aprovarOrcamento(solicitacao: Solicitacao) {
-		solicitacao.situacao = Situacao.aprovada;
+		solicitacao.situacao = Situacao.APROVADA;
 
 		if (solicitacao.orcamento) {
 			const precoFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
@@ -114,7 +114,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		this.showMessage = true;
 		this.mensagem = 'Serviço rejeitado.';
 
-		solicitacao.situacao = Situacao.rejeitada;
+		solicitacao.situacao = Situacao.REJEITADA;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => console.log(res));
 
 		setTimeout(() => {
@@ -126,7 +126,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		this.showMessage = true;
 		this.mensagem = 'Serviço resgatado!';
 
-		solicitacao.situacao = Situacao.orcada;
+		solicitacao.situacao = Situacao.ORÇADA;
 		solicitacao.motivoRejeicao = undefined;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => console.log(res));
 

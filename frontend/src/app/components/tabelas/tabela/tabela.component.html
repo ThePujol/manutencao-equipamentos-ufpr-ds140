@@ -48,6 +48,8 @@
 					<td>
 						<app-dropdown
 							[solicitacao]="item"
+							[dropdownAbertoId]="dropdownAbertoId"
+							(dropdownAbertoIdChange)="setDropdownAberto($event)"
 							(efetuarManutencaoClicked)="efetuarManutencao(item)"
 							(finalizarClicked)="finalizarManutencao(item)"
 							(redirecionarManutencaoClicked)="redirecionarManutencao(item)"

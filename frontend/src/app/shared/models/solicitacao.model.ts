@@ -3,14 +3,14 @@ import { Funcionario } from './funcionario.model';
 import { Pessoa } from './pessoa.model';
 
 export enum Situacao {
-	aberta = 'ABERTA',
-	orcada = 'ORÇADA',
-	rejeitada = 'REJEITADA',
-	redirecionada = 'REDIRECIONADA',
-	aprovada = 'APROVADA',
-	arrumada = 'ARRUMADA',
-	paga = 'PAGA',
-	finalizada = 'FINALIZADA',
+	ABERTA = 'ABERTA',
+	ORÇADA = 'ORÇADA',
+	REJEITADA = 'REJEITADA',
+	REDIRECIONADA = 'REDIRECIONADA',
+	APROVADA = 'APROVADA',
+	ARRUMADA = 'ARRUMADA',
+	PAGA = 'PAGA',
+	FINALIZADA = 'FINALIZADA',
 }
 export class Solicitacao {
 	constructor(

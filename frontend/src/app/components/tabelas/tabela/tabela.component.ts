@@ -26,6 +26,7 @@ export class TabelaComponent {
 	@Input() excluirDisabledCondition = false;
 
 	dropdown = false;
+	dropdownAbertoId: number | null = null;
 
 	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
@@ -35,14 +36,14 @@ export class TabelaComponent {
 	@Output() excluirClicked = new EventEmitter<any>();
 
 	situacoes = {
-		aberta: Situacao.aberta,
-		orcada: Situacao.orcada,
-		rejeitada: Situacao.rejeitada,
-		aprovada: Situacao.aprovada,
-		redirecionada: Situacao.redirecionada,
-		arrumada: Situacao.arrumada,
-		paga: Situacao.paga,
-		finalizada: Situacao.finalizada,
+		aberta: Situacao.ABERTA,
+		orcada: Situacao.ORÇADA,
+		rejeitada: Situacao.REJEITADA,
+		aprovada: Situacao.APROVADA,
+		redirecionada: Situacao.REDIRECIONADA,
+		arrumada: Situacao.ARRUMADA,
+		paga: Situacao.PAGA,
+		finalizada: Situacao.FINALIZADA,
 	};
 
 	toggleDropdown() {
@@ -80,5 +81,9 @@ export class TabelaComponent {
 
 	checkIfCliente(obj: unknown) {
 		return obj instanceof Pessoa;
+	}
+
+	setDropdownAberto(id: number | null) {
+		this.dropdownAbertoId = id;
 	}
 }
