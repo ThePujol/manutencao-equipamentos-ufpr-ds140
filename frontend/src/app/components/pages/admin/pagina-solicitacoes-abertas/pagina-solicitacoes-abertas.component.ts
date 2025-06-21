@@ -3,6 +3,7 @@ import { map } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { AuthService } from '../../../../services/auth.service';
 import { SolicitacaoService } from '../../../../services/solicitacao.service';
@@ -28,6 +29,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		DatePipe,
 		SidebarFuncionarioComponent,
 		TabelaComponent,
+		CommonModule,
 	],
 	templateUrl: './pagina-solicitacoes-abertas.component.html',
 })
@@ -37,6 +39,25 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	formOrcamento!: FormGroup;
 	solicitacaoModal!: Solicitacao;
 	modal = false;
+
+	// Paginação
+	itensPorPagina = 8;
+	paginaAtual = 1;
+	get totalPaginas(): number {
+		return Math.ceil((this.solicitacoesAbertas?.length || 0) / this.itensPorPagina) || 1;
+	}
+	get solicitacoesPaginadas(): Solicitacao[] {
+		const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
+		return this.solicitacoesAbertas?.slice(inicio, inicio + this.itensPorPagina) || [];
+	}
+	mudarPagina(p: number) {
+		if (p >= 1 && p <= this.totalPaginas) {
+			this.paginaAtual = p;
+		}
+	}
+	menor(a: number, b: number): number {
+		return a < b ? a : b;
+	}
 
 	headersTabela: TableColumn[] = [
 		{

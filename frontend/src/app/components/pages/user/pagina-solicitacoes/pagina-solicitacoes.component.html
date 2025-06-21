@@ -40,9 +40,37 @@
 		@if (listaSolicitacoes && listaSolicitacoes.length > 0) {
 			<app-tabela-expandivel
 				[columns]="headersTabela"
-				[gridData]="listaSolicitacoes"
+				[gridData]="solicitacoesPaginadas"
 				[abrirHistorico]="abrirHistorico.bind(this)"
 			></app-tabela-expandivel>
+
+			<!-- Controles de Paginação -->
+			<div class="flex justify-center items-center gap-2 mt-4">
+				<button
+					(click)="mudarPagina(paginaAtual - 1)"
+					[disabled]="paginaAtual === 1"
+					class="px-2 py-1 rounded bg-gray-200"
+				>
+					Anterior
+				</button>
+				<span *ngFor="let p of [].constructor(totalPaginas); let i = index" class="mx-1">
+					<button
+						(click)="mudarPagina(i + 1)"
+						[class.bg-primary]="paginaAtual === i + 1"
+						class="px-2 py-1 rounded"
+						[disabled]="paginaAtual === i + 1"
+					>
+						{{ i + 1 }}
+					</button>
+				</span>
+				<button
+					(click)="mudarPagina(paginaAtual + 1)"
+					[disabled]="paginaAtual === totalPaginas"
+					class="px-2 py-1 rounded bg-gray-200"
+				>
+					Próxima
+				</button>
+			</div>
 		} @else {
 			<p>Você ainda não fez nenhuma solicitação.</p>
 		}

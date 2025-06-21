@@ -47,6 +47,17 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	historico: SolicitacaoStatusHistorico[] = [];
 	mostrarModalHistorico = false;
 
+	// Paginação
+	itensPorPagina = 8;
+	paginaAtual = 1;
+	get totalPaginas(): number {
+		return Math.ceil(this.listaSolicitacoes.length / this.itensPorPagina) || 1;
+	}
+	get solicitacoesPaginadas(): Solicitacao[] {
+		const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
+		return this.listaSolicitacoes.slice(inicio, inicio + this.itensPorPagina);
+	}
+
 	constructor(
 		private solicitacaoService: SolicitacaoService,
 		private authService: AuthService,
@@ -122,5 +133,11 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		setTimeout(() => {
 			this.showMessage = false;
 		}, 3000);
+	}
+
+	mudarPagina(p: number) {
+		if (p >= 1 && p <= this.totalPaginas) {
+			this.paginaAtual = p;
+		}
 	}
 }

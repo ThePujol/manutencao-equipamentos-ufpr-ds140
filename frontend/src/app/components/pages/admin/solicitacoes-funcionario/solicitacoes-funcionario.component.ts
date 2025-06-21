@@ -25,6 +25,7 @@ import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesqu
 import { InputTextComponent } from '../../../ui/input-text/input-text.component';
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
 	selector: 'app-solicitacoes-funcionario',
@@ -39,6 +40,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		DatePipe,
 		TabelaComponent,
 		MensagemComponent,
+		CommonModule,
 	],
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
@@ -53,6 +55,22 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	modalRedirecionarManutencao = false;
 	showMessage = false;
 	mensagem = '';
+
+	// Paginação
+	itensPorPagina = 8;
+	paginaAtual = 1;
+	get totalPaginas(): number {
+		return Math.ceil((this.listaSolicitacoes?.length || 0) / this.itensPorPagina) || 1;
+	}
+	get solicitacoesPaginadas(): Solicitacao[] {
+		const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
+		return this.listaSolicitacoes?.slice(inicio, inicio + this.itensPorPagina) || [];
+	}
+	mudarPagina(p: number) {
+		if (p >= 1 && p <= this.totalPaginas) {
+			this.paginaAtual = p;
+		}
+	}
 
 	headersTabela: TableColumn[] = [
 		{
@@ -205,5 +223,9 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 	pesquisarFuncionarios(query: string) {
 		console.log(query);
+	}
+
+	menor(a: number, b: number): number {
+		return a < b ? a : b;
 	}
 }
