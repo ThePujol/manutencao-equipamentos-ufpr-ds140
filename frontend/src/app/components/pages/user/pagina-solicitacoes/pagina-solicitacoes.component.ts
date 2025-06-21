@@ -1,6 +1,7 @@
 import { map } from 'rxjs';
 
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 import { AuthService } from '../../../../services/auth.service';
@@ -25,6 +26,7 @@ import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cli
 		MensagemComponent,
 		TabelaExpandivelComponent,
 		SelectEstadoComponent,
+		FormsModule,
 	],
 	templateUrl: './pagina-solicitacoes.component.html',
 })
@@ -37,6 +39,8 @@ export class PaginaSolicitacoesComponent implements OnInit {
 
 	query = '';
 	estado = 'todos';
+	dataMin?: Date;
+	dataMax?: Date;
 
 	headersTabela: TableColumn[] = [
 		{
@@ -130,5 +134,11 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	filtrarPorEstado(estado: string) {
 		this.estado = estado;
 		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
+	}
+
+	filtrarPorData() {
+		const min = this.dataMin ? new Date(this.dataMin) : undefined;
+		const max = this.dataMax ? new Date(this.dataMax) : undefined;
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado, min, max);
 	}
 }

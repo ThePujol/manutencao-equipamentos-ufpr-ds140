@@ -8,8 +8,16 @@ export class Util {
 		return Math.floor(new Date().getTime() / 1000) >= expiry;
 	}
 
-	public static pesquisarSolicitacao(listaCompleta: Solicitacao[], query: string, estado: string) {
-		const listaFiltrada = listaCompleta.filter((s) => this.checkEstado(s, estado) && this.checkQuery(s, query));
+	public static pesquisarSolicitacao(
+		listaCompleta: Solicitacao[],
+		query: string,
+		estado: string,
+		dataMin?: Date,
+		dataMax?: Date
+	) {
+		const listaFiltrada = listaCompleta.filter(
+			(s) => this.checkEstado(s, estado) && this.checkQuery(s, query) && this.checkDate(s, dataMin, dataMax)
+		);
 		return listaFiltrada;
 	}
 
@@ -32,5 +40,17 @@ export class Util {
 
 	private static checkQuery(s: Solicitacao, query: string) {
 		return s.cliente.nome.toLowerCase().includes(query) || s.descricao.toLowerCase().includes(query);
+	}
+
+	private static checkDate(s: Solicitacao, min?: Date, max?: Date) {
+		const itemDate = s.dataSolicitacao;
+		console.log(itemDate);
+		console.log(`minimo: ${min}`);
+		console.log(`maximo: ${max}`);
+
+		const afterMin = !min || itemDate >= min;
+		const beforeMax = !max || itemDate <= max;
+
+		return afterMin && beforeMax;
 	}
 }

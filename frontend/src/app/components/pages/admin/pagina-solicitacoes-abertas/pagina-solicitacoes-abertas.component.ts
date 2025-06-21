@@ -2,7 +2,7 @@ import { map } from 'rxjs';
 
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService } from '../../../../services/auth.service';
 import { SolicitacaoService } from '../../../../services/solicitacao.service';
@@ -29,6 +29,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		DatePipe,
 		SidebarFuncionarioComponent,
 		TabelaComponent,
+		FormsModule,
 	],
 	templateUrl: './pagina-solicitacoes-abertas.component.html',
 })
@@ -41,6 +42,8 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 
 	estado = 'todos';
 	query = '';
+	dataMin?: Date;
+	dataMax?: Date;
 
 	headersTabela: TableColumn[] = [
 		{
@@ -109,5 +112,11 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	pesquisarSolicitacao(query: string) {
 		this.query = query;
 		this.solicitacoesAbertas = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
+	}
+
+	filtrarPorData() {
+		const min = this.dataMin ? new Date(this.dataMin) : undefined;
+		const max = this.dataMax ? new Date(this.dataMax) : undefined;
+		this.solicitacoesAbertas = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado, min, max);
 	}
 }

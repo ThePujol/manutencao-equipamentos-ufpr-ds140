@@ -6,6 +6,7 @@ import {
 	AbstractControl,
 	FormBuilder,
 	FormGroup,
+	FormsModule,
 	ReactiveFormsModule,
 	ValidationErrors,
 	Validators,
@@ -42,6 +43,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		TabelaComponent,
 		MensagemComponent,
 		SelectEstadoComponent,
+		FormsModule,
 	],
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
@@ -59,6 +61,8 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 	estado = 'todos';
 	query = '';
+	dataMin?: Date;
+	dataMax?: Date;
 
 	headersTabela: TableColumn[] = [
 		{
@@ -210,11 +214,29 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 	pesquisarSolicitacao(query: string) {
 		this.query = query;
-		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(
+			this.todasSolicitacoes,
+			this.query,
+			this.estado,
+			this.dataMin,
+			this.dataMax
+		);
 	}
 
 	filtrarPorEstado(estado: string) {
 		this.estado = estado;
-		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado);
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(
+			this.todasSolicitacoes,
+			this.query,
+			this.estado,
+			this.dataMin,
+			this.dataMax
+		);
+	}
+
+	filtrarPorData() {
+		const min = this.dataMin ? new Date(this.dataMin) : undefined;
+		const max = this.dataMax ? new Date(this.dataMax) : undefined;
+		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado, min, max);
 	}
 }

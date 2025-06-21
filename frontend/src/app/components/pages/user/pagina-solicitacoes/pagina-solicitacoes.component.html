@@ -15,12 +15,30 @@
 					(pesquisarClick)="pesquisarSolicitacao($event)"
 				/>
 			</div>
-			<div>
+			<div class="flex gap-8 items-center">
 				<app-select-estado (selectChange)="filtrarPorEstado($event)" />
-				<input
-					type="date"
-					class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
-				/>
+				<div class="flex items-center justify-center gap-3">
+					<label for="dataMin">De</label>
+					<input
+						name="dataMin"
+						type="date"
+						value="22-01-2023"
+						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md text-gray-900/70 outline-1 outline-gray-900/30"
+						[(ngModel)]="dataMin"
+						(change)="filtrarPorData()"
+					/>
+				</div>
+				<div class="flex items-center justify-center gap-3">
+					<label for="dataMax">Até</label>
+					<input
+						name="dataMax"
+						type="date"
+						value="22-01-2023"
+						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md text-gray-900/70 outline-1 outline-gray-900/30"
+						[(ngModel)]="dataMax"
+						(change)="filtrarPorData()"
+					/>
+				</div>
 			</div>
 		</div>
 
