@@ -1,18 +1,24 @@
 package com.repairio.backend.service;
 
-import com.repairio.backend.dao.FuncionarioDao;
-import com.repairio.backend.model.Funcionario;
-import org.springframework.stereotype.Service;
-import com.repairio.backend.util.PasswordUtil;
-
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.repairio.backend.dao.FuncionarioDao;
+import com.repairio.backend.dao.SolicitacaoDao;
+import com.repairio.backend.exception.FuncionarioConstraintException;
+import com.repairio.backend.model.Funcionario;
+import com.repairio.backend.util.PasswordUtil;
 
 @Service
 public class FuncionarioService {
-    private final FuncionarioDao funcionarioDao;
 
-    public FuncionarioService(FuncionarioDao funcionarioDao) {
+    private final FuncionarioDao funcionarioDao;
+    private final SolicitacaoDao solicitacaoDao;
+
+    public FuncionarioService(FuncionarioDao funcionarioDao, SolicitacaoDao solicitacaoDao) {
         this.funcionarioDao = funcionarioDao;
+        this.solicitacaoDao = solicitacaoDao;
     }
 
     public List<Funcionario> findAll() {
@@ -36,6 +42,10 @@ public class FuncionarioService {
     }
 
     public void delete(Long id) {
+        if (solicitacaoDao.findByFuncionarioId(id) != null) {
+            throw new FuncionarioConstraintException("Este funcionário está atrelado a uma ou mais solicitações.");
+        }
+
         funcionarioDao.delete(id);
     }
 

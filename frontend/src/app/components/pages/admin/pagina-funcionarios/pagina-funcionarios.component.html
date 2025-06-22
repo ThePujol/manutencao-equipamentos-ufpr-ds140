@@ -1,3 +1,4 @@
+<app-mensagem [mensagem]="erro" [showMessage]="showErro" [errorMessage]="true" />
 <main class="flex gap-10 h-full">
 	<app-sidebar-funcionario></app-sidebar-funcionario>
 
@@ -12,12 +13,7 @@
 		<div class="flex justify-between w-full items-center">
 			<app-input-pesquisar placeholder="Pesquise um funcionário..." (pesquisarClick)="pesquisarFuncionario($event)" />
 			<div class="flex gap-5">
-				<input
-					type="date"
-					value="22-01-2023"
-					class="bg-gray-900/15 px-2.5 py-[4px] rounded-md ml-5 text-gray-900/70 outline-1 outline-gray-900/30"
-				/>
-				<app-button text="Novo funcionário" (funcao)="abrirModal()" />
+				<app-secondary-button text="Novo funcionário" (funcao)="abrirModal()" />
 			</div>
 		</div>
 		<app-tabela

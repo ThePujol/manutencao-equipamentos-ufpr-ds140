@@ -8,9 +8,10 @@ import { Funcionario } from '../../../../shared/models/funcionario.model';
 import { TableColumn } from '../../../../shared/tabela-interface';
 import { Util } from '../../../../shared/util';
 import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
-import { ButtonComponent } from '../../../ui/buttons/button/button.component';
+import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
@@ -23,7 +24,8 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		SidebarFuncionarioComponent,
 		TabelaComponent,
 		InputPesquisarComponent,
-		ButtonComponent,
+		MensagemComponent,
+		SecondaryButtonComponent,
 	],
 	templateUrl: './pagina-funcionarios.component.html',
 })
@@ -33,6 +35,9 @@ export class PaginaFuncionariosComponent implements OnInit {
 	funcionarioSelecionado?: Funcionario;
 	modal = false;
 	formfuncionario!: FormGroup;
+	showErro = false;
+	erro = '';
+
 	headersTabela: TableColumn[] = [
 		{
 			fieldName: 'nome',
@@ -82,11 +87,26 @@ export class PaginaFuncionariosComponent implements OnInit {
 
 	removerfuncionario(id: number) {
 		if (this.authService.getUserData().id != id) {
-			this.funcionarioService.removerFuncionario(id).subscribe(() => {
-				this.listarfuncionarios();
+			this.funcionarioService.removerFuncionario(id).subscribe({
+				next: () => {
+					this.listarfuncionarios();
+				},
+				error: (err) => {
+					this.showErro = true;
+					this.erro = 'Erro: ' + err.error;
+					setTimeout(() => {
+						this.showErro = false;
+						this.erro = '';
+					}, 4000);
+				},
 			});
 		} else {
-			console.error('Um funcionario nao pode deletar ele mesmo.');
+			this.showErro = true;
+			this.erro = 'Erro: um funcionário não pode deletar ele mesmo';
+			setTimeout(() => {
+				this.showErro = false;
+				this.erro = '';
+			}, 4000);
 		}
 	}
 

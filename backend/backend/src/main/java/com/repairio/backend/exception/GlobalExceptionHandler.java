@@ -17,4 +17,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleCpfJaCadastrado(CpfJaCadastradoException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
+    @ExceptionHandler(CategoriaConstraintException.class)
+    public ResponseEntity<String> handleCategoriaConstraint(CategoriaConstraintException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(FuncionarioConstraintException.class)
+    public ResponseEntity<String> handleFuncionarioConstraint(FuncionarioConstraintException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }

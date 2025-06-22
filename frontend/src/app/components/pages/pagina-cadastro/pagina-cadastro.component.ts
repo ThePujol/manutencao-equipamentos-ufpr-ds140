@@ -7,7 +7,6 @@ import { matCheckCircleOutline, matHandymanOutline, matSecurityOutline } from '@
 
 import { PessoaService } from '../../../services/pessoa.service';
 import { ViaCepService } from '../../../services/via-cep.service';
-import { ButtonComponent } from '../../ui/buttons/button/button.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
 import { LoadingSvgComponent } from '../../ui/loading-svg/loading-svg.component';
 
@@ -20,7 +19,6 @@ import { LoadingSvgComponent } from '../../ui/loading-svg/loading-svg.component'
 		InputTextComponent,
 		RouterOutlet,
 		RouterLink,
-		ButtonComponent,
 		NgIcon,
 		LoadingSvgComponent,
 	],

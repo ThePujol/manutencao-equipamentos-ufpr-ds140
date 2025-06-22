@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 export class MensagemComponent {
 	@Input() mensagem!: string;
 	@Input() showMessage = false;
+	@Input() errorMessage = false;
 
 	toggleShowMessage() {
 		this.showMessage = !this.showMessage;

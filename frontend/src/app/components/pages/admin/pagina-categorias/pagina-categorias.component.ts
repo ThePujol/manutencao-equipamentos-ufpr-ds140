@@ -11,6 +11,7 @@ import { ButtonComponent } from '../../../ui/buttons/button/button.component';
 import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
@@ -24,6 +25,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		InputPesquisarComponent,
 		SecondaryButtonComponent,
 		ButtonComponent,
+		MensagemComponent,
 	],
 	templateUrl: './pagina-categorias.component.html',
 })
@@ -33,6 +35,8 @@ export class PaginaCategoriasComponent implements OnInit {
 	categoriaSelecionada?: Categoria;
 	modalEditar = false;
 	formCategoria!: FormGroup;
+	erro = '';
+	showErro = false;
 
 	headersTabela: TableColumn[] = [
 		{
@@ -70,8 +74,19 @@ export class PaginaCategoriasComponent implements OnInit {
 	}
 
 	removerCategoria(id: number) {
-		this.categoriaService.removerCategoria(id).subscribe(() => {
-			this.listarCategorias();
+		this.categoriaService.removerCategoria(id).subscribe({
+			next: () => {
+				this.listarCategorias();
+			},
+			error: (err) => {
+				console.log(err.error);
+				this.erro = 'Erro: ' + err.error;
+				this.showErro = true;
+				setTimeout(() => {
+					this.showErro = false;
+					this.erro = '';
+				}, 4000);
+			},
 		});
 	}
 

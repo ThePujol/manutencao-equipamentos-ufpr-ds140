@@ -90,6 +90,68 @@ public class SolicitacaoDao {
                 }, id);
     }
 
+    public List<Solicitacao> findByCategoryId(Long id) {
+        return jdbcTemplate.query("SELECT * FROM solicitacao WHERE categoria_id = ?",
+                (rs, rowNum) -> {
+                    Solicitacao s = new Solicitacao();
+                    s.setId(rs.getLong("id"));
+                    s.setDescricao(rs.getString("descricao"));
+                    s.setCategoria(categoriaDao.findById(rs.getLong("categoria_id")));
+                    s.setDefeito(rs.getString("defeito"));
+                    s.setOrcamento(rs.getObject("orcamento", Double.class));
+                    s.setSituacao(Situacao.valueOf(rs.getString("situacao")));
+                    s.setCliente(pessoaDao.findById(rs.getLong("cliente_id")));
+                    Long funcionarioId = rs.getLong("funcionario_id");
+                    if (!rs.wasNull()) {
+                        s.setFuncionario(funcionarioDao.findById(funcionarioId));
+                    }
+                    s.setDataOrcamento(rs.getDate("dataOrcamento"));
+                    s.setDescricaoManutencao(rs.getString("descricaoManutencao"));
+                    s.setDataManutencao(rs.getDate("dataManutencao"));
+                    s.setOrientacoes(rs.getString("orientacoes"));
+                    s.setDataFinalizacao(rs.getDate("dataFinalizacao"));
+                    s.setMotivoRejeicao(rs.getString("motivoRejeicao"));
+                    // Buscar a data de abertura (primeira do histórico)
+                    Date dataAbertura = jdbcTemplate.query(
+                            "SELECT data_hora FROM solicitacao_status_historico WHERE solicitacao_id = ? ORDER BY data_hora ASC LIMIT 1",
+                            (rsh) -> rsh.next() ? new Date(rsh.getTimestamp("data_hora").getTime()) : null,
+                            s.getId());
+                    s.setDataSolicitacaoAbertura(dataAbertura);
+                    return s;
+                }, id);
+    }
+
+    public List<Solicitacao> findByFuncionarioId(Long id) {
+        return jdbcTemplate.query("SELECT * FROM solicitacao WHERE funcionario_id = ?",
+                (rs, rowNum) -> {
+                    Solicitacao s = new Solicitacao();
+                    s.setId(rs.getLong("id"));
+                    s.setDescricao(rs.getString("descricao"));
+                    s.setCategoria(categoriaDao.findById(rs.getLong("categoria_id")));
+                    s.setDefeito(rs.getString("defeito"));
+                    s.setOrcamento(rs.getObject("orcamento", Double.class));
+                    s.setSituacao(Situacao.valueOf(rs.getString("situacao")));
+                    s.setCliente(pessoaDao.findById(rs.getLong("cliente_id")));
+                    Long funcionarioId = rs.getLong("funcionario_id");
+                    if (!rs.wasNull()) {
+                        s.setFuncionario(funcionarioDao.findById(funcionarioId));
+                    }
+                    s.setDataOrcamento(rs.getDate("dataOrcamento"));
+                    s.setDescricaoManutencao(rs.getString("descricaoManutencao"));
+                    s.setDataManutencao(rs.getDate("dataManutencao"));
+                    s.setOrientacoes(rs.getString("orientacoes"));
+                    s.setDataFinalizacao(rs.getDate("dataFinalizacao"));
+                    s.setMotivoRejeicao(rs.getString("motivoRejeicao"));
+                    // Buscar a data de abertura (primeira do histórico)
+                    Date dataAbertura = jdbcTemplate.query(
+                            "SELECT data_hora FROM solicitacao_status_historico WHERE solicitacao_id = ? ORDER BY data_hora ASC LIMIT 1",
+                            (rsh) -> rsh.next() ? new Date(rsh.getTimestamp("data_hora").getTime()) : null,
+                            s.getId());
+                    s.setDataSolicitacaoAbertura(dataAbertura);
+                    return s;
+                }, id);
+    }
+
     public void save(Solicitacao solicitacao) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
