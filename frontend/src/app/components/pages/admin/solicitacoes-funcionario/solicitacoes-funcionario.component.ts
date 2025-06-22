@@ -70,7 +70,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	dataMax?: Date;
 
 	// Paginação
-	itensPorPagina = 8;
+	itensPorPagina!: number;
 	paginaAtual = 1;
 	get totalPaginas(): number {
 		return Math.ceil((this.listaSolicitacoes?.length || 0) / this.itensPorPagina) || 1;
@@ -148,6 +148,14 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		const altura = window.innerHeight;
+
+		if (altura > 800) {
+			this.itensPorPagina = 8;
+		} else {
+			this.itensPorPagina = 5;
+		}
+
 		this.listarSolicitacoesPorFuncionario();
 
 		this.funcionarioService

@@ -65,7 +65,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	mostrarModalHistorico = false;
 
 	// Paginação
-	itensPorPagina = 5;
+	itensPorPagina!: number;
 	paginaAtual = 1;
 	get totalPaginas(): number {
 		return Math.ceil(this.listaSolicitacoes.length / this.itensPorPagina) || 1;
@@ -83,6 +83,14 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		const altura = window.innerHeight;
+
+		if (altura > 800) {
+			this.itensPorPagina = 5;
+		} else {
+			this.itensPorPagina = 2;
+		}
+
 		this.loggedUser = this.authService.getUserData();
 		this.solicitacaoService
 			.listarSolicitacoes()

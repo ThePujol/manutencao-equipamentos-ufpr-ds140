@@ -47,7 +47,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	mensagemErroOrcamento = '';
 
 	// Paginação
-	itensPorPagina = 8;
+	itensPorPagina!: number;
 	paginaAtual = 1;
 	get totalPaginas(): number {
 		return Math.ceil((this.solicitacoesAbertas?.length || 0) / this.itensPorPagina) || 1;
@@ -125,6 +125,14 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		const altura = window.innerHeight;
+
+		if (altura > 800) {
+			this.itensPorPagina = 8;
+		} else {
+			this.itensPorPagina = 5;
+		}
+
 		this.solicitacaoService
 			.listarSolicitacoes()
 			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.situacao === Situacao.ABERTA)))
