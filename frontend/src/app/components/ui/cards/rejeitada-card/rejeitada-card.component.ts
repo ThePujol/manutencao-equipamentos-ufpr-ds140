@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { OrcamentoService } from '../../../services/orcamento.service';
-import { SolicitacaoService } from '../../../services/solicitacao.service';
-import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
-import { ButtonComponent } from '../buttons/button/button.component';
+import { OrcamentoService } from '../../../../services/orcamento.service';
+import { SolicitacaoService } from '../../../../services/solicitacao.service';
+import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
+import { ButtonComponent } from '../../buttons/button/button.component';
 
 @Component({
 	selector: 'app-rejeitada-card',

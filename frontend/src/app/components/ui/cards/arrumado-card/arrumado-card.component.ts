@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { SolicitacaoService } from '../../../services/solicitacao.service';
-import { Solicitacao } from '../../../shared/models/solicitacao.model';
-import { ButtonComponent } from '../buttons/button/button.component';
-import { PagamentoPopUpComponent } from '../pagamento-pop-up/pagamento-pop-up.component';
+import { SolicitacaoService } from '../../../../services/solicitacao.service';
+import { Solicitacao } from '../../../../shared/models/solicitacao.model';
+import { ButtonComponent } from '../../buttons/button/button.component';
+import { PagamentoPopUpComponent } from '../../pagamento-pop-up/pagamento-pop-up.component';
 
 @Component({
 	selector: 'app-arrumado-card',

@@ -55,6 +55,10 @@
 			<app-aprovada-card [orcamento]="solicitacao.orcamento" />
 		} @else if (solicitacao.situacao === situacoes.rejeitada) {
 			<app-rejeitada-card [solicitacao]="solicitacao" />
+		} @else if (solicitacao.situacao === situacoes.paga) {
+			<app-paga-card />
+		} @else if (solicitacao.situacao === situacoes.finalizada) {
+			<app-finalizada-card />
 		} @else {
 			<span class="w-52"></span>
 		}

@@ -2,11 +2,11 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { OrcamentoService } from '../../../services/orcamento.service';
-import { Solicitacao } from '../../../shared/models/solicitacao.model';
-import { ButtonComponent } from '../buttons/button/button.component';
-import { SecondaryButtonComponent } from '../buttons/secondary-button/secondary-button.component';
-import { InputTextComponent } from '../input-text/input-text.component';
+import { OrcamentoService } from '../../../../services/orcamento.service';
+import { Solicitacao } from '../../../../shared/models/solicitacao.model';
+import { ButtonComponent } from '../../buttons/button/button.component';
+import { SecondaryButtonComponent } from '../../buttons/secondary-button/secondary-button.component';
+import { InputTextComponent } from '../../input-text/input-text.component';
 
 @Component({
 	selector: 'app-orcada-card',

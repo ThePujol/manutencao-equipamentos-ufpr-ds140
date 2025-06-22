@@ -4,12 +4,14 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matChevronRightOutline } from '@ng-icons/material-icons/outline';
 
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
-import { AbertaCardComponent } from '../../ui/aberta-card/aberta-card.component';
-import { AprovadaCardComponent } from '../../ui/aprovada-card/aprovada-card.component';
-import { ArrumadoCardComponent } from '../../ui/arrumado-card/arrumado-card.component';
 import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
-import { OrcadaCardComponent } from '../../ui/orcada-card/orcada-card.component';
-import { RejeitadaCardComponent } from '../../ui/rejeitada-card/rejeitada-card.component';
+import { AbertaCardComponent } from '../../ui/cards/aberta-card/aberta-card.component';
+import { AprovadaCardComponent } from '../../ui/cards/aprovada-card/aprovada-card.component';
+import { ArrumadoCardComponent } from '../../ui/cards/arrumado-card/arrumado-card.component';
+import { FinalizadaCardComponent } from '../../ui/cards/finalizada-card/finalizada-card.component';
+import { OrcadaCardComponent } from '../../ui/cards/orcada-card/orcada-card.component';
+import { PagaCardComponent } from '../../ui/cards/paga-card/paga-card.component';
+import { RejeitadaCardComponent } from '../../ui/cards/rejeitada-card/rejeitada-card.component';
 import { SituacaoTagComponent } from '../../ui/situacao-tag/situacao-tag.component';
 import { TableLabelComponent } from '../../ui/table-label/table-label.component';
 
@@ -26,6 +28,8 @@ import { TableLabelComponent } from '../../ui/table-label/table-label.component'
 		NgIcon,
 		SecondaryButtonComponent,
 		SituacaoTagComponent,
+		PagaCardComponent,
+		FinalizadaCardComponent,
 	],
 	viewProviders: [provideIcons({ matChevronRightOutline })],
 	templateUrl: './tabela-expandida.component.html',
