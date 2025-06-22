@@ -6,11 +6,12 @@ import { matChevronLeftOutline } from '@ng-icons/material-icons/outline';
 
 import { Situacao } from '../../../shared/models/solicitacao.model';
 import { TableColumn } from '../../../shared/tabela-interface';
+import { SituacaoTagComponent } from '../../ui/situacao-tag/situacao-tag.component';
 import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.component';
 
 @Component({
 	selector: 'app-tabela-expandivel',
-	imports: [DatePipe, NgIcon, TabelaExpandidaComponent],
+	imports: [DatePipe, NgIcon, TabelaExpandidaComponent, SituacaoTagComponent],
 	viewProviders: [provideIcons({ matChevronLeftOutline })],
 	templateUrl: './tabela-expandivel.component.html',
 })

@@ -10,6 +10,7 @@ import { ArrumadoCardComponent } from '../../ui/arrumado-card/arrumado-card.comp
 import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
 import { OrcadaCardComponent } from '../../ui/orcada-card/orcada-card.component';
 import { RejeitadaCardComponent } from '../../ui/rejeitada-card/rejeitada-card.component';
+import { SituacaoTagComponent } from '../../ui/situacao-tag/situacao-tag.component';
 import { TableLabelComponent } from '../../ui/table-label/table-label.component';
 
 @Component({
@@ -24,6 +25,7 @@ import { TableLabelComponent } from '../../ui/table-label/table-label.component'
 		DatePipe,
 		NgIcon,
 		SecondaryButtonComponent,
+		SituacaoTagComponent,
 	],
 	viewProviders: [provideIcons({ matChevronRightOutline })],
 	templateUrl: './tabela-expandida.component.html',

@@ -24,7 +24,7 @@
 	<td class="flex flex-col h-full justify-between">
 		<span>
 			<app-table-label>Estado atual</app-table-label>
-			<p class="w-52">{{ solicitacao.situacao }}</p>
+			<p class="w-52"><app-situacao-tag [situacao]="solicitacao.situacao" /></p>
 		</span>
 
 		<span>
