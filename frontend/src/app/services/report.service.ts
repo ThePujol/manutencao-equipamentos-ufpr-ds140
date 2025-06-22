@@ -23,10 +23,16 @@ export class ReportService {
 		/* O codigo de antes nao funcionava em um contexto assincrono, entao eu alterei. Faz a mesma coisa, mas funciona com o padrao Observable */
 		return this.solicitacaoService.listarSolicitacoes().pipe(
 			map((solicitacoes) => {
-				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.paga);
+				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.PAGA);
 
 				const solicitacoesFiltradas = solicitacoesPagas.filter((s) => {
-					const dataDaSolicitacao = s.dataFinalizacao ? new Date(s.dataFinalizacao) : new Date(s.dataSolicitacao);
+					const dataDaSolicitacao = s.dataFinalizacao
+						? new Date(s.dataFinalizacao)
+						: s.dataSolicitacaoAbertura
+							? new Date(s.dataSolicitacaoAbertura)
+							: null;
+
+					if (!dataDaSolicitacao) return false;
 
 					const aposInicio = !dataInicio || dataDaSolicitacao >= dataInicio;
 					const antesFim = !dataFim || dataDaSolicitacao <= dataFim;
@@ -36,7 +42,12 @@ export class ReportService {
 
 				const mapa = new Map<string, number>();
 				solicitacoesFiltradas.forEach((s) => {
-					const dataDaSolicitacao = s.dataFinalizacao ? new Date(s.dataFinalizacao) : new Date(s.dataSolicitacao);
+					const dataDaSolicitacao = s.dataFinalizacao
+						? new Date(s.dataFinalizacao)
+						: s.dataSolicitacaoAbertura
+							? new Date(s.dataSolicitacaoAbertura)
+							: null;
+					if (!dataDaSolicitacao) return;
 					// A chave do mapa será a data no formato 'YYYY-MM-DD' para garantir o agrupamento correto
 					const key = dataDaSolicitacao.toISOString().substring(0, 10);
 					mapa.set(key, (mapa.get(key) || 0) + (s.orcamento ?? 0));
@@ -55,7 +66,7 @@ export class ReportService {
 		/* Mesma coisa pra esse codigo. */
 		return this.solicitacaoService.listarSolicitacoes().pipe(
 			map((solicitacoes: Solicitacao[]) => {
-				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.paga);
+				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.PAGA);
 
 				const mapa = new Map<string, number>();
 				solicitacoesPagas.forEach((s) => {

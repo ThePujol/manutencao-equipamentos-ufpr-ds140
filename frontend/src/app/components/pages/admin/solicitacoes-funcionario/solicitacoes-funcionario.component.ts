@@ -1,6 +1,6 @@
 import { map } from 'rxjs';
 
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
 	AbstractControl,
@@ -44,6 +44,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		MensagemComponent,
 		SelectEstadoComponent,
 		FormsModule,
+		CommonModule,
 	],
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
@@ -64,9 +65,25 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	dataMin?: Date;
 	dataMax?: Date;
 
+	// Paginação
+	itensPorPagina = 8;
+	paginaAtual = 1;
+	get totalPaginas(): number {
+		return Math.ceil((this.listaSolicitacoes?.length || 0) / this.itensPorPagina) || 1;
+	}
+	get solicitacoesPaginadas(): Solicitacao[] {
+		const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
+		return this.listaSolicitacoes?.slice(inicio, inicio + this.itensPorPagina) || [];
+	}
+	mudarPagina(p: number) {
+		if (p >= 1 && p <= this.totalPaginas) {
+			this.paginaAtual = p;
+		}
+	}
+
 	headersTabela: TableColumn[] = [
 		{
-			fieldName: 'dataSolicitacao',
+			fieldName: 'dataSolicitacaoAbertura',
 			headerName: 'Data / Hora',
 		},
 		{
@@ -167,7 +184,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 		solicitacao.descricaoManutencao = this.formManutencao.value.descricaoManutencao;
 		solicitacao.orientacoes = this.formManutencao.value.orientacoes;
-		solicitacao.situacao = Situacao.arrumada;
+		solicitacao.situacao = Situacao.ARRUMADA;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
 			console.log(res);
 			this.formManutencao.reset();
@@ -205,7 +222,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	}
 
 	finalizarSolicitacao(solicitacao: Solicitacao) {
-		solicitacao.situacao = Situacao.finalizada;
+		solicitacao.situacao = Situacao.FINALIZADA;
 		solicitacao.dataFinalizacao = new Date();
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
 			console.log(res);
@@ -238,5 +255,9 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		const min = this.dataMin ? new Date(this.dataMin) : undefined;
 		const max = this.dataMax ? new Date(this.dataMax) : undefined;
 		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado, min, max);
+	}
+
+	menor(a: number, b: number): number {
+		return a < b ? a : b;
 	}
 }

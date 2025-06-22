@@ -19,10 +19,22 @@
 			>
 				@for (columnName of columns; track $index) {
 					@if (checkIfDate(item[columnName.fieldName])) {
-						<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy' }}</td>
+						<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy HH:mm' }}</td>
+					} @else if (columnName.fieldName === 'dataSolicitacaoAbertura') {
+						<td class="w-52 text-muted">
+							<ng-container
+								*ngIf="
+									item[columnName.fieldName];
+									instanceof: Date && !isNaN(item[columnName.fieldName].getTime());
+									else: semData
+								"
+							>
+								{{ item[columnName.fieldName] | date: 'dd/MM/yyyy HH:mm' }}
+							</ng-container>
+							<ng-template #semData>Sem data</ng-template>
+						</td>
 					} @else if (columnName.fieldName === 'cliente') {
-						<!-- Temp fix: por algum motivo, a função checkIfCliente não consegue identificar o tipo do objeto como cliente. Resolver depois. -->
-						<td class="w-52">{{ item[columnName.fieldName].nome }}</td>
+						<td class="w-52">{{ item[columnName.fieldName]?.nome ?? '' }}</td>
 					} @else if (columnName.fieldName === 'situacao') {
 						<td class="w-52">
 							<app-situacao-tag [situacao]="item[columnName.fieldName]" />
@@ -36,6 +48,8 @@
 					<td>
 						<app-dropdown
 							[solicitacao]="item"
+							[dropdownAbertoId]="dropdownAbertoId"
+							(dropdownAbertoIdChange)="setDropdownAberto($event)"
 							(efetuarManutencaoClicked)="efetuarManutencao(item)"
 							(finalizarClicked)="finalizarManutencao(item)"
 							(redirecionarManutencaoClicked)="redirecionarManutencao(item)"

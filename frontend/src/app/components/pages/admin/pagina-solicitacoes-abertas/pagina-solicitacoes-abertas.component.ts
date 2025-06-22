@@ -1,6 +1,6 @@
 import { map } from 'rxjs';
 
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -30,6 +30,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		SidebarFuncionarioComponent,
 		TabelaComponent,
 		FormsModule,
+		CommonModule,
 	],
 	templateUrl: './pagina-solicitacoes-abertas.component.html',
 })
@@ -39,6 +40,26 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	formOrcamento!: FormGroup;
 	solicitacaoModal!: Solicitacao;
 	modal = false;
+	mensagemErroOrcamento = '';
+
+	// Paginação
+	itensPorPagina = 8;
+	paginaAtual = 1;
+	get totalPaginas(): number {
+		return Math.ceil((this.solicitacoesAbertas?.length || 0) / this.itensPorPagina) || 1;
+	}
+	get solicitacoesPaginadas(): Solicitacao[] {
+		const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
+		return this.solicitacoesAbertas?.slice(inicio, inicio + this.itensPorPagina) || [];
+	}
+	mudarPagina(p: number) {
+		if (p >= 1 && p <= this.totalPaginas) {
+			this.paginaAtual = p;
+		}
+	}
+	menor(a: number, b: number): number {
+		return a < b ? a : b;
+	}
 
 	estado = 'todos';
 	query = '';
@@ -47,7 +68,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 
 	headersTabela: TableColumn[] = [
 		{
-			fieldName: 'dataSolicitacao',
+			fieldName: 'dataSolicitacaoAbertura',
 			headerName: 'Data / Hora',
 		},
 		{
@@ -80,10 +101,19 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 			return;
 		}
 
+		const valor = Number(this.formOrcamento.value.orcamento);
+		if (valor < 0) {
+			this.mensagemErroOrcamento = 'O valor do orçamento não pode ser negativo!';
+			setTimeout(() => {
+				this.mensagemErroOrcamento = '';
+			}, 4000);
+			return;
+		}
+
 		solicitacao.funcionario = this.authService.getUserData();
 		solicitacao.dataOrcamento = new Date();
 		solicitacao.orcamento = Number(this.formOrcamento.value.orcamento);
-		solicitacao.situacao = Situacao.orcada;
+		solicitacao.situacao = Situacao.ORÇADA;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe(() => {
 			this.formOrcamento.reset();
 			this.toggleModal();
@@ -93,7 +123,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 	ngOnInit() {
 		this.solicitacaoService
 			.listarSolicitacoes()
-			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.situacao === Situacao.aberta)))
+			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.situacao === Situacao.ABERTA)))
 			.subscribe((solicitacoes) => {
 				this.todasSolicitacoes = solicitacoes;
 				this.solicitacoesAbertas = solicitacoes;

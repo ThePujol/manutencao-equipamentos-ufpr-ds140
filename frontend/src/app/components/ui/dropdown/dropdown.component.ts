@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ElementRef, HostListener, OnChanges } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowDropDownOutline } from '@ng-icons/material-icons/outline';
 
@@ -10,23 +10,47 @@ import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model'
 	viewProviders: [provideIcons({ matArrowDropDownOutline })],
 	templateUrl: './dropdown.component.html',
 })
-export class DropdownComponent {
+export class DropdownComponent implements OnChanges {
 	@Input() solicitacao!: Solicitacao;
-	situacoes = {
-		aberta: Situacao.aberta,
-		orcada: Situacao.orcada,
-		rejeitada: Situacao.rejeitada,
-		aprovada: Situacao.aprovada,
-		redirecionada: Situacao.redirecionada,
-		arrumada: Situacao.arrumada,
-		paga: Situacao.paga,
-		finalizada: Situacao.finalizada,
-	};
-
+	@Input() dropdownAbertoId: number | null = null;
+	@Output() dropdownAbertoIdChange = new EventEmitter<number | null>();
 	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
 	dropdown = false;
+
+	situacoes = {
+		aberta: Situacao.ABERTA,
+		orcada: Situacao.ORÇADA,
+		rejeitada: Situacao.REJEITADA,
+		aprovada: Situacao.APROVADA,
+		redirecionada: Situacao.REDIRECIONADA,
+		arrumada: Situacao.ARRUMADA,
+		paga: Situacao.PAGA,
+		finalizada: Situacao.FINALIZADA,
+	};
+
+	constructor(private elementRef: ElementRef) {}
+
+	@HostListener('document:click', ['$event'])
+	onDocumentClick(event: MouseEvent) {
+		if (this.dropdown && !this.elementRef.nativeElement.contains(event.target)) {
+			this.fecharDropdown();
+		}
+	}
+
+	abrirDropdown(event?: MouseEvent) {
+		if (event) event.stopPropagation();
+		this.dropdownAbertoIdChange.emit(this.solicitacao.id);
+	}
+
+	fecharDropdown() {
+		this.dropdownAbertoIdChange.emit(null);
+	}
+
+	ngOnChanges() {
+		this.dropdown = this.dropdownAbertoId === this.solicitacao.id;
+	}
 
 	efetuarManutencao(solicitacao: Solicitacao) {
 		this.efetuarManutencaoClicked.emit(solicitacao);
@@ -40,7 +64,8 @@ export class DropdownComponent {
 		this.finalizarClicked.emit(solicitacao);
 	}
 
-	toggleDropdown() {
+	toggleDropdown(event?: MouseEvent) {
+		if (event) event.stopPropagation();
 		this.dropdown = !this.dropdown;
 	}
 }

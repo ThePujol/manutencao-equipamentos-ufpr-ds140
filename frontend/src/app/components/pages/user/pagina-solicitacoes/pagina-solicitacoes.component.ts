@@ -1,11 +1,16 @@
 import { map } from 'rxjs';
 
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 import { AuthService } from '../../../../services/auth.service';
 import { OrcamentoService } from '../../../../services/orcamento.service';
+import {
+	SolicitacaoHistoricoService,
+	SolicitacaoStatusHistorico,
+} from '../../../../services/solicitacao-status-historico.service';
 import { SolicitacaoService } from '../../../../services/solicitacao.service';
 import { Pessoa } from '../../../../shared/models/pessoa.model';
 import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
@@ -27,8 +32,11 @@ import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cli
 		TabelaExpandivelComponent,
 		SelectEstadoComponent,
 		FormsModule,
+		CommonModule,
+		DatePipe,
 	],
 	templateUrl: './pagina-solicitacoes.component.html',
+	providers: [DatePipe],
 })
 export class PaginaSolicitacoesComponent implements OnInit {
 	todasSolicitacoes: Solicitacao[] = [];
@@ -43,24 +51,31 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	dataMax?: Date;
 
 	headersTabela: TableColumn[] = [
-		{
-			fieldName: 'dataSolicitacao',
-			headerName: 'Data',
-		},
-		{
-			fieldName: 'descricao',
-			headerName: 'Descrição',
-		},
-		{
-			fieldName: 'situacao',
-			headerName: 'Situação',
-		},
+		{ fieldName: 'dataSolicitacaoAbertura', headerName: 'Data' },
+		{ fieldName: 'descricao', headerName: 'Descrição' },
+		{ fieldName: 'situacao', headerName: 'Situação' },
 	];
+
+	// NOVO: para histórico
+	historico: SolicitacaoStatusHistorico[] = [];
+	mostrarModalHistorico = false;
+
+	// Paginação
+	itensPorPagina = 8;
+	paginaAtual = 1;
+	get totalPaginas(): number {
+		return Math.ceil(this.listaSolicitacoes.length / this.itensPorPagina) || 1;
+	}
+	get solicitacoesPaginadas(): Solicitacao[] {
+		const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
+		return this.listaSolicitacoes.slice(inicio, inicio + this.itensPorPagina);
+	}
 
 	constructor(
 		private solicitacaoService: SolicitacaoService,
 		private authService: AuthService,
-		private orcamentoAction: OrcamentoService
+		private orcamentoAction: OrcamentoService,
+		private historicoService: SolicitacaoHistoricoService // NOVO
 	) {}
 
 	ngOnInit() {
@@ -80,8 +95,20 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		});
 	}
 
+	abrirHistorico(solicitacaoId: number) {
+		this.historicoService.listarHistorico(solicitacaoId).subscribe((h) => {
+			this.historico = h;
+			this.mostrarModalHistorico = true;
+		});
+	}
+
+	fecharModalHistorico() {
+		this.mostrarModalHistorico = false;
+		this.historico = [];
+	}
+
 	aprovarOrcamento(solicitacao: Solicitacao) {
-		solicitacao.situacao = Situacao.aprovada;
+		solicitacao.situacao = Situacao.APROVADA;
 
 		if (solicitacao.orcamento) {
 			const precoFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
@@ -105,7 +132,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		this.showMessage = true;
 		this.mensagem = 'Serviço rejeitado.';
 
-		solicitacao.situacao = Situacao.rejeitada;
+		solicitacao.situacao = Situacao.REJEITADA;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => console.log(res));
 
 		setTimeout(() => {
@@ -117,7 +144,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		this.showMessage = true;
 		this.mensagem = 'Serviço resgatado!';
 
-		solicitacao.situacao = Situacao.orcada;
+		solicitacao.situacao = Situacao.ORÇADA;
 		solicitacao.motivoRejeicao = undefined;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => console.log(res));
 
@@ -140,5 +167,11 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		const min = this.dataMin ? new Date(this.dataMin) : undefined;
 		const max = this.dataMax ? new Date(this.dataMax) : undefined;
 		this.listaSolicitacoes = Util.pesquisarSolicitacao(this.todasSolicitacoes, this.query, this.estado, min, max);
+	}
+
+	mudarPagina(p: number) {
+		if (p >= 1 && p <= this.totalPaginas) {
+			this.paginaAtual = p;
+		}
 	}
 }

@@ -50,16 +50,14 @@ public class FuncionarioDao {
         jdbcTemplate.update(
                 "INSERT INTO funcionario (nome, email, senha, salt, data_nasc) VALUES (?, ?, ?, ?, ?)",
                 funcionario.getNome(), funcionario.getEmail(), funcionario.getSenha(),
-                funcionario.getSalt(), Date.valueOf(funcionario.getDataNasc())
-        );
+                funcionario.getSalt(), Date.valueOf(funcionario.getDataNasc()));
     }
 
     public void update(Funcionario funcionario) {
         jdbcTemplate.update(
                 "UPDATE funcionario SET nome = ?, email = ?, senha = ?, salt = ?, data_nasc = ? WHERE id = ?",
                 funcionario.getNome(), funcionario.getEmail(), funcionario.getSenha(),
-                funcionario.getSalt(), Date.valueOf(funcionario.getDataNasc()), funcionario.getId()
-        );
+                funcionario.getSalt(), Date.valueOf(funcionario.getDataNasc()), funcionario.getId());
     }
 
     public void delete(Long id) {
