@@ -27,13 +27,30 @@
 				</div>
 
 				<div class="flex flex-col gap-5">
-					<app-input-text
-						[label]="'Descrição do equipamento'"
-						controlName="descricao"
-						[type]="'text'"
-						[placeholder]="'iPhone, Notebook Acer...'"
-						[required]="true"
-					/>
+					<div>
+						<app-input-text
+							[label]="'Descrição do equipamento'"
+							controlName="descricao"
+							[type]="'text'"
+							[placeholder]="'iPhone, Notebook Acer...'"
+							[required]="true"
+							[max]="30"
+						/>
+						@if (
+							novaSolicitacaoForm.get('descricao')?.hasError('maxlength') &&
+							novaSolicitacaoForm.get('descricao')?.touched
+						) {
+							<p
+								class="text-red-600 text-sm"
+								*ngIf="
+									novaSolicitacaoForm.get('descricao')?.hasError('maxlength') &&
+									novaSolicitacaoForm.get('descricao')?.touched
+								"
+							>
+								A descrição pode ter até 30 caracteres.
+							</p>
+						}
+					</div>
 
 					<div class="flex flex-col w-full">
 						<label for="categoria" class="mb-1 text-sm font-medium text-gray-700">Categoria do equipamento</label>

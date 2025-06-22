@@ -3,6 +3,7 @@ package com.repairio.backend.model;
 import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,6 +14,7 @@ public class Solicitacao {
     private Long id;
 
     @NotBlank(message = "Descrição é obrigatória")
+    @Size(max = 30, message = "A descrição só pode ter até 30 caracteres.")
     private String descricao;
 
     @NotBlank(message = "Categoria é obrigatória")

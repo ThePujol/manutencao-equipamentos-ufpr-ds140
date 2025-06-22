@@ -1,16 +1,18 @@
 package com.repairio.backend.service;
 
-import com.repairio.backend.dao.SolicitacaoDao;
-import com.repairio.backend.model.Solicitacao;
-import com.repairio.backend.model.SolicitacaoStatusHistorico;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.repairio.backend.dao.SolicitacaoDao;
+import com.repairio.backend.model.Solicitacao;
+import com.repairio.backend.model.SolicitacaoStatusHistorico;
+
 @Service
 public class SolicitacaoService {
+
     private final SolicitacaoDao solicitacaoDao;
     private final SolicitacaoStatusHistoricoService historicoService;
 

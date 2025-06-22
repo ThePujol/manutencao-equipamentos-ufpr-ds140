@@ -49,7 +49,7 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 		private authService: AuthService
 	) {
 		this.novaSolicitacaoForm = this.fBuilder.group({
-			descricao: ['', Validators.required],
+			descricao: ['', [Validators.required, Validators.maxLength(30)]],
 			categoria: ['', Validators.required],
 			defeito: ['', Validators.required],
 		});
