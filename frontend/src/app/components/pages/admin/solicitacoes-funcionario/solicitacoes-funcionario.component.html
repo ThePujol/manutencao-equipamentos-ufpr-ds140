@@ -39,15 +39,16 @@
 
 		<!-- Tabela -->
 		@if (todasSolicitacoes && todasSolicitacoes.length > 0 && listaSolicitacoes.length > 0) {
-			<app-tabela
-				[columns]="headersTabela"
-				[gridData]="solicitacoesPaginadas"
-				[tabelaFuncionario]="true"
-				(efetuarManutencaoClicked)="toggleModalManutencao($event)"
-				(redirecionarManutencaoClicked)="toggleModalRedirecionar($event)"
-				(finalizarClicked)="finalizarSolicitacao($event)"
-			/>
-			<!-- Controles de Paginação -->
+			<div class="h-full">
+				<app-tabela
+					[columns]="headersTabela"
+					[gridData]="solicitacoesPaginadas"
+					[tabelaFuncionario]="true"
+					(efetuarManutencaoClicked)="toggleModalManutencao($event)"
+					(redirecionarManutencaoClicked)="toggleModalRedirecionar($event)"
+					(finalizarClicked)="finalizarSolicitacao($event)"
+				/>
+			</div>
 			<!-- Controles de Paginação -->
 			<div class="flex justify-end items-center gap-1 mt-4">
 				<button

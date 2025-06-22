@@ -79,7 +79,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		private solicitacaoService: SolicitacaoService,
 		private authService: AuthService,
 		private orcamentoAction: OrcamentoService,
-		private historicoService: SolicitacaoHistoricoService // NOVO
+		private historicoService: SolicitacaoHistoricoService
 	) {}
 
 	ngOnInit() {

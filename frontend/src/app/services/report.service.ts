@@ -23,7 +23,7 @@ export class ReportService {
 		/* O codigo de antes nao funcionava em um contexto assincrono, entao eu alterei. Faz a mesma coisa, mas funciona com o padrao Observable */
 		return this.solicitacaoService.listarSolicitacoes().pipe(
 			map((solicitacoes) => {
-				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.PAGA);
+				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.FINALIZADA);
 
 				const solicitacoesFiltradas = solicitacoesPagas.filter((s) => {
 					const dataDaSolicitacao = s.dataFinalizacao
@@ -66,7 +66,7 @@ export class ReportService {
 		/* Mesma coisa pra esse codigo. */
 		return this.solicitacaoService.listarSolicitacoes().pipe(
 			map((solicitacoes: Solicitacao[]) => {
-				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.PAGA);
+				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.FINALIZADA);
 
 				const mapa = new Map<string, number>();
 				solicitacoesPagas.forEach((s) => {

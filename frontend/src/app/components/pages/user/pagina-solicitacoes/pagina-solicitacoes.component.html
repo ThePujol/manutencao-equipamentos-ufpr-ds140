@@ -15,7 +15,7 @@
 					(pesquisarClick)="pesquisarSolicitacao($event)"
 				/>
 			</div>
-			<div class="flex gap-8 items-center">
+			<div class="flex gap-4 items-center">
 				<app-select-estado (selectChange)="filtrarPorEstado($event)" />
 				<div class="flex items-center justify-center gap-3">
 					<label for="dataMin">De</label>
@@ -23,7 +23,7 @@
 						name="dataMin"
 						type="date"
 						value="22-01-2023"
-						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md text-gray-900/70 outline-1 outline-gray-900/30"
+						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md text-gray-900/70 outline-1 outline-gray-900/30 max-w-40"
 						[(ngModel)]="dataMin"
 						(change)="filtrarPorData()"
 					/>
@@ -34,7 +34,7 @@
 						name="dataMax"
 						type="date"
 						value="22-01-2023"
-						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md text-gray-900/70 outline-1 outline-gray-900/30"
+						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md text-gray-900/70 outline-1 outline-gray-900/30 max-w-40"
 						[(ngModel)]="dataMax"
 						(change)="filtrarPorData()"
 					/>

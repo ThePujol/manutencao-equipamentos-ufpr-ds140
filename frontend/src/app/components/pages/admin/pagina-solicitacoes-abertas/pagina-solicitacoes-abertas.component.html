@@ -38,12 +38,14 @@
 
 		<!-- Tabela -->
 		@if (solicitacoesAbertas && solicitacoesAbertas.length > 0) {
-			<app-tabela
-				[columns]="headersTabela"
-				[gridData]="solicitacoesPaginadas"
-				[tabelaSolicitacoesAbertas]="true"
-				(orcamentoClicked)="toggleModal($event)"
-			/>
+			<div class="h-full">
+				<app-tabela
+					[columns]="headersTabela"
+					[gridData]="solicitacoesPaginadas"
+					[tabelaSolicitacoesAbertas]="true"
+					(orcamentoClicked)="toggleModal($event)"
+				/>
+			</div>
 			<!-- Controles de Paginação -->
 			<div class="flex justify-end items-center gap-1 mt-4">
 				<button

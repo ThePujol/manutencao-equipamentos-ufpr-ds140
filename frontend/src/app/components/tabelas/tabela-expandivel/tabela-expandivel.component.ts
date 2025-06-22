@@ -20,6 +20,14 @@ export class TabelaExpandivelComponent {
 	@Input() gridData!: any[];
 
 	itemSelecionado!: any;
+	aberta: Situacao = Situacao.ABERTA;
+	orcada: Situacao = Situacao.ORÇADA;
+	rejeitada: Situacao = Situacao.REJEITADA;
+	redirecionada: Situacao = Situacao.REDIRECIONADA;
+	aprovada: Situacao = Situacao.APROVADA;
+	arrumada: Situacao = Situacao.ARRUMADA;
+	paga: Situacao = Situacao.PAGA;
+	finalizada: Situacao = Situacao.FINALIZADA;
 
 	@Output() abrirHistorico = new EventEmitter<number>();
 
@@ -38,12 +46,4 @@ export class TabelaExpandivelComponent {
 		}
 		return false;
 	}
-	aberta: Situacao = Situacao.ABERTA;
-	orcada: Situacao = Situacao.ORÇADA;
-	rejeitada: Situacao = Situacao.REJEITADA;
-	redirecionada: Situacao = Situacao.REDIRECIONADA;
-	aprovada: Situacao = Situacao.APROVADA;
-	arrumada: Situacao = Situacao.ARRUMADA;
-	paga: Situacao = Situacao.PAGA;
-	finalizada: Situacao = Situacao.FINALIZADA;
 }
