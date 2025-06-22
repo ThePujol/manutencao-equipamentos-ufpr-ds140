@@ -1,19 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CommonModule } from '@angular/common';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matDeleteOutline, matEditOutline } from '@ng-icons/material-icons/outline';
 
+import { Categoria } from '../../../shared/models/categoria.model';
 import { Pessoa } from '../../../shared/models/pessoa.model';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
 import { TableColumn } from '../../../shared/tabela-interface';
+import { ButtonComponent } from '../../ui/buttons/button/button.component';
+import { SecondaryButtonComponent } from '../../ui/buttons/secondary-button/secondary-button.component';
 import { DropdownComponent } from '../../ui/dropdown/dropdown.component';
 import { SituacaoTagComponent } from '../../ui/situacao-tag/situacao-tag.component';
 
 @Component({
 	selector: 'app-tabela',
-	imports: [CommonModule, DatePipe, SituacaoTagComponent, DropdownComponent, NgIcon],
+	imports: [
+		CommonModule,
+		DatePipe,
+		SituacaoTagComponent,
+		DropdownComponent,
+		NgIcon,
+		ButtonComponent,
+		SecondaryButtonComponent,
+	],
 	viewProviders: [provideIcons({ matDeleteOutline, matEditOutline })],
 	templateUrl: './tabela.component.html',
 })
@@ -27,6 +37,9 @@ export class TabelaComponent {
 
 	dropdown = false;
 	dropdownAbertoId: number | null = null;
+	modalExcluir = false;
+	categoriaSelecionada!: Categoria;
+	itemSelecionado!: any;
 
 	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
@@ -73,6 +86,7 @@ export class TabelaComponent {
 
 	excluir(item: any) {
 		this.excluirClicked.emit(item);
+		this.modalExcluir = false;
 	}
 
 	checkIfDate(obj: unknown) {
@@ -85,5 +99,15 @@ export class TabelaComponent {
 
 	setDropdownAberto(id: number | null) {
 		this.dropdownAbertoId = id;
+	}
+
+	abrirModalExcluir(item: any) {
+		this.modalExcluir = true;
+		this.itemSelecionado = item;
+	}
+
+	fecharModal() {
+		this.modalExcluir = false;
+		this.itemSelecionado = null;
 	}
 }

@@ -31,75 +31,82 @@
 		</p>
 	</section>
 
-	<div *ngIf="modal" class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
-		<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
-			<div class="flex justify-between items-center mb-4">
-				<h2 class="text-xl font-semibold text-gray-800">
-					{{ funcionarioSelecionado ? 'Editar funcionario' : 'Novo funcionario' }}
-				</h2>
-				<button (click)="fecharModal()">✖</button>
-			</div>
-
-			<form [formGroup]="formfuncionario" (ngSubmit)="salvarOuEditarfuncionario()">
-				<div class="mb-4">
-					<app-input-text
-						[label]="'Nome'"
-						controlName="nome"
-						[type]="'text'"
-						[placeholder]="'Ex: Geraldo Alckmin'"
-						[required]="true"
-					/>
-					<app-input-text
-						[label]="'Email'"
-						controlName="email"
-						[type]="'email'"
-						[placeholder]="'Ex: alckmail@email.com'"
-						[required]="true"
-					/>
-					<app-input-text
-						[label]="'Senha'"
-						controlName="senha"
-						[type]="'password'"
-						[placeholder]="'Ex: ********'"
-						[required]="true"
-					/>
-					<app-input-text [label]="'Data de Nascimento'" controlName="dataNasc" [type]="'date'" [required]="true" />
-
-					<div
-						*ngIf="formfuncionario.get('nome')?.touched && formfuncionario.get('nome')?.invalid"
-						class="text-red-500 text-sm mt-1"
-					>
-						Nome é obrigatório.
-					</div>
-
-					<div
-						*ngIf="formfuncionario.get('email')?.touched && formfuncionario.get('email')?.invalid"
-						class="text-red-500 text-sm mt-1"
-					>
-						Email é obrigatório.
-					</div>
-
-					<div
-						*ngIf="formfuncionario.get('senha')?.touched && formfuncionario.get('senha')?.invalid"
-						class="text-red-500 text-sm mt-1"
-					>
-						Senha é obrigatória.
-					</div>
-				</div>
-
-				<div class="flex justify-end space-x-3">
+	@if (modal) {
+		<div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+			<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+				<div class="flex justify-between items-center mb-4">
+					<h2 class="text-xl font-semibold text-gray-800">
+						{{ funcionarioSelecionado ? 'Editar funcionario' : 'Novo funcionario' }}
+					</h2>
 					<button
-						type="button"
+						class="cursor-pointer rounded-full hover:bg-gray-950/5 p-1 w-7 h-7 duration-150"
 						(click)="fecharModal()"
-						class="px-4 py-2 rounded-xl border border-purple-600 text-purple-600 hover:bg-purple-50"
 					>
-						Cancelar
-					</button>
-					<button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
-						Salvar
+						✖
 					</button>
 				</div>
-			</form>
+
+				<form [formGroup]="formfuncionario" (ngSubmit)="salvarOuEditarfuncionario()">
+					<div class="flex flex-col gap-3 mb-4">
+						<app-input-text
+							[label]="'Nome'"
+							controlName="nome"
+							[type]="'text'"
+							[placeholder]="'Ex: Geraldo Alckmin'"
+							[required]="true"
+						/>
+						<app-input-text
+							[label]="'Email'"
+							controlName="email"
+							[type]="'email'"
+							[placeholder]="'Ex: alckmail@email.com'"
+							[required]="true"
+						/>
+						<app-input-text
+							[label]="'Senha'"
+							controlName="senha"
+							[type]="'password'"
+							[placeholder]="'Ex: ********'"
+							[required]="true"
+						/>
+						<app-input-text [label]="'Data de Nascimento'" controlName="dataNasc" [type]="'date'" [required]="true" />
+
+						<div
+							*ngIf="formfuncionario.get('nome')?.touched && formfuncionario.get('nome')?.invalid"
+							class="text-red-500 text-sm mt-1"
+						>
+							Nome é obrigatório.
+						</div>
+
+						<div
+							*ngIf="formfuncionario.get('email')?.touched && formfuncionario.get('email')?.invalid"
+							class="text-red-500 text-sm mt-1"
+						>
+							Email é obrigatório.
+						</div>
+
+						<div
+							*ngIf="formfuncionario.get('senha')?.touched && formfuncionario.get('senha')?.invalid"
+							class="text-red-500 text-sm mt-1"
+						>
+							Senha é obrigatória.
+						</div>
+					</div>
+
+					<div class="flex justify-end space-x-3">
+						<button
+							type="button"
+							(click)="fecharModal()"
+							class="px-4 py-2 rounded-xl border border-purple-600 text-purple-600 hover:bg-purple-50"
+						>
+							Cancelar
+						</button>
+						<button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
+							Salvar
+						</button>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
+	}
 </main>

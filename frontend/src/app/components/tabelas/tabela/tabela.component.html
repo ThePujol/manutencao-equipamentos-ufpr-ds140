@@ -74,7 +74,7 @@
 						</button>
 						<button
 							class="text-red-500 outline outline-red-500 p-2 rounded-md flex justify-center items-center cursor-pointer"
-							(click)="excluir(item)"
+							(click)="abrirModalExcluir(item)"
 							[disabled]="excluirDisabledCondition"
 						>
 							<ng-icon name="matDeleteOutline" />
@@ -85,3 +85,28 @@
 		}
 	</tbody>
 </table>
+
+<!-- Modal Excluir -->
+@if (modalExcluir) {
+	<section class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+		<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+			<div class="flex justify-between items-start mb-4">
+				<div>
+					<h2 class="text-xl font-semibold text-gray-800">Atenção</h2>
+					<p class="text-gray-600 text-sm mt-1">Tem certeza que deseja excluir este item?</p>
+				</div>
+				<button
+					class="cursor-pointer rounded-full hover:bg-gray-950/5 p-1 w-7 h-7 duration-150"
+					(click)="fecharModal()"
+				>
+					✖
+				</button>
+			</div>
+
+			<div class="flex justify-end space-x-3">
+				<app-secondary-button text="Cancelar" (funcao)="fecharModal()" />
+				<app-button text="Excluir" (funcao)="excluir(itemSelecionado)" />
+			</div>
+		</div>
+	</section>
+}

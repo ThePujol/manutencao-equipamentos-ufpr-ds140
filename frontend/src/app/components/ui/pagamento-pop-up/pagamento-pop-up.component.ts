@@ -3,10 +3,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { SolicitacaoService } from '../../../services/solicitacao.service';
 import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model';
+import { SecondaryButtonComponent } from '../buttons/secondary-button/secondary-button.component';
 
 @Component({
 	selector: 'app-pagamento-pop-up',
-	imports: [],
+	imports: [SecondaryButtonComponent],
 	templateUrl: './pagamento-pop-up.component.html',
 })
 export class PagamentoPopUpComponent {

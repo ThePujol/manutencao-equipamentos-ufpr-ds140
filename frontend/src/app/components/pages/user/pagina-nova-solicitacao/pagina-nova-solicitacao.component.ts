@@ -15,6 +15,7 @@ import { Pessoa } from '../../../../shared/models/pessoa.model';
 import { Situacao, Solicitacao } from '../../../../shared/models/solicitacao.model';
 import { ButtonComponent } from '../../../ui/buttons/button/button.component';
 import { InputTextComponent } from '../../../ui/input-text/input-text.component';
+import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cliente.component';
 
 @Component({
@@ -29,6 +30,7 @@ import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cli
 		ButtonComponent,
 		NgIcon,
 		SidebarClienteComponent,
+		MensagemComponent,
 	],
 	viewProviders: [provideIcons({ matAddCircleOutlineOutline, matInfoOutline })],
 })
@@ -37,6 +39,8 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 	novaSolicitacaoForm!: FormGroup;
 	listaCategorias!: Observable<Categoria[]>;
 	loggedUser!: Pessoa;
+	showMessage = false;
+	mensagem!: string;
 
 	constructor(
 		private fBuilder: FormBuilder,
@@ -70,7 +74,6 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 				...formValue,
 				categoria: categoriaSelecionada,
 				situacao: Situacao.ABERTA,
-				// Removido dataSolicitacao, pois agora a data de abertura é controlada pelo backend via histórico
 			};
 
 			solicitacao.cliente = this.loggedUser;
@@ -78,6 +81,13 @@ export class PaginaNovaSolicitacaoComponent implements OnInit {
 			this.solicitacaoService.addSolicitacao(solicitacao).subscribe((response) => {
 				console.log(response);
 				this.novaSolicitacaoForm.reset();
+
+				this.showMessage = true;
+				this.mensagem = 'Solicitação criada!';
+
+				setTimeout(() => {
+					this.showMessage = false;
+				}, 3000);
 			});
 		} else {
 			this.novaSolicitacaoForm.markAllAsTouched();

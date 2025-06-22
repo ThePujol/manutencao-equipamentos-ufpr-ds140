@@ -7,6 +7,7 @@ import { Categoria } from '../../../../shared/models/categoria.model';
 import { TableColumn } from '../../../../shared/tabela-interface';
 import { Util } from '../../../../shared/util';
 import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
+import { ButtonComponent } from '../../../ui/buttons/button/button.component';
 import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../../ui/input-text/input-text.component';
@@ -22,6 +23,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		TabelaComponent,
 		InputPesquisarComponent,
 		SecondaryButtonComponent,
+		ButtonComponent,
 	],
 	templateUrl: './pagina-categorias.component.html',
 })
@@ -29,7 +31,7 @@ export class PaginaCategoriasComponent implements OnInit {
 	todasCategorias!: Categoria[];
 	listaCategorias!: Categoria[];
 	categoriaSelecionada?: Categoria;
-	modal = false;
+	modalEditar = false;
 	formCategoria!: FormGroup;
 
 	headersTabela: TableColumn[] = [
@@ -52,8 +54,8 @@ export class PaginaCategoriasComponent implements OnInit {
 		this.listarCategorias();
 	}
 
-	abrirModal(categoria?: Categoria) {
-		this.modal = true;
+	abrirModalEditar(categoria?: Categoria) {
+		this.modalEditar = true;
 		if (categoria) {
 			this.categoriaSelecionada = categoria;
 			this.formCategoria.patchValue(categoria);
@@ -64,7 +66,7 @@ export class PaginaCategoriasComponent implements OnInit {
 	}
 
 	fecharModal() {
-		this.modal = false;
+		this.modalEditar = false;
 	}
 
 	removerCategoria(id: number) {
