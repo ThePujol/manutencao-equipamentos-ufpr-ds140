@@ -19,7 +19,11 @@
 			>
 				@for (columnName of columns; track $index) {
 					@if (checkIfDate(item[columnName.fieldName])) {
-						<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy HH:mm' }}</td>
+						@if (item.email) {
+							<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy' }}</td>
+						} @else {
+							<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy HH:mm' }}</td>
+						}
 					} @else if (columnName.fieldName === 'dataSolicitacaoAbertura') {
 						<td class="w-52 text-muted">
 							<ng-container

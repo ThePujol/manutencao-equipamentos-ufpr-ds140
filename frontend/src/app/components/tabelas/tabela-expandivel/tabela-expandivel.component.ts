@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DatePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matChevronLeftOutline } from '@ng-icons/material-icons/outline';
 
+import { Situacao } from '../../../shared/models/solicitacao.model';
 import { TableColumn } from '../../../shared/tabela-interface';
 import { TabelaExpandidaComponent } from '../tabela-expandida/tabela-expandida.component';
-import { Situacao } from '../../../shared/models/solicitacao.model';
 
 @Component({
 	selector: 'app-tabela-expandivel',
@@ -17,8 +17,10 @@ import { Situacao } from '../../../shared/models/solicitacao.model';
 export class TabelaExpandivelComponent {
 	@Input() columns!: TableColumn[];
 	@Input() gridData!: any[];
-	@Input() abrirHistorico?: (id: number) => void;
+
 	itemSelecionado!: any;
+
+	@Output() abrirHistorico = new EventEmitter<number>();
 
 	toggleExpansao(item: any) {
 		if (item === this.itemSelecionado) {

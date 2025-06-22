@@ -61,7 +61,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	mostrarModalHistorico = false;
 
 	// Paginação
-	itensPorPagina = 8;
+	itensPorPagina = 5;
 	paginaAtual = 1;
 	get totalPaginas(): number {
 		return Math.ceil(this.listaSolicitacoes.length / this.itensPorPagina) || 1;

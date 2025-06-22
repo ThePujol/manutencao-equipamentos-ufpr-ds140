@@ -44,19 +44,22 @@
 		</span>
 	</td>
 
-	@if (solicitacao.situacao === situacoes.arrumada) {
-		<app-arrumado-card [solicitacao]="solicitacao" />
-	} @else if (solicitacao.situacao === situacoes.orcada && solicitacao.orcamento) {
-		<app-orcada-card [precoOrcamento]="solicitacao.orcamento" [solicitacao]="solicitacao" />
-	} @else if (solicitacao.situacao === situacoes.aberta) {
-		<app-aberta-card />
-	} @else if (solicitacao.situacao === situacoes.aprovada && solicitacao.orcamento) {
-		<app-aprovada-card [orcamento]="solicitacao.orcamento" />
-	} @else if (solicitacao.situacao === situacoes.rejeitada) {
-		<app-rejeitada-card [solicitacao]="solicitacao" />
-	} @else {
-		<span class="w-52"></span>
-	}
+	<div class="flex flex-col items-center justify-center gap-5">
+		@if (solicitacao.situacao === situacoes.arrumada) {
+			<app-arrumado-card [solicitacao]="solicitacao" />
+		} @else if (solicitacao.situacao === situacoes.orcada && solicitacao.orcamento) {
+			<app-orcada-card [precoOrcamento]="solicitacao.orcamento" [solicitacao]="solicitacao" />
+		} @else if (solicitacao.situacao === situacoes.aberta) {
+			<app-aberta-card />
+		} @else if (solicitacao.situacao === situacoes.aprovada && solicitacao.orcamento) {
+			<app-aprovada-card [orcamento]="solicitacao.orcamento" />
+		} @else if (solicitacao.situacao === situacoes.rejeitada) {
+			<app-rejeitada-card [solicitacao]="solicitacao" />
+		} @else {
+			<span class="w-52"></span>
+		}
+		<app-secondary-button class="w-full" text="Ver histórico" (funcao)="abrirHistorico.emit(solicitacao.id)" />
+	</div>
 
 	<td class="max-w-52 text-right h-full flex items-start justify-end">
 		<button class="opacity-50 cursor-pointer text-3xl rotate-90" (click)="toggleExpansion()">
