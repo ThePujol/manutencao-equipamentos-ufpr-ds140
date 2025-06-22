@@ -4,6 +4,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matChevronLeftOutline, matChevronRightOutline } from '@ng-icons/material-icons/outline';
 
 import { AuthService } from '../../../../services/auth.service';
 import { OrcamentoService } from '../../../../services/orcamento.service';
@@ -34,7 +36,9 @@ import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cli
 		FormsModule,
 		CommonModule,
 		DatePipe,
+		NgIcon,
 	],
+	viewProviders: [provideIcons({ matChevronLeftOutline, matChevronRightOutline })],
 	templateUrl: './pagina-solicitacoes.component.html',
 	providers: [DatePipe],
 })

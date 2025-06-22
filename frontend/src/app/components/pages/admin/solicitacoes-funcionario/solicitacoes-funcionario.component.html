@@ -48,38 +48,35 @@
 				(finalizarClicked)="finalizarSolicitacao($event)"
 			/>
 			<!-- Controles de Paginação -->
-			<div class="flex justify-center items-center gap-2 mt-4">
+			<!-- Controles de Paginação -->
+			<div class="flex justify-end items-center gap-1 mt-4">
 				<button
 					(click)="mudarPagina(paginaAtual - 1)"
 					[disabled]="paginaAtual === 1"
-					class="px-2 py-1 rounded bg-gray-200"
+					class="text-xl text-black/70 cursor-pointer flex items-center disabled:text-black/30"
 				>
-					Anterior
+					<ng-icon name="matChevronLeftOutline" />
 				</button>
-				<span *ngFor="let p of [].constructor(totalPaginas); let i = index" class="mx-1">
-					<button
-						(click)="mudarPagina(i + 1)"
-						[class.bg-primary]="paginaAtual === i + 1"
-						class="px-2 py-1 rounded"
-						[disabled]="paginaAtual === i + 1"
-					>
-						{{ i + 1 }}
-					</button>
-				</span>
+				@for (p of [].constructor(totalPaginas); track $index) {
+					<span>
+						<button
+							(click)="mudarPagina($index + 1)"
+							[ngClass]="{ 'bg-black/20': paginaAtual === $index + 1 }"
+							class="px-2.5 py-[3px] rounded-md cursor-pointer"
+							[disabled]="paginaAtual === $index + 1"
+						>
+							{{ $index + 1 }}
+						</button>
+					</span>
+				}
 				<button
 					(click)="mudarPagina(paginaAtual + 1)"
 					[disabled]="paginaAtual === totalPaginas"
-					class="px-2 py-1 rounded bg-gray-200"
+					class="text-xl text-black/70 cursor-pointer flex items-center disabled:text-black/30"
 				>
-					Próxima
+					<ng-icon name="matChevronRightOutline" />
 				</button>
 			</div>
-			<p class="mt-3 text-sm text-gray-900/70 font-light">
-				Exibindo {{ (paginaAtual - 1) * itensPorPagina + 1 }}-{{
-					menor(paginaAtual * itensPorPagina, listaSolicitacoes.length)
-				}}
-				itens de {{ listaSolicitacoes.length }} itens.
-			</p>
 		} @else if (todasSolicitacoes.length <= 0) {
 			<p>Não há nenhuma solicitação atribuída a você.</p>
 		} @else if (listaSolicitacoes.length <= 0) {

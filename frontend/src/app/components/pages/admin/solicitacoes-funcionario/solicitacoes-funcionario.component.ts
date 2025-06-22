@@ -11,6 +11,8 @@ import {
 	ValidationErrors,
 	Validators,
 } from '@angular/forms';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matChevronLeftOutline, matChevronRightOutline } from '@ng-icons/material-icons/outline';
 
 import { AuthService } from '../../../../services/auth.service';
 import { FuncionarioService } from '../../../../services/funcionario.service';
@@ -45,7 +47,9 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		SelectEstadoComponent,
 		FormsModule,
 		CommonModule,
+		NgIcon,
 	],
+	viewProviders: [provideIcons({ matChevronLeftOutline, matChevronRightOutline })],
 	templateUrl: './solicitacoes-funcionario.component.html',
 })
 export class SolicitacoesFuncionarioComponent implements OnInit {

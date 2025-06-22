@@ -3,6 +3,8 @@ import { map } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matChevronLeftOutline, matChevronRightOutline } from '@ng-icons/material-icons/outline';
 
 import { AuthService } from '../../../../services/auth.service';
 import { SolicitacaoService } from '../../../../services/solicitacao.service';
@@ -31,7 +33,9 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		TabelaComponent,
 		FormsModule,
 		CommonModule,
+		NgIcon,
 	],
+	viewProviders: [provideIcons({ matChevronLeftOutline, matChevronRightOutline })],
 	templateUrl: './pagina-solicitacoes-abertas.component.html',
 })
 export class PaginaSolicitacoesAbertasComponent implements OnInit {
