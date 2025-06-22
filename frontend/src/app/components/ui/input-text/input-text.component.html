@@ -9,7 +9,10 @@
 		[mask]="mask"
 		[required]="required"
 		[min]="min"
+		[maxLength]="max"
+		[disabled]="disabled"
 		class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
+		[class.bg-gray-100]="controlName === 'cidade' || controlName === 'estado'"
 	/>
 	@if (error) {
 		<p class="text-red-600 text-sm">{{ errorMessage }}</p>

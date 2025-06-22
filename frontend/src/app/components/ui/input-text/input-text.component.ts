@@ -20,6 +20,7 @@ export class InputTextComponent implements OnInit {
 	@Input() error = false;
 	@Input() min?: number;
 	@Input() max = 9999;
+	@Input() disabled = false;
 	formControl!: FormControl;
 
 	constructor(private formGroupDirective: FormGroupDirective) {}
