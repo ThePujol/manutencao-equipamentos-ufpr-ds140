@@ -10,5 +10,6 @@ export class SecondaryButtonComponent {
 	@Input() text = 'Botao';
 	@Input() linkTo?: string;
 	@Input() disabledCondition?: boolean;
+	@Input() type?: string;
 	@Output() funcao = new EventEmitter<void>();
 }
