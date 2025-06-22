@@ -9,11 +9,21 @@ import { PessoaService } from '../../../services/pessoa.service';
 import { ViaCepService } from '../../../services/via-cep.service';
 import { ButtonComponent } from '../../ui/buttons/button/button.component';
 import { InputTextComponent } from '../../ui/input-text/input-text.component';
+import { LoadingSvgComponent } from '../../ui/loading-svg/loading-svg.component';
 
 @Component({
 	selector: 'app-pagina-cadastro',
 	standalone: true,
-	imports: [CommonModule, ReactiveFormsModule, InputTextComponent, RouterOutlet, RouterLink, ButtonComponent, NgIcon],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		InputTextComponent,
+		RouterOutlet,
+		RouterLink,
+		ButtonComponent,
+		NgIcon,
+		LoadingSvgComponent,
+	],
 	viewProviders: [provideIcons({ matCheckCircleOutline, matHandymanOutline, matSecurityOutline })],
 	templateUrl: './pagina-cadastro.component.html',
 })
@@ -25,6 +35,7 @@ export class PaginaCadastroComponent implements OnInit {
 	cadastroForm!: FormGroup;
 	emailJaExiste = false;
 	cpfJaExiste = false;
+	loading = false;
 
 	constructor(
 		private fBuilder: FormBuilder,
@@ -86,13 +97,11 @@ export class PaginaCadastroComponent implements OnInit {
 
 	onSubmit() {
 		if (this.cadastroForm.valid) {
+			this.loading = true;
 			const dados = this.cadastroForm.value;
 			this.pessoaService.addPessoa(dados).subscribe({
 				next: () => {
 					this.submitted = true;
-					this.cadastroForm.reset();
-					this.modal = true;
-					this.emailJaExiste = false;
 				},
 				error: (err) => {
 					if (err.status === 400) {
@@ -110,6 +119,13 @@ export class PaginaCadastroComponent implements OnInit {
 					} else {
 						console.error('Erro inesperado');
 					}
+					this.loading = false;
+				},
+				complete: () => {
+					this.cadastroForm.reset();
+					this.modal = true;
+					this.emailJaExiste = false;
+					this.loading = false;
 				},
 			});
 		} else {
