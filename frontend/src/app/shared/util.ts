@@ -43,13 +43,10 @@ export class Util {
 	}
 
 	private static checkDate(s: Solicitacao, min?: Date, max?: Date) {
-		const itemDate = s.dataSolicitacao;
-		console.log(itemDate);
-		console.log(`minimo: ${min}`);
-		console.log(`maximo: ${max}`);
+		const itemDate = s.dataSolicitacaoAbertura;
 
-		const afterMin = !min || itemDate >= min;
-		const beforeMax = !max || itemDate <= max;
+		const afterMin = !min || (itemDate as Date) >= min;
+		const beforeMax = !max || (itemDate as Date) <= max;
 
 		return afterMin && beforeMax;
 	}

@@ -82,9 +82,7 @@
 			</p>
 		} @else if (todasSolicitacoes.length <= 0) {
 			<p>Não há nenhuma solicitação atribuída a você.</p>
-		}
-
-		@if (listaSolicitacoes.length <= 0) {
+		} @else if (listaSolicitacoes.length <= 0) {
 			<p>Nenhum resultado para a pesquisa.</p>
 		}
 
