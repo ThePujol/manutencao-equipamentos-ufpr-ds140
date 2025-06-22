@@ -45,6 +45,11 @@ export class Util {
 	private static checkDate(s: Solicitacao, min?: Date, max?: Date) {
 		const itemDate = s.dataSolicitacaoAbertura;
 
+		if (max) max.setHours(23, 59, 59, 999);
+
+		console.log('Max: ' + max);
+		console.log('Min: ' + min);
+
 		const afterMin = !min || (itemDate as Date) >= min;
 		const beforeMax = !max || (itemDate as Date) <= max;
 
