@@ -31,15 +31,13 @@ export class SidebarFuncionarioComponent implements OnInit {
 	@Input() selected = 0;
 	loggedUser!: Pessoa | Funcionario;
 	primeiroNome!: string;
+	relatoriosExpanded!: boolean;
 
 	constructor(private authService: AuthService) {}
 
-	// Variável para controlar a expansão do submenu de relatórios
-	relatoriosExpanded = false;
-
-	// Método para alternar o submenu de relatórios
 	toggleRelatorios() {
 		this.relatoriosExpanded = !this.relatoriosExpanded;
+		sessionStorage.setItem('relatoriosExpanded', JSON.stringify(this.relatoriosExpanded));
 	}
 
 	deslogar() {
@@ -49,5 +47,8 @@ export class SidebarFuncionarioComponent implements OnInit {
 	ngOnInit() {
 		this.loggedUser = this.authService.getUserData();
 		this.primeiroNome = this.loggedUser.nome.split(' ')[0];
+
+		const savedState = sessionStorage.getItem('relatoriosExpanded');
+		this.relatoriosExpanded = savedState ? JSON.parse(savedState) : false;
 	}
 }

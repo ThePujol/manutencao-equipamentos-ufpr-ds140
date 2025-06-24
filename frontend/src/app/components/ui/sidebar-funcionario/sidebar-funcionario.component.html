@@ -37,10 +37,16 @@
 		></app-sidebar-button>
 
 		<!-- submenu -->
-		<div *ngIf="relatoriosExpanded" class="ml-4 space-y-1">
-			<app-sidebar-button routerLink="/relatorios/receitas" icon="matTodayOutline" text="Por dia" />
-			<app-sidebar-button routerLink="/relatorios/receitas-categoria" icon="matCategoryOutline" text="Por categoria" />
-		</div>
+		@if (relatoriosExpanded) {
+			<div class="ml-4 space-y-1">
+				<app-sidebar-button routerLink="/relatorios/receitas" icon="matTodayOutline" text="Por dia" />
+				<app-sidebar-button
+					routerLink="/relatorios/receitas-categoria"
+					icon="matCategoryOutline"
+					text="Por categoria"
+				/>
+			</div>
+		}
 	</div>
 
 	<a
