@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@theme {
+:root {
 	--color-primary: #4931a9;
 }
 
@@ -12,4 +12,18 @@ body {
 
 body.no-scroll {
 	overflow: hidden;
+}
+
+/* Cursor pointer global para botões */
+button,
+.cursor-pointer,
+[type="button"],
+[type="submit"],
+a[routerLink] {
+	cursor: pointer;
+}
+
+/* Garantir que imagens tenham fundo transparente quando necessário */
+img {
+	background: transparent;
 }

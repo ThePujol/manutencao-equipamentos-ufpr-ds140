@@ -8,6 +8,7 @@ import { PaginaRelatorioReceitasComponent } from './components/pages/admin/pagin
 import { PaginaSolicitacoesAbertasComponent } from './components/pages/admin/pagina-solicitacoes-abertas/pagina-solicitacoes-abertas.component';
 import { SolicitacoesFuncionarioComponent } from './components/pages/admin/solicitacoes-funcionario/solicitacoes-funcionario.component';
 import { PaginaCadastroComponent } from './components/pages/pagina-cadastro/pagina-cadastro.component';
+import { PaginaHomeComponent } from './components/pages/pagina-home/pagina-home.component';
 import { PaginaLoginComponent } from './components/pages/pagina-login/pagina-login.component';
 import { PaginaNaoEncontradaComponent } from './components/pages/pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { PaginaEdicaoPerfilComponent } from './components/pages/user/pagina-edicao-perfil/pagina-edicao-perfil.component';
@@ -17,8 +18,13 @@ import { PaginaSolicitacoesComponent } from './components/pages/user/pagina-soli
 export const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'cadastro',
+		redirectTo: 'home',
 		pathMatch: 'full',
+	},
+	{
+		path: 'home',
+		component: PaginaHomeComponent,
+		title: 'Home - repair.io',
 	},
 	{
 		path: 'login',
