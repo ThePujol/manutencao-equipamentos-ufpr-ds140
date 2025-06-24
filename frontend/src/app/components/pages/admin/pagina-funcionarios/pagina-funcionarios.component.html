@@ -90,16 +90,8 @@
 					</div>
 
 					<div class="flex justify-end space-x-3">
-						<button
-							type="button"
-							(click)="fecharModal()"
-							class="px-4 py-2 rounded-xl border border-purple-600 text-purple-600 hover:bg-purple-50"
-						>
-							Cancelar
-						</button>
-						<button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700">
-							Salvar
-						</button>
+						<app-secondary-button (funcao)="fecharModal()" text="Cancelar" type="button" />
+						<app-button type="submit" text="Salvar" />
 					</div>
 				</form>
 			</div>

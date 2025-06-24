@@ -8,6 +8,7 @@ import { Funcionario } from '../../../../shared/models/funcionario.model';
 import { TableColumn } from '../../../../shared/tabela-interface';
 import { Util } from '../../../../shared/util';
 import { TabelaComponent } from '../../../tabelas/tabela/tabela.component';
+import { ButtonComponent } from '../../../ui/buttons/button/button.component';
 import { SecondaryButtonComponent } from '../../../ui/buttons/secondary-button/secondary-button.component';
 import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesquisar.component';
 import { InputTextComponent } from '../../../ui/input-text/input-text.component';
@@ -26,6 +27,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		InputPesquisarComponent,
 		MensagemComponent,
 		SecondaryButtonComponent,
+		ButtonComponent,
 	],
 	templateUrl: './pagina-funcionarios.component.html',
 })
