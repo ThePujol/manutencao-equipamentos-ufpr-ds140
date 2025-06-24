@@ -88,7 +88,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		if (altura > 800) {
 			this.itensPorPagina = 5;
 		} else {
-			this.itensPorPagina = 2;
+			this.itensPorPagina = 5;
 		}
 
 		this.loggedUser = this.authService.getUserData();

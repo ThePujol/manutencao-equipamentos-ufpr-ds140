@@ -151,7 +151,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		const altura = window.innerHeight;
 
 		if (altura > 800) {
-			this.itensPorPagina = 8;
+			this.itensPorPagina = 7;
 		} else {
 			this.itensPorPagina = 5;
 		}
