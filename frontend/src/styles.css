@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-:root {
+@theme {
 	--color-primary: #4931a9;
 }
 
@@ -17,8 +17,8 @@ body.no-scroll {
 /* Cursor pointer global para botões */
 button,
 .cursor-pointer,
-[type="button"],
-[type="submit"],
+[type='button'],
+[type='submit'],
 a[routerLink] {
 	cursor: pointer;
 }
