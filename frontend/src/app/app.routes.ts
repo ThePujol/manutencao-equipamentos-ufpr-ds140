@@ -10,7 +10,6 @@ import { SolicitacoesFuncionarioComponent } from './components/pages/admin/solic
 import { PaginaCadastroComponent } from './components/pages/pagina-cadastro/pagina-cadastro.component';
 import { PaginaLoginComponent } from './components/pages/pagina-login/pagina-login.component';
 import { PaginaNaoEncontradaComponent } from './components/pages/pagina-nao-encontrada/pagina-nao-encontrada.component';
-import { PaginaEdicaoPerfilComponent } from './components/pages/user/pagina-edicao-perfil/pagina-edicao-perfil.component';
 import { PaginaNovaSolicitacaoComponent } from './components/pages/user/pagina-nova-solicitacao/pagina-nova-solicitacao.component';
 import { PaginaSolicitacoesComponent } from './components/pages/user/pagina-solicitacoes/pagina-solicitacoes.component';
 
@@ -41,13 +40,6 @@ export const routes: Routes = [
 		path: 'nova-solicitacao',
 		component: PaginaNovaSolicitacaoComponent,
 		title: 'Nova Solicitação',
-		canActivate: [authGuard],
-		data: { role: 'pessoa' },
-	},
-	{
-		path: 'editar-perfil',
-		component: PaginaEdicaoPerfilComponent,
-		title: 'Editar Perfil',
 		canActivate: [authGuard],
 		data: { role: 'pessoa' },
 	},
