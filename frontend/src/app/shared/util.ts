@@ -23,13 +23,13 @@ export class Util {
 
 	public static pesquisarFuncionario(listaCompleta: Funcionario[], query: string) {
 		const listaFiltrada = listaCompleta.filter(
-			(f) => f.nome.toLowerCase().includes(query) || f.email.toLowerCase().includes(query)
+			(f) => f.nome.toLowerCase().includes(query.toLowerCase()) || f.email.toLowerCase().includes(query.toLowerCase())
 		);
 		return listaFiltrada;
 	}
 
 	public static pesquisarCategoria(listaCompleta: Categoria[], query: string) {
-		const listaFiltrada = listaCompleta.filter((c) => c.descricao.toLowerCase().includes(query));
+		const listaFiltrada = listaCompleta.filter((c) => c.descricao.toLowerCase().includes(query.toLowerCase()));
 		return listaFiltrada;
 	}
 
@@ -39,7 +39,10 @@ export class Util {
 	}
 
 	private static checkQuery(s: Solicitacao, query: string) {
-		return s.cliente.nome.toLowerCase().includes(query) || s.descricao.toLowerCase().includes(query);
+		return (
+			s.cliente.nome.toLowerCase().includes(query.toLowerCase()) ||
+			s.descricao.toLowerCase().includes(query.toLowerCase())
+		);
 	}
 
 	private static checkDate(s: Solicitacao, min?: Date, max?: Date) {
