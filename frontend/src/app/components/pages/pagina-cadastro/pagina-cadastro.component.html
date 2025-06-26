@@ -1,53 +1,192 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="flex bg-white shadow-lg rounded-2xl overflow-hidden">
-    <div class="flex flex-col justify-center w-[675px] p-8">
-      <div>
-        <h1 class="text-2xl font-bold text-indigo-700 flex items-center gap-2">
-          <img class="w-[27px]" src="person.svg" alt="Ícone Cadastro">
-          <span class="text-[34px]">Cadastro</span>
-        </h1>
-        <h2 class="font-light text-gray-500 mt-1">Preencha os campos abaixo para criar uma conta.</h2>
-      </div>
+<div class="flex items-center gap-16 justify-center min-h-screen bg-radial from-white to-[#7E84F0]/20">
+	<div class="flex flex-col gap-8">
+		<div class="pointer-events-none select-none">
+			<p class="font-bold text-primary flex items-center gap-2">
+				<a routerLink="/home" class="pointer-events-auto cursor-pointer hover:opacity-80 transition-opacity">
+					<img src="logo.png" alt="Logo" width="30px" height="30px" />
+				</a>
+				repair.io
+			</p>
+			<h1 class="font-semibold text-4xl">Cadastre-se.</h1>
+			<p class="font-light text-black/50">Crie uma conta na melhor plataforma de manutenções.</p>
+		</div>
 
-      <div *ngIf="submitted" class="mt-4 text-green-600 text-lg">
-        Cadastro Realizado com sucesso!
-      </div>
+		<div class="w-[330px]">
+			<span class="text-primary text-4xl"><ng-icon name="matHandymanOutline" /></span>
+			<h2 class="text-xl font-semibold">Manutenção e reparo</h2>
+			<p class="font-light text-black/50">Agende manutenções ou reparos para qualquer equipamento eletrônico.</p>
+		</div>
 
-      <form *ngIf="!submitted" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="mt-4">
-        <div class="grid grid-cols-2 gap-[15px] gap-y-[30px]">
-          <app-input-text controlName="nome" [type]="'text'" [placeholder]="'Nome Completo'"></app-input-text>
-          <app-input-text controlName="email" [type]="'email'" [placeholder]="'E-mail'"></app-input-text>
-          <app-input-text controlName="cpf" [type]="'text'" [placeholder]="'CPF'"></app-input-text>
-          <app-input-text controlName="tel" [type]="'tel'" [placeholder]="'Telefone'"></app-input-text>
-          <app-input-text controlName="cep" [type]="'text'" [placeholder]="'CEP'"></app-input-text>
-          <app-input-text controlName="estado" [type]="'text'" [placeholder]="'Estado'"></app-input-text>
-          <app-input-text controlName="cidade" [type]="'text'" [placeholder]="'Cidade'"></app-input-text>
-          <app-input-text controlName="endereco" [type]="'text'" [placeholder]="'Endereço'"></app-input-text>
-          <app-input-text controlName="numero" [type]="'text'" [placeholder]="'Número'"></app-input-text>
-          <app-input-text controlName="complemento" [type]="'text'" [placeholder]="'Complemento'"></app-input-text>
-        </div>
+		<div class="w-[330px]">
+			<span class="text-primary text-4xl"><ng-icon name="matCheckCircleOutline" /></span>
+			<h2 class="text-xl font-semibold">Estabelecimento certificado</h2>
+			<p class="font-light text-black/50">
+				Somos um estabelecimento certificado e garantimos a excelência na execução do nosso trabalho.
+			</p>
+		</div>
 
-        <div class="flex justify-between">
-          <p class="text-sm text-gray-500 mt-4 text-center">
-            Já possui uma conta?
-            <a routerLink="/login" class="cursor-pointer text-indigo-600 hover:underline">
-              Faça o login
-            </a>
-          </p>
+		<div class="w-[330px]">
+			<span class="text-primary text-4xl"><ng-icon name="matSecurityOutline" /></span>
+			<h2 class="text-xl font-semibold">Segurança garantida</h2>
+			<p class="font-light text-black/50">Possuímos diversos planos de garantia para o seu equipamento danificado.</p>
+		</div>
+	</div>
 
+	<div class="flex bg-white shadow-lg rounded-2xl overflow-hidden">
+		<div class="flex flex-col justify-center w-[675px] p-8">
+			<form *ngIf="!submitted" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="mt-4">
+				<div class="grid grid-cols-4 gap-[15px] gap-y-[30px]">
+					<app-input-text
+						[label]="'Nome Completo:'"
+						controlName="nome"
+						[type]="'text'"
+						[placeholder]="'Geraldo Alckmin'"
+						[required]="true"
+						class="col-span-2"
+					></app-input-text>
+					<app-input-text
+						[label]="'Email:'"
+						controlName="email"
+						[type]="'email'"
+						[placeholder]="'email@example.com'"
+						[required]="true"
+						class="col-span-2"
+						[error]="emailJaExiste"
+						[errorMessage]="'Um usuário com este email já existe.'"
+					></app-input-text>
+					<app-input-text
+						[label]="'CPF:'"
+						controlName="cpf"
+						[type]="'text'"
+						[placeholder]="'000.000.000-00'"
+						[mask]="'000.000.000-00'"
+						[required]="true"
+						class="col-span-2"
+						[error]="cpfJaExiste"
+						[errorMessage]="'Um usuário com este cpf já existe.'"
+					></app-input-text>
+					<app-input-text
+						[label]="'Telefone:'"
+						controlName="tel"
+						[type]="'tel'"
+						[placeholder]="'(00) 00000-0000'"
+						[mask]="'(00) 00000-0000'"
+						[required]="true"
+						class="col-span-2"
+					></app-input-text>
+					<app-input-text
+						[label]="'CEP:'"
+						controlName="cep"
+						[type]="'text'"
+						[placeholder]="'00000-000'"
+						[mask]="'00000-000'"
+						[required]="true"
+						class="col-span-2"
+					></app-input-text>
+					<app-input-text
+						[label]="'Estado:'"
+						controlName="estado"
+						[type]="'text'"
+						[placeholder]="'PR'"
+						[mask]="'AA'"
+						[required]="true"
+						class="col-span-2"
+						[disabled]="true"
+					></app-input-text>
+					<app-input-text
+						[label]="'Cidade:'"
+						controlName="cidade"
+						[type]="'text'"
+						[placeholder]="'Curitiba'"
+						[required]="true"
+						class="col-span-2"
+						[disabled]="true"
+					></app-input-text>
+					<app-input-text
+						[label]="'Complemento:'"
+						controlName="complemento"
+						[type]="'text'"
+						[placeholder]="'Apto 30'"
+						[required]="false"
+						class="col-span-2"
+					></app-input-text>
+					<app-input-text
+						[label]="'Endereco:'"
+						controlName="endereco"
+						[type]="'text'"
+						[placeholder]="'Rua das Palmeiras'"
+						[required]="true"
+						class="col-span-3"
+					></app-input-text>
+					<app-input-text
+						[label]="'Numero:'"
+						controlName="num"
+						[type]="'text'"
+						[placeholder]="'100'"
+						[required]="true"
+						class="col-span-1"
+					></app-input-text>
+				</div>
 
-          <button type="submit" class="cursor-pointer bg-indigo-700 text-white text-sm font-semibold w-[300px] p-2.5 rounded-lg mt-4 hover:bg-indigo-800 transition-transform transform hover:-translate-y-1 active:-translate-y-0.5">
-            Confirmar
-          </button>
+				<div class="mt-2 min-h-[42px] text-center flex flex-col justify-center items-center">
+					<div *ngIf="cepNaoEncontrado" class="text-red-600 text-sm">
+						⚠️ CEP não encontrado. Verifique o valor informado.
+					</div>
 
-        </div>
-      </form>
-    </div>
+					<div *ngIf="cadastroForm.invalid && cadastroForm.touched" class="text-red-600 text-sm mt-1">
+						⚠️ Preencha todos os campos obrigatórios corretamente.
+					</div>
+				</div>
 
-    <div class="w-[531px]">
-      <img src="cadastro.svg" alt="Manutenção de Computadores" class="w-full h-full object-cover">
-    </div>
-  </div>
+				<div class="flex flex-col gap-2">
+					<div class="flex justify-center mt-4">
+						<button
+							class="flex justify-center items-center gap-2 text-center cursor-pointer bg-primary text-white text-sm font-semibold w-full p-2.5 rounded-md hover:outline-indigo-800 hover:bg-indigo-800 duration-150 disabled:bg-gray-400 disabled:cursor-not-allowed"
+							[disabled]="cadastroForm.invalid"
+							type="submit"
+						>
+							<p>Criar conta</p>
+							@if (loading) {
+								<app-loading-svg />
+							}
+						</button>
+					</div>
+
+					<p class="text-black/50 text-xs">
+						Ao criar uma conta, você concorda com os
+						<a routerLink="/termos-servico" target="blank" class="text-indigo-600 hover:underline cursor-pointer"
+							>Termos de Serviço.</a
+						>
+						Você também receberá novidades pelo seu email.
+					</p>
+				</div>
+			</form>
+			<p class="text-sm text-center mt-10">
+				Já possui uma conta?
+				<a routerLink="/login" class="text-indigo-600 hover:underline">Faça o login</a>
+			</p>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div *ngIf="modal" class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+		<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+			<div class="flex justify-between items-center mb-4">
+				<h2 class="text-xl text-gray-600">
+					Verifique seu e-mail cadastrado para receber sua senha de acesso se o mesmo for válido.
+				</h2>
+			</div>
+			<div class="flex justify-between items-center mb-4">
+				<button
+					type="button"
+					(click)="continuar()"
+					class="justify-right cursor-pointer text-white text-sm font-semibold px-4 py-2 p-2.5 rounded-lg transition-transform transform hover:-translate-y-1 active:-translate-y-0.5 bg-indigo-700 hover:bg-indigo-800"
+				>
+					Ok
+				</button>
+			</div>
+		</div>
+	</div>
 </div>
-<router-outlet></router-outlet>
 
+<router-outlet></router-outlet>

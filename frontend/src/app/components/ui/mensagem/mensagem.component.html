@@ -1,0 +1,9 @@
+@if (showMessage) {
+	<div
+		class="flex gap-5 py-2.5 select-none p-5 bg-green-700 text-white rounded-md absolute top-40 right-150 text-center"
+		[class.bg-red-700]="errorMessage"
+	>
+		<p>{{ mensagem }}</p>
+		<button (click)="toggleShowMessage()" class="cursor-pointer">✖</button>
+	</div>
+}

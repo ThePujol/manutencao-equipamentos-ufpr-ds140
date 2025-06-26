@@ -1,0 +1,13 @@
+<p
+	class="rounded-full p-1 max-w-40 text-center text-sm font-semibold capitalize"
+	[class.bg-gray-200]="situacao === situacoes.aberta"
+	[class.bg-amber-800]="situacao === situacoes.orcada"
+	[class.bg-red-400]="situacao === situacoes.rejeitada"
+	[class.bg-yellow-200]="situacao === situacoes.aprovada"
+	[class.bg-purple]="situacao === situacoes.redirecionada"
+	[class.bg-blue-200]="situacao === situacoes.arrumada"
+	[class.bg-orange]="situacao === situacoes.paga"
+	[class.bg-green-200]="situacao === situacoes.finalizada"
+>
+	{{ situacao | capitalizeFirst }}
+</p>

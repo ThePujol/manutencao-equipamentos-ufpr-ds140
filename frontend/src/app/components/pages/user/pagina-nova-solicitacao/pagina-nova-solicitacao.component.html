@@ -1,0 +1,100 @@
+<main class="flex gap-10 h-screen w-full">
+	<app-sidebar-cliente></app-sidebar-cliente>
+
+	<div class="h-screen w-full overflow-y-auto flex justify-center items-center">
+		<section class="flex flex-col py-10 gap-[30px] h-screen">
+			<div>
+				<h1 class="flex gap-4 items-center text-[40px] font-semibold text-[#4931A9]">
+					<ng-icon name="matAddCircleOutlineOutline" />
+					Nova Solicitação
+				</h1>
+				<h2 class="opacity-50 font-light">Crie uma nova solicitação de manutenção para o seu equipamento.</h2>
+			</div>
+
+			<form
+				(ngSubmit)="onSubmit()"
+				#solicitacaoForm="ngForm"
+				class="flex flex-col justify-between h-[550px] p-8 rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.25)] max-w-[500px]"
+				[formGroup]="novaSolicitacaoForm"
+			>
+				<div>
+					<h2 class="flex items-center gap-2 text-xl font-semibold text-[#4931A9]">
+						<ng-icon name="matInfoOutline" class="text-2xl" /> Especificações do equipamento
+					</h2>
+					<p class="font-light text-sm opacity-50 text-wrap">
+						Descreva os atributos do seu equipamento danificado para que possamos analisá-lo de maneira eficiente.
+					</p>
+				</div>
+
+				<div class="flex flex-col gap-5">
+					<div>
+						<app-input-text
+							[label]="'Descrição do equipamento'"
+							controlName="descricao"
+							[type]="'text'"
+							[placeholder]="'iPhone, Notebook Acer...'"
+							[required]="true"
+							[max]="30"
+						/>
+						@if (
+							novaSolicitacaoForm.get('descricao')?.hasError('maxlength') &&
+							novaSolicitacaoForm.get('descricao')?.touched
+						) {
+							<p
+								class="text-red-600 text-sm"
+								*ngIf="
+									novaSolicitacaoForm.get('descricao')?.hasError('maxlength') &&
+									novaSolicitacaoForm.get('descricao')?.touched
+								"
+							>
+								A descrição pode ter até 30 caracteres.
+							</p>
+						}
+					</div>
+
+					<div class="flex flex-col w-full">
+						<label for="categoria" class="mb-1 text-sm font-medium text-gray-700">Categoria do equipamento</label>
+						<select
+							name="categoria"
+							id="categoria"
+							class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
+							required
+							formControlName="categoria"
+						>
+							@for (categoria of listaCategorias | async; track categoria.id) {
+								<option [value]="categoria.id">{{ categoria.descricao }}</option>
+							}
+						</select>
+					</div>
+
+					<app-input-text
+						[label]="'Descrição do defeito'"
+						controlName="defeito"
+						[type]="'text'"
+						[placeholder]="'Tela trincada, não liga...'"
+						[required]="true"
+					/>
+				</div>
+
+				<div class="flex flex-col gap-2">
+					<app-button text="Solicitar manutenção" type="submit" [disabledCondition]="novaSolicitacaoForm.invalid" />
+					<a
+						routerLink="/solicitacoes"
+						class="justify-center text-center cursor-pointer text-[#4931A9] text-sm font-semibold w-full p-2.5 rounded-md outline outline-[#4931A9] hover:outline-indigo-800 hover:text-indigo-800 duration-150"
+					>
+						Cancelar
+					</a>
+				</div>
+			</form>
+		</section>
+		<app-mensagem [mensagem]="mensagem" [showMessage]="showMessage" />
+
+		<img
+			src="ilust-nova-solicitacao.png"
+			alt="Ilustração"
+			class="w-[500px] h-[500px] select-none pointer-events-none"
+		/>
+	</div>
+</main>
+
+<router-outlet></router-outlet>

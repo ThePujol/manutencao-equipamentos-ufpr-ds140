@@ -1,0 +1,117 @@
+<table class="w-full">
+	<thead>
+		<th
+			class="flex justify-between w-full border-1 border-gray-900/15 text-gray-900/50 px-4 py-2.5 rounded-t-md items-center text-left font-medium"
+		>
+			@for (column of columns; track $index) {
+				<td class="w-52">{{ column.headerName }}</td>
+			}
+			<!-- Por algum motivo, se eu usar <td></td> aqui o bagulho simplesmente quebra -->
+			<p class="w-52 text-right">Ações</p>
+		</th>
+	</thead>
+
+	<tbody>
+		@for (item of gridData; track $index) {
+			<tr
+				class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center hover:bg-gray-100 duration-75"
+				[class.rounded-b-md]="$index + 1 === gridData.length"
+			>
+				@for (columnName of columns; track $index) {
+					@if (checkIfDate(item[columnName.fieldName])) {
+						@if (item.email) {
+							<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy' }}</td>
+						} @else {
+							<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy HH:mm' }}</td>
+						}
+					} @else if (columnName.fieldName === 'dataSolicitacaoAbertura') {
+						<td class="w-52 text-muted">
+							<ng-container
+								*ngIf="
+									item[columnName.fieldName] && item[columnName.fieldName];
+									instanceof: Date && !isNaN(item[columnName.fieldName].getTime());
+									else: semData
+								"
+							>
+								{{ item[columnName.fieldName] | date: 'dd/MM/yyyy HH:mm' }}
+							</ng-container>
+							<ng-template #semData>Sem data</ng-template>
+						</td>
+					} @else if (columnName.fieldName === 'cliente') {
+						<td class="w-52">{{ item[columnName.fieldName]?.nome ?? '' }}</td>
+					} @else if (columnName.fieldName === 'situacao') {
+						<td class="w-52">
+							<app-situacao-tag [situacao]="item[columnName.fieldName]" />
+						</td>
+					} @else {
+						<td class="w-52">{{ item[columnName.fieldName] }}</td>
+					}
+				}
+
+				@if (tabelaFuncionario) {
+					<td class="flex w-52 gap-3 justify-end items-center">
+						<app-dropdown
+							[solicitacao]="item"
+							[dropdownAbertoId]="dropdownAbertoId"
+							(dropdownAbertoIdChange)="setDropdownAberto($event)"
+							(efetuarManutencaoClicked)="efetuarManutencao(item)"
+							(finalizarClicked)="finalizarManutencao(item)"
+							(redirecionarManutencaoClicked)="redirecionarManutencao(item)"
+							(historicoClicked)="exibirHistorico(item)"
+						/>
+					</td>
+				} @else if (tabelaSolicitacoesAbertas) {
+					<td>
+						<button
+							class="bg-primary text-white w-52 px-4 py-1 rounded-md hover:bg-indigo-900 hover:cursor-pointer"
+							(click)="emitirOrcamento(item)"
+						>
+							Fazer orçamento
+						</button>
+					</td>
+				} @else {
+					<td class="flex w-52 gap-3 justify-end">
+						<button
+							class="text-white bg-primary p-2 rounded-md flex justify-center items-center cursor-pointer hover:bg-indigo-950"
+							(click)="editar(item)"
+						>
+							<ng-icon name="matEditOutline" />
+						</button>
+						<button
+							class="text-red-500 outline outline-red-500 p-2 rounded-md flex justify-center items-center cursor-pointer"
+							(click)="abrirModalExcluir(item)"
+							[disabled]="excluirDisabledCondition"
+						>
+							<ng-icon name="matDeleteOutline" />
+						</button>
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>
+
+<!-- Modal Excluir -->
+@if (modalExcluir) {
+	<section class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+		<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+			<div class="flex justify-between items-start mb-4">
+				<div>
+					<h2 class="text-xl font-semibold text-gray-800">Atenção</h2>
+					<p class="text-gray-600 text-sm mt-1">Tem certeza que deseja excluir este item?</p>
+				</div>
+				<button
+					class="cursor-pointer rounded-full hover:bg-gray-950/5 p-1 w-7 h-7 duration-150"
+					(click)="fecharModal()"
+				>
+					✖
+				</button>
+			</div>
+
+			<div class="flex justify-end space-x-3">
+				<app-secondary-button text="Cancelar" (funcao)="fecharModal()" />
+				<app-button text="Excluir" (funcao)="excluir(itemSelecionado)" />
+			</div>
+		</div>
+	</section>
+}

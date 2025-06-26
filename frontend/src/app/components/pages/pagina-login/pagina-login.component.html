@@ -1,55 +1,61 @@
-<div class="w-full h-screen bg-[#EAEAEA] flex justify-center items-center">
+<div class="w-full h-screen flex justify-center items-center bg-radial from-white to-[#7E84F0]/20">
+	<div class="flex p-10 flex-col justify-center items-center gap-10">
+		<div class="flex flex-col items-center gap-1">
+			<a routerLink="/home" class="cursor-pointer">
+				<img src="logo.png" class="w-9 select-none hover:opacity-80 transition-opacity" alt="Logo" />
+			</a>
+			<h1 class="text-black select-none font-semibold text-xl">Login no repair.io</h1>
+		</div>
 
-    <!-- Container Principal (largura proporcional e limites agradáveis) -->
-    <div class="flex rounded-2xl overflow-hidden shadow-xl bg-white max-w-4xl w-full min-h-[600px] min-w-[1000px]">
+		<form
+			[formGroup]="loginForm"
+			(ngSubmit)="onSubmit()"
+			class="flex flex-col w-[513px] rounded-lg shadow-xl bg-white p-10 gap-8"
+		>
+			<div>
+				<app-input-text
+					label="Email"
+					type="email"
+					placeholder="email@example.com"
+					controlName="email"
+					[required]="true"
+				/>
+				@if (loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)) {
+					<div class="text-red-500 text-sm mt-1">
+						<span *ngIf="loginForm.get('email')?.errors?.['required']">Email é obrigatório</span>
+						<span *ngIf="loginForm.get('email')?.errors?.['email']">Formato de email inválido</span>
+					</div>
+				}
+			</div>
 
-      <!-- Formulário (metade esquerda, padding agradável) -->
-      <div class="flex-1 p-10 flex flex-col justify-center items-center gap-4">
+			<div>
+				<app-input-text label="Senha" type="password" placeholder="Sua senha" controlName="senha" [required]="true" />
 
-        <div class="flex flex-col items-center gap-1">
-          <span class="text-3xl font-bold text-[#4931A9] flex items-center gap-2">
-            <img src="personicone.svg" alt="">
-            <span class="material-icons"></span> Login
-          </span>
-          <p class="text-gray-500">Bem-vindo(a) de volta.</p>
-        </div>
+				@if (
+					loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)
+				) {
+					<div class="text-red-500 text-sm mt-1">
+						@if (loginForm.get('password')?.errors?.['required']) {
+							<span>Senha é obrigatória</span>
+						}
+					</div>
+				}
+			</div>
 
-        <div class="flex flex-col gap-3 w-full max-w-xs">
-          <input
-            type="email"
-            placeholder="Email"
-            class="py-2 px-4 rounded-md border border-gray-300 outline-none focus:ring-1 ring-[#4931A9] placeholder:text-gray-400"
-          />
-          <input
-            type="password"
-            placeholder="Senha"
-            class="py-2 px-4 rounded-md border border-gray-300 outline-none focus:ring-1 ring-[#4931A9] placeholder:text-gray-400"
-          />
-          <button class="py-2 bg-[#4931A9] text-white font-semibold rounded-md hover:bg-[#3b2788] transition">
-            Confirmar
-          </button>
-        </div>
+			@if (invalidCredentials) {
+				<p class="text-red-500 text-sm mt-1">Email ou senha incorretos.</p>
+			}
 
+			<app-button text="Login" type="submit" [disabledCondition]="!loginForm.valid" />
+			<p class="text-sm text-center">
+				Não possui uma conta?
+				<a routerLink="/cadastro" routerLinkActive="router-link-active" class="text-[#3238AB] underline"
+					>Faça o cadastro.</a
+				>
+			</p>
+		</form>
+	</div>
 
-        <p class="text-sm text-gray-500">
-          Não possui uma conta?
-          <a routerLink="/cadastro" routerLinkActive="router-link-active" class="text-[#4931A9] underline">Faça o cadastro.</a>
-        </p>
-
-
-      </div>
-
-      <!-- Imagem lateral (metade direita, escondida em telas menores) -->
-      <div class="hidden md:block flex-1">
-        <img
-          src="cadastro.svg"
-          alt="Imagem lateral"
-          class="w-full h-full object-cover"
-        />
-      </div>
-
-    </div>
-
-  </div>
-  <router-outlet></router-outlet>
-
+	<img src="ilust-login.png" alt="Imagem lateral" class="w-[600px] object-cover" />
+</div>
+<router-outlet></router-outlet>

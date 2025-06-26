@@ -1,0 +1,52 @@
+<table class="w-full">
+	<thead>
+		<th
+			class="flex justify-between w-full border-1 border-gray-900/15 text-gray-900/50 px-4 py-2.5 rounded-t-md items-center text-left font-medium"
+		>
+			@for (column of columns; track $index) {
+				<td class="w-52">{{ column.headerName }}</td>
+			}
+			<!-- Por algum motivo, se eu usar <td></td> aqui o bagulho simplesmente quebra -->
+			<p class="w-52 text-right">Ações</p>
+		</th>
+	</thead>
+
+	<tbody>
+		@for (item of gridData; track $index) {
+			@if (itemSelecionado === item) {
+				<tr>
+					<td>
+						<app-tabela-expandida
+							[solicitacao]="itemSelecionado"
+							(toggleExpansionEvent)="toggleExpansao(itemSelecionado)"
+							(abrirHistorico)="abrirHistorico.emit(itemSelecionado.id)"
+						/>
+					</td>
+				</tr>
+			} @else {
+				<tr
+					class="flex justify-between w-full border-1 border-t-0 border-gray-900/15 px-4 py-2.5 items-center"
+					[class.rounded-b-md]="$index + 1 === gridData.length"
+				>
+					@for (columnName of columns; track $index) {
+						@if (checkIfDate(item[columnName.fieldName])) {
+							<td class="w-52">{{ item[columnName.fieldName] | date: 'dd/MM/yyyy HH:mm' }}</td>
+						} @else if (columnName.fieldName === 'dataSolicitacaoAbertura') {
+							<td class="w-52 text-muted">Sem data</td>
+						} @else if (columnName.fieldName === 'situacao') {
+							<td class="w-52"><app-situacao-tag [situacao]="item[columnName.fieldName]" /></td>
+						} @else {
+							<td class="w-52">{{ item[columnName.fieldName] ?? '' }}</td>
+						}
+					}
+
+					<td class="w-52 text-right">
+						<button class="text-3xl text-black/50 cursor-pointer" (click)="toggleExpansao(item)">
+							<ng-icon name="matChevronLeftOutline" />
+						</button>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>

@@ -1,11 +1,22 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-body {
-    font-family: "Poppins", "sans-serif";
+@theme {
+	--color-primary: #4931a9;
+	--color-orange: #f28c28;
+	--color-purple: #ad11ad;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+	font-family: 'Poppins', sans-serif;
+	height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body.no-scroll {
+	overflow: hidden;
+}
+
+/* Garantir que imagens tenham fundo transparente quando necessário */
+img {
+	background: transparent;
+}

@@ -1,0 +1,235 @@
+<app-mensagem [mensagem]="mensagem" [showMessage]="showMessage" />
+<main class="flex gap-10 h-full">
+	<app-sidebar-funcionario />
+	<section class="flex flex-col py-10 gap-[30px] pr-10 w-full overflow-y-auto">
+		<div>
+			<h1 class="text-[40px] font-semibold text-[#4931A9]">Suas solicitações</h1>
+			<h2 class="opacity-50 font-light text-[18px]">
+				Aqui, você pode gerenciar todas as solicitações que estão atribuídas a você.
+			</h2>
+		</div>
+
+		<div class="flex justify-between w-full items-center">
+			<app-input-pesquisar placeholder="Pesquise uma solicitação..." (pesquisarClick)="pesquisarSolicitacao($event)" />
+			<div class="flex gap-8 items-center">
+				<app-select-estado (selectChange)="filtrarPorEstado($event)" />
+				<div class="flex items-center justify-center gap-3">
+					<label for="dataMin">De</label>
+					<input
+						name="dataMin"
+						type="date"
+						value="22-01-2023"
+						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md text-gray-900/70 outline-1 outline-gray-900/30"
+						[(ngModel)]="dataMin"
+						(change)="filtrarPorData()"
+					/>
+				</div>
+				<div class="flex items-center justify-center gap-3">
+					<label for="dataMax">Até</label>
+					<input
+						name="dataMax"
+						type="date"
+						value="22-01-2023"
+						class="bg-gray-900/15 px-2.5 py-[4px] rounded-md text-gray-900/70 outline-1 outline-gray-900/30"
+						[(ngModel)]="dataMax"
+						(change)="filtrarPorData()"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<!-- Tabela -->
+		@if (todasSolicitacoes && todasSolicitacoes.length > 0 && listaSolicitacoes.length > 0) {
+			<div class="h-full">
+				<app-tabela
+					[columns]="headersTabela"
+					[gridData]="solicitacoesPaginadas"
+					[tabelaFuncionario]="true"
+					(efetuarManutencaoClicked)="toggleModalManutencao($event)"
+					(redirecionarManutencaoClicked)="toggleModalRedirecionar($event)"
+					(finalizarClicked)="finalizarSolicitacao($event)"
+					(historicoClicked)="visualizarHistorico($event)"
+				/>
+			</div>
+			<!-- Controles de Paginação -->
+			<div class="flex justify-end items-center gap-1 mt-4">
+				<button
+					(click)="mudarPagina(paginaAtual - 1)"
+					[disabled]="paginaAtual === 1"
+					class="text-xl text-black/70 cursor-pointer flex items-center disabled:text-black/30"
+				>
+					<ng-icon name="matChevronLeftOutline" />
+				</button>
+				@for (p of [].constructor(totalPaginas); track $index) {
+					<span>
+						<button
+							(click)="mudarPagina($index + 1)"
+							[ngClass]="{ 'bg-black/20': paginaAtual === $index + 1 }"
+							class="px-2.5 py-[3px] rounded-md cursor-pointer"
+							[disabled]="paginaAtual === $index + 1"
+						>
+							{{ $index + 1 }}
+						</button>
+					</span>
+				}
+				<button
+					(click)="mudarPagina(paginaAtual + 1)"
+					[disabled]="paginaAtual === totalPaginas"
+					class="text-xl text-black/70 cursor-pointer flex items-center disabled:text-black/30"
+				>
+					<ng-icon name="matChevronRightOutline" />
+				</button>
+			</div>
+		} @else if (todasSolicitacoes.length <= 0) {
+			<p>Não há nenhuma solicitação atribuída a você.</p>
+		} @else if (listaSolicitacoes.length <= 0) {
+			<p>Nenhum resultado para a pesquisa.</p>
+		}
+
+		<!-- Modal Efetuar Manutenção -->
+		@if (modalEfetuarManutencao) {
+			<div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+				<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+					<div class="flex justify-between items-center mb-4">
+						<h2 class="text-xl font-semibold text-gray-800">Efetuar manutenção</h2>
+						<button
+							(click)="toggleModalManutencao()"
+							class="cursor-pointer rounded-full hover:bg-gray-950/5 p-1 w-7 h-7 duration-150"
+						>
+							✖
+						</button>
+					</div>
+
+					<form [formGroup]="formManutencao" (ngSubmit)="efetuarManutencao(solicitacaoModal)">
+						<div class="mb-4 flex gap-3 flex-col">
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe class="w-full" label="Descrição" [dado]="solicitacaoModal.descricao" />
+								<app-informacao-detalhe
+									class="w-full"
+									label="Categoria"
+									[dado]="solicitacaoModal.categoria.descricao"
+								/>
+							</div>
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe class="w-full" label="Defeito" [dado]="solicitacaoModal.defeito" />
+								<app-informacao-detalhe class="w-full" label="Situação atual" [dado]="solicitacaoModal.situacao" />
+							</div>
+
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe
+									class="w-full"
+									label="Data da solicitação"
+									[dado]="solicitacaoModal.dataSolicitacaoAbertura | date: 'dd/MM/yyyy - HH:mm:ss'"
+								/>
+								<app-informacao-detalhe class="w-full" label="Cliente" [dado]="solicitacaoModal.cliente.nome" />
+							</div>
+
+							<app-input-text
+								label="Descrição da manutenção"
+								controlName="descricaoManutencao"
+								type="text"
+								placeholder="HD trocado"
+								[required]="true"
+							/>
+							<app-input-text
+								label="Orientações para o cliente"
+								controlName="orientacoes"
+								type="text"
+								placeholder="Não ligar fora da tomada"
+								[required]="true"
+							/>
+						</div>
+
+						<div class="flex flex-col w-full gap-3 justify-end space-x-3">
+							<app-button
+								text="Efetuar manutenção"
+								type="submit"
+								class="w-full"
+								[disabledCondition]="this.formManutencao.invalid"
+							/>
+							<app-secondary-button text="Cancelar" (funcao)="toggleModalManutencao()" class="w-full" />
+						</div>
+					</form>
+				</div>
+			</div>
+		}
+
+		<!-- Modal histórico -->
+		@if (mostrarModalHistorico) {
+			<app-modal-historico [historico]="historico" (fecharModal)="fecharHistorico()" />
+		}
+
+		<!-- Modal Redirecionar Manutenção -->
+		@if (modalRedirecionarManutencao) {
+			<div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+				<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+					<div class="flex justify-between items-center mb-4">
+						<h2 class="text-xl font-semibold text-gray-800">Redirecionar manutenção</h2>
+						<button
+							(click)="toggleModalRedirecionar()"
+							class="cursor-pointer rounded-full hover:bg-gray-950/5 p-1 w-7 h-7 duration-150"
+						>
+							✖
+						</button>
+					</div>
+
+					<form [formGroup]="formRedirecionar" (ngSubmit)="redirecionarManutencao(solicitacaoModal)">
+						<div class="mb-4 flex gap-3 flex-col">
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe class="w-full" label="Descrição" [dado]="solicitacaoModal.descricao" />
+								<app-informacao-detalhe
+									class="w-full"
+									label="Categoria"
+									[dado]="solicitacaoModal.categoria.descricao"
+								/>
+							</div>
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe class="w-full" label="Defeito" [dado]="solicitacaoModal.defeito" />
+								<app-informacao-detalhe class="w-full" label="Situação atual" [dado]="solicitacaoModal.situacao" />
+							</div>
+
+							<div class="flex w-full gap-2">
+								<app-informacao-detalhe
+									class="w-full"
+									label="Data da solicitação"
+									[dado]="solicitacaoModal.dataSolicitacaoAbertura | date: 'dd/MM/yyyy - HH:mm:ss'"
+								/>
+								<app-informacao-detalhe class="w-full" label="Cliente" [dado]="solicitacaoModal.cliente.nome" />
+							</div>
+
+							<div>
+								<label for="funcionarioDestino" class="mb-1 text-sm font-medium text-gray-700"
+									>Funcionário destino</label
+								>
+								<select
+									name="funcionarioDestino"
+									id="funcionarioDestino"
+									class="border border-gray-300 rounded-lg p-2 text-sm text-gray-700 w-full focus:ring-2 focus:ring-indigo-400 outline-none"
+									required
+									formControlName="funcionarioDestino"
+								>
+									@for (funcionario of listaFuncionarios; track funcionario.id) {
+										<option [ngValue]="funcionario">{{ funcionario.nome }}</option>
+									}
+								</select>
+								@if (formRedirecionar.errors?.['mesmoFuncionario']) {
+									<p class="text-red-500 text-sm mt-1">Não é possível redirecionar uma solicitação para si mesmo.</p>
+								}
+							</div>
+						</div>
+
+						<div class="flex flex-col w-full gap-3 justify-end space-x-3">
+							<app-button
+								text="Rediorecionar manutenção"
+								type="submit"
+								class="w-full"
+								[disabledCondition]="this.formRedirecionar.invalid"
+							/>
+							<app-secondary-button text="Cancelar" (funcao)="toggleModalRedirecionar()" class="w-full" type="button" />
+						</div>
+					</form>
+				</div>
+			</div>
+		}
+	</section>
+</main>
