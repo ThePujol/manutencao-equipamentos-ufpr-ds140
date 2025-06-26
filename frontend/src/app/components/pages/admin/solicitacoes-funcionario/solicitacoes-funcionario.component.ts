@@ -218,6 +218,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		this.mensagem = 'Solicitação redirecionada.';
 
 		solicitacao.funcionario = this.formRedirecionar.value.funcionarioDestino;
+		solicitacao.situacao = Situacao.REDIRECIONADA;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
 			console.log(res);
 			this.formRedirecionar.reset();

@@ -122,6 +122,9 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 			this.formOrcamento.reset();
 			this.toggleModal();
 		});
+
+		// Atualiza lista de solicitacoes
+		this.listarSolicitacoesAbertas();
 	}
 
 	ngOnInit() {
@@ -133,6 +136,10 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 			this.itensPorPagina = 5;
 		}
 
+		this.listarSolicitacoesAbertas();
+	}
+
+	listarSolicitacoesAbertas() {
 		this.solicitacaoService
 			.listarSolicitacoes()
 			.pipe(map((solicitacoes) => solicitacoes.filter((s) => s.situacao === Situacao.ABERTA)))
