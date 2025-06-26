@@ -19,13 +19,17 @@ export interface ReceitaPorCategoria {
 export class ReportService {
 	constructor(private solicitacaoService: SolicitacaoService) {}
 
-	getReceitaPorDia(dataInicio?: Date, dataFim?: Date): Observable<ReceitaPorDia[]> {
+        getReceitaPorDia(
+                dataInicio?: Date,
+                dataFim?: Date,
+                estados: Situacao[] = [Situacao.FINALIZADA]
+        ): Observable<ReceitaPorDia[]> {
 		/* O codigo de antes nao funcionava em um contexto assincrono, entao eu alterei. Faz a mesma coisa, mas funciona com o padrao Observable */
 		return this.solicitacaoService.listarSolicitacoes().pipe(
 			map((solicitacoes) => {
-				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.FINALIZADA);
+                                const solicitacoesPorEstado = solicitacoes.filter((s) => estados.includes(s.situacao));
 
-				const solicitacoesFiltradas = solicitacoesPagas.filter((s) => {
+                                const solicitacoesFiltradas = solicitacoesPorEstado.filter((s) => {
 					const dataDaSolicitacao = s.dataFinalizacao
 						? new Date(s.dataFinalizacao)
 						: s.dataSolicitacaoAbertura
@@ -62,14 +66,14 @@ export class ReportService {
 		);
 	}
 
-	getReceitaPorCategoria(): Observable<ReceitaPorCategoria[]> {
+        getReceitaPorCategoria(estados: Situacao[] = [Situacao.FINALIZADA]): Observable<ReceitaPorCategoria[]> {
 		/* Mesma coisa pra esse codigo. */
 		return this.solicitacaoService.listarSolicitacoes().pipe(
 			map((solicitacoes: Solicitacao[]) => {
-				const solicitacoesPagas = solicitacoes.filter((s) => s.situacao === Situacao.FINALIZADA);
+                                const solicitacoesFiltradas = solicitacoes.filter((s) => estados.includes(s.situacao));
 
 				const mapa = new Map<string, number>();
-				solicitacoesPagas.forEach((s) => {
+                                solicitacoesFiltradas.forEach((s) => {
 					const nomeCategoria = s.categoria.descricao;
 					const orcamento = s.orcamento ?? 0;
 					mapa.set(nomeCategoria, (mapa.get(nomeCategoria) || 0) + orcamento);

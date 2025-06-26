@@ -11,8 +11,9 @@
       </h2>
     </div>
 
-    <!-- Botão Gerar PDF -->
-    <div class="mb-6">
+    <!-- Filtros e Botão Gerar PDF -->
+    <div class="mb-6 flex items-end gap-4">
+      <app-multi-select-estado (estadosChange)="estadosSelecionados = $event"></app-multi-select-estado>
       <button
         (click)="gerarPDF()"
         [disabled]="!resultados.length"

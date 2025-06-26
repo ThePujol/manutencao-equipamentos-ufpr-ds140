@@ -6,29 +6,34 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { ReceitaPorCategoria, ReportService } from '../../../../services/report.service';
+import { Situacao } from '../../../../shared/models/solicitacao.model';
+import { MultiSelectEstadoComponent } from '../../../ui/multi-select-estado/multi-select-estado.component';
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-relatorio-receitas-categoria',
 	standalone: true,
-	imports: [CommonModule, RouterOutlet, SidebarFuncionarioComponent, MensagemComponent],
+        imports: [CommonModule, RouterOutlet, SidebarFuncionarioComponent, MensagemComponent, MultiSelectEstadoComponent],
 	templateUrl: './pagina-relatorio-receitas-categoria.component.html',
 	styleUrls: ['./pagina-relatorio-receitas-categoria.component.css'],
 })
 export class PaginaRelatorioReceitasCategoriaComponent implements OnInit {
-	resultados: ReceitaPorCategoria[] = [];
-	mensagem = '';
-	showMessage = false;
+        resultados: ReceitaPorCategoria[] = [];
+        mensagem = '';
+        showMessage = false;
+        estadosSelecionados: Situacao[] = [Situacao.FINALIZADA];
 
 	constructor(private reportService: ReportService) {}
 
-	ngOnInit(): void {
-		// já carrega os dados ao entrar na página
-		this.reportService.getReceitaPorCategoria().subscribe((resultados) => {
-			this.resultados = resultados;
-		});
-	}
+        ngOnInit(): void {
+                // já carrega os dados ao entrar na página
+                this.reportService
+                        .getReceitaPorCategoria(this.estadosSelecionados)
+                        .subscribe((resultados) => {
+                        this.resultados = resultados;
+                });
+        }
 
 	gerarPDF(): void {
 		if (!this.resultados.length) {
