@@ -51,7 +51,7 @@ public class SolicitacaoStatusHistoricoService {
 
                 case REJEITADA:
                     dto.setMotivoRejeicao(solicitacao.getMotivoRejeicao());
-                    // Para REJEITADA, não incluir o motivo na observação
+
                     if (historico.getObservacao() != null &&
                             !historico.getObservacao().contains("Motivo: ")) {
                         dto.setObservacao(historico.getObservacao());
@@ -65,7 +65,7 @@ public class SolicitacaoStatusHistoricoService {
                     break;
 
                 case REDIRECIONADA:
-                    // Para redirecionamento, extrair informações da observação
+
                     extrairInformacoesRedirecionamento(dto, historico, solicitacao);
                     break;
 
@@ -86,7 +86,7 @@ public class SolicitacaoStatusHistoricoService {
         String observacao = historico.getObservacao();
 
         if (observacao != null && observacao.contains(" de ") && observacao.contains(" para ")) {
-            // Formato: "Solicitação redirecionada de [Nome Antigo] para [Nome Novo]"
+
             int deIndex = observacao.indexOf(" de ");
             int paraIndex = observacao.indexOf(" para ");
 
@@ -94,7 +94,6 @@ public class SolicitacaoStatusHistoricoService {
                 String nomeAntigo = observacao.substring(deIndex + 4, paraIndex).trim();
                 String nomeNovo = observacao.substring(paraIndex + 6).trim();
 
-                // Criar funcionários temporários com os nomes extraídos
                 com.repairio.backend.model.Funcionario funcionarioAntigo = new com.repairio.backend.model.Funcionario();
                 funcionarioAntigo.setNome(nomeAntigo);
 
@@ -105,11 +104,9 @@ public class SolicitacaoStatusHistoricoService {
                 dto.setFuncionarioRedirecionado(funcionarioNovo);
             }
         } else {
-            // Fallback: usar o funcionário atual da solicitação como destino
+
             dto.setFuncionarioRedirecionado(solicitacao.getFuncionario());
         }
 
-        // Não incluir a observação de redirecionamento, pois já temos os campos
-        // específicos
     }
 }

@@ -18,9 +18,6 @@ public class SolicitacaoStatusHistoricoController {
         this.historicoService = historicoService;
     }
 
-    /**
-     * Retorna histórico com dados enriquecidos para o frontend
-     */
     @GetMapping
     public ResponseEntity<List<SolicitacaoStatusHistoricoDTO>> listarHistorico(@PathVariable Long solicitacaoId) {
         List<SolicitacaoStatusHistoricoDTO> historico = historicoService.listarHistoricoParaFrontend(solicitacaoId);
