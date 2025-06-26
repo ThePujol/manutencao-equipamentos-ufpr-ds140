@@ -18,7 +18,7 @@ export class DropdownComponent {
 	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
 	@Output() historicoClicked = new EventEmitter<Solicitacao>();
-	showDropdown = false;
+	dropdown = false;
 
 	situacoes = {
 		aberta: Situacao.ABERTA,
@@ -30,19 +30,6 @@ export class DropdownComponent {
 		paga: Situacao.PAGA,
 		finalizada: Situacao.FINALIZADA,
 	};
-
-	get dropdown(): boolean {
-		return this.dropdownAbertoId === this.solicitacao.id;
-	}
-
-	abrirDropdown(event: Event) {
-		event.stopPropagation();
-		if (this.dropdown) {
-			this.dropdownAbertoIdChange.emit(null);
-		} else {
-			this.dropdownAbertoIdChange.emit(this.solicitacao.id);
-		}
-	}
 
 	efetuarManutencao(solicitacao: Solicitacao) {
 		this.efetuarManutencaoClicked.emit(solicitacao);
@@ -62,6 +49,7 @@ export class DropdownComponent {
 
 	toggleDropdown(event?: MouseEvent) {
 		if (event) event.stopPropagation();
-		this.showDropdown = !this.dropdown;
+		console.log('A');
+		this.dropdown = !this.dropdown;
 	}
 }
