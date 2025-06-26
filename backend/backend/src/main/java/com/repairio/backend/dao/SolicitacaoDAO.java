@@ -49,7 +49,7 @@ public class SolicitacaoDao {
                     s.setOrientacoes(rs.getString("orientacoes"));
                     s.setDataFinalizacao(rs.getDate("dataFinalizacao"));
                     s.setMotivoRejeicao(rs.getString("motivoRejeicao"));
-                    // Buscar a data de abertura (primeira do histórico)
+
                     Date dataAbertura = jdbcTemplate.query(
                             "SELECT data_hora FROM solicitacao_status_historico WHERE solicitacao_id = ? ORDER BY data_hora ASC LIMIT 1",
                             (rsh) -> rsh.next() ? new Date(rsh.getTimestamp("data_hora").getTime()) : null,
@@ -80,7 +80,7 @@ public class SolicitacaoDao {
                     s.setOrientacoes(rs.getString("orientacoes"));
                     s.setDataFinalizacao(rs.getDate("dataFinalizacao"));
                     s.setMotivoRejeicao(rs.getString("motivoRejeicao"));
-                    // Buscar a data de abertura (primeira do histórico)
+
                     Date dataAbertura = jdbcTemplate.query(
                             "SELECT data_hora FROM solicitacao_status_historico WHERE solicitacao_id = ? ORDER BY data_hora ASC LIMIT 1",
                             (rsh) -> rsh.next() ? new Date(rsh.getTimestamp("data_hora").getTime()) : null,
@@ -157,7 +157,7 @@ public class SolicitacaoDao {
         jdbcTemplate.update(connection -> {
             var ps = connection.prepareStatement(
                     "INSERT INTO solicitacao (descricao, categoria_id, defeito, orcamento, situacao, cliente_id, funcionario_id, dataOrcamento, descricaoManutencao, dataManutencao, orientacoes, dataFinalizacao, motivoRejeicao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    new String[]{"id"});
+                    new String[] { "id" });
             ps.setString(1, solicitacao.getDescricao());
             ps.setLong(2, solicitacao.getCategoria().getId());
             ps.setString(3, solicitacao.getDefeito());
@@ -175,16 +175,16 @@ public class SolicitacaoDao {
             }
             ps.setTimestamp(8,
                     solicitacao.getDataOrcamento() != null ? new Timestamp(solicitacao.getDataOrcamento().getTime())
-                    : null);
+                            : null);
             ps.setString(9, solicitacao.getDescricaoManutencao());
             ps.setTimestamp(10,
                     solicitacao.getDataManutencao() != null ? new Timestamp(solicitacao.getDataManutencao().getTime())
-                    : null);
+                            : null);
             ps.setString(11, solicitacao.getOrientacoes());
             ps.setDate(12,
                     solicitacao.getDataFinalizacao() != null
-                    ? new java.sql.Date(solicitacao.getDataFinalizacao().getTime())
-                    : null);
+                            ? new java.sql.Date(solicitacao.getDataFinalizacao().getTime())
+                            : null);
             ps.setString(13, solicitacao.getMotivoRejeicao());
             return ps;
         }, keyHolder);
@@ -196,10 +196,10 @@ public class SolicitacaoDao {
     public void update(Solicitacao solicitacao) {
         jdbcTemplate.update(
                 "UPDATE solicitacao SET "
-                + "descricao = ?, categoria_id = ?, defeito = ?, orcamento = ?, situacao = ?, cliente_id = ?, funcionario_id = ?, "
-                + "dataOrcamento = ?, descricaoManutencao = ?, dataManutencao = ?, "
-                + "orientacoes = ?, dataFinalizacao = ?, motivoRejeicao = ? "
-                + "WHERE id = ?",
+                        + "descricao = ?, categoria_id = ?, defeito = ?, orcamento = ?, situacao = ?, cliente_id = ?, funcionario_id = ?, "
+                        + "dataOrcamento = ?, descricaoManutencao = ?, dataManutencao = ?, "
+                        + "orientacoes = ?, dataFinalizacao = ?, motivoRejeicao = ? "
+                        + "WHERE id = ?",
                 solicitacao.getDescricao(),
                 solicitacao.getCategoria().getId(),
                 solicitacao.getDefeito(),

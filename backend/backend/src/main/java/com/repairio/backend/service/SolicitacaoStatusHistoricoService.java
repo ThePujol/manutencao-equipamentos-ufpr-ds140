@@ -85,6 +85,8 @@ public class SolicitacaoStatusHistoricoService {
             Solicitacao solicitacao) {
         String observacao = historico.getObservacao();
 
+        System.out.println("DEBUG: Processando redirecionamento - Observação: " + observacao);
+
         if (observacao != null && observacao.contains(" de ") && observacao.contains(" para ")) {
 
             int deIndex = observacao.indexOf(" de ");
@@ -94,19 +96,49 @@ public class SolicitacaoStatusHistoricoService {
                 String nomeAntigo = observacao.substring(deIndex + 4, paraIndex).trim();
                 String nomeNovo = observacao.substring(paraIndex + 6).trim();
 
+                System.out.println("DEBUG: Extraído - De: " + nomeAntigo + ", Para: " + nomeNovo);
+
                 com.repairio.backend.model.Funcionario funcionarioAntigo = new com.repairio.backend.model.Funcionario();
+                funcionarioAntigo.setId(-1L);
                 funcionarioAntigo.setNome(nomeAntigo);
 
                 com.repairio.backend.model.Funcionario funcionarioNovo = new com.repairio.backend.model.Funcionario();
+                funcionarioNovo.setId(-2L);
                 funcionarioNovo.setNome(nomeNovo);
 
                 dto.setFuncionarioResponsavel(funcionarioAntigo);
                 dto.setFuncionarioRedirecionado(funcionarioNovo);
+
+                dto.setObservacao(observacao);
+            }
+        } else if (observacao != null && observacao.contains(" para ")) {
+
+            int paraIndex = observacao.indexOf(" para ");
+            if (paraIndex > 0) {
+                String nomeNovo = observacao.substring(paraIndex + 6).trim();
+
+                System.out.println("DEBUG: Extraído - Apenas Para: " + nomeNovo);
+
+                com.repairio.backend.model.Funcionario funcionarioNovo = new com.repairio.backend.model.Funcionario();
+                funcionarioNovo.setId(-2L);
+                funcionarioNovo.setNome(nomeNovo);
+
+                dto.setFuncionarioRedirecionado(funcionarioNovo);
+                dto.setObservacao(observacao);
             }
         } else {
-
-            dto.setFuncionarioRedirecionado(solicitacao.getFuncionario());
+            System.out.println("DEBUG: Usando fallback - Funcionário atual da solicitação");
+            if (solicitacao.getFuncionario() != null) {
+                dto.setFuncionarioRedirecionado(solicitacao.getFuncionario());
+                dto.setObservacao("Redirecionado para " + solicitacao.getFuncionario().getNome());
+            } else {
+                dto.setObservacao(observacao != null ? observacao : "Solicitação redirecionada");
+            }
         }
 
+        System.out.println("DEBUG: DTO final - ResponsavelId: " +
+                (dto.getFuncionarioResponsavel() != null ? dto.getFuncionarioResponsavel().getId() : "null") +
+                ", RedirecionadoId: " +
+                (dto.getFuncionarioRedirecionado() != null ? dto.getFuncionarioRedirecionado().getId() : "null"));
     }
 }

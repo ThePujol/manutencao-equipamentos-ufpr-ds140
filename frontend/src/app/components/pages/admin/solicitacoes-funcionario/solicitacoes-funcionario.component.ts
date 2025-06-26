@@ -229,16 +229,13 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		solicitacao.funcionario = this.formRedirecionar.value.funcionarioDestino;
 		solicitacao.situacao = Situacao.REDIRECIONADA;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
-			console.log(res);
+			console.log('Solicitação redirecionada com sucesso:', res);
 			this.formRedirecionar.reset();
 			this.toggleModalRedirecionar();
+
+			this.listarSolicitacoesPorFuncionario();
 		});
 
-		// Atualizar lista de solicitacoes
-		this.listarSolicitacoesPorFuncionario();
-		window.location.reload();
-
-		// Intervalo para a mensagem desaparecer
 		setTimeout(() => {
 			this.showMessage = false;
 		}, 3000);
@@ -253,10 +250,21 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	}
 
 	visualizarHistorico(solicitacao: Solicitacao) {
-		this.historicoService.listarHistorico(solicitacao.id).subscribe((h) => {
-			console.log('s');
-			this.historico = h;
-			this.mostrarModalHistorico = true;
+		console.log('Visualizando histórico da solicitação:', solicitacao.id);
+		this.historicoService.listarHistorico(solicitacao.id).subscribe({
+			next: (h) => {
+				console.log('Histórico recebido:', h);
+				this.historico = h;
+				this.mostrarModalHistorico = true;
+			},
+			error: (error) => {
+				console.error('Erro ao carregar histórico:', error);
+				this.mensagem = 'Erro ao carregar histórico da solicitação.';
+				this.showMessage = true;
+				setTimeout(() => {
+					this.showMessage = false;
+				}, 3000);
+			},
 		});
 	}
 
@@ -291,7 +299,6 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		const min = this.dataMin ? new Date(this.dataMin) : undefined;
 		const max = this.dataMax ? new Date(this.dataMax) : undefined;
 
-		// Corrige as datas para ajustar o fuso horario
 		const minCorrigido = min ? new Date(min.getTime() + min.getTimezoneOffset() * 60000) : undefined;
 		const maxCorrigido = max ? new Date(max.getTime() + max.getTimezoneOffset() * 60000) : undefined;
 

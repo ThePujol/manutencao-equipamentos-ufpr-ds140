@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface SolicitacaoStatusHistorico {
 	id: number;
@@ -15,7 +16,7 @@ export interface SolicitacaoStatusHistorico {
 		id: number;
 		nome: string;
 	};
-	// Additional fields from Solicitacao for specific situations
+
 	motivoRejeicao?: string;
 	orientacoes?: string;
 	descricaoManutencao?: string;
@@ -32,6 +33,23 @@ export class SolicitacaoHistoricoService {
 		console.log('Serviço: Fazendo chamada para histórico da solicitação:', solicitacaoId);
 		const url = `${this.apiUrl}/${solicitacaoId}/historico`;
 		console.log('Serviço: URL da requisição:', url);
-		return this.http.get<SolicitacaoStatusHistorico[]>(url);
+
+		return this.http.get<SolicitacaoStatusHistorico[]>(url).pipe(
+			map((historico: SolicitacaoStatusHistorico[]) => {
+				console.log('Serviço: Resposta recebida do backend:', historico);
+
+				historico.forEach((h: SolicitacaoStatusHistorico, index: number) => {
+					if (h.situacao === 'REDIRECIONADA') {
+						console.log(`Redirecionamento ${index}:`, {
+							observacao: h.observacao,
+							funcionarioResponsavel: h.funcionarioResponsavel,
+							funcionarioRedirecionado: h.funcionarioRedirecionado,
+						});
+					}
+				});
+
+				return historico;
+			})
+		);
 	}
 }

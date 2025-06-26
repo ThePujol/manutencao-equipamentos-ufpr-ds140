@@ -61,7 +61,6 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		{ fieldName: 'situacao', headerName: 'Situação' },
 	];
 
-	// NOVO: para histórico
 	historico: SolicitacaoStatusHistorico[] = [];
 	mostrarModalHistorico = false;
 
@@ -109,9 +108,21 @@ export class PaginaSolicitacoesComponent implements OnInit {
 	}
 
 	abrirHistorico(solicitacaoId: number) {
-		this.historicoService.listarHistorico(solicitacaoId).subscribe((h) => {
-			this.historico = h;
-			this.mostrarModalHistorico = true;
+		console.log('Cliente: Abrindo histórico da solicitação:', solicitacaoId);
+		this.historicoService.listarHistorico(solicitacaoId).subscribe({
+			next: (h) => {
+				console.log('Cliente: Histórico recebido:', h);
+				this.historico = h;
+				this.mostrarModalHistorico = true;
+			},
+			error: (error) => {
+				console.error('Cliente: Erro ao carregar histórico:', error);
+				this.mensagem = 'Erro ao carregar histórico da solicitação.';
+				this.showMessage = true;
+				setTimeout(() => {
+					this.showMessage = false;
+				}, 3000);
+			},
 		});
 	}
 
