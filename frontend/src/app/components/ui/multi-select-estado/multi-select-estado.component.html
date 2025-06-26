@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill" class="w-56">
+  <mat-label>Situações</mat-label>
+  <mat-select [(ngModel)]="selecionados" multiple (selectionChange)="onSelectionChange()">
+    <mat-option *ngFor="let estado of estados" [value]="estado">
+      {{ estado }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

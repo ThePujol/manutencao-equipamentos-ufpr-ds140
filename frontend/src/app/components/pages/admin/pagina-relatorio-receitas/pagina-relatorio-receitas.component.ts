@@ -7,32 +7,37 @@ import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 import { ReceitaPorDia, ReportService } from '../../../../services/report.service';
+import { Situacao } from '../../../../shared/models/solicitacao.model';
+import { MultiSelectEstadoComponent } from '../../../ui/multi-select-estado/multi-select-estado.component';
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
 
 @Component({
 	selector: 'app-pagina-relatorio-receitas',
 	standalone: true,
-	imports: [CommonModule, FormsModule, RouterOutlet, SidebarFuncionarioComponent, MensagemComponent],
+        imports: [CommonModule, FormsModule, RouterOutlet, SidebarFuncionarioComponent, MensagemComponent, MultiSelectEstadoComponent],
 	templateUrl: './pagina-relatorio-receitas.component.html',
 	styleUrls: ['./pagina-relatorio-receitas.component.css'],
 })
 export class PaginaRelatorioReceitasComponent {
-	dataInicio?: string;
-	dataFim?: string;
-	resultados: ReceitaPorDia[] = [];
+        dataInicio?: string;
+        dataFim?: string;
+        estadosSelecionados: Situacao[] = [Situacao.FINALIZADA];
+        resultados: ReceitaPorDia[] = [];
 	mensagem = '';
 	showMessage = false;
 
 	constructor(private reportService: ReportService) {}
 
-	buscar(): void {
-		const inicio = this.dataInicio ? new Date(this.dataInicio) : undefined;
-		const fim = this.dataFim ? new Date(this.dataFim) : undefined;
-		this.reportService.getReceitaPorDia(inicio, fim).subscribe((resultados) => {
-			this.resultados = resultados;
-		});
-	}
+        buscar(): void {
+                const inicio = this.dataInicio ? new Date(this.dataInicio) : undefined;
+                const fim = this.dataFim ? new Date(this.dataFim) : undefined;
+                this.reportService
+                        .getReceitaPorDia(inicio, fim, this.estadosSelecionados)
+                        .subscribe((resultados) => {
+                                this.resultados = resultados;
+                        });
+        }
 
 	gerarPDF(): void {
 		if (!this.resultados.length) {
