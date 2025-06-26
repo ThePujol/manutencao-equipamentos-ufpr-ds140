@@ -72,10 +72,22 @@
 								<div class="bg-blue-50 border-l-4 border-blue-400 p-3 rounded-r">
 									<div class="text-sm font-semibold text-blue-700 mb-1">Redirecionamento</div>
 									<div class="text-sm text-blue-600">
-										<span class="font-medium">{{ h.funcionarioResponsavel.nome }}</span>
+										De: <span class="font-medium">{{ h.funcionarioResponsavel.nome }}</span>
 										<span class="mx-2">→</span>
-										<span class="font-medium">{{ h.funcionarioRedirecionado.nome }}</span>
+										Para: <span class="font-medium">{{ h.funcionarioRedirecionado.nome }}</span>
 									</div>
+								</div>
+							} @else if (h.funcionarioRedirecionado && h.situacao === 'REDIRECIONADA') {
+								<div class="bg-blue-50 border-l-4 border-blue-400 p-3 rounded-r">
+									<div class="text-sm font-semibold text-blue-700 mb-1">Redirecionamento</div>
+									<div class="text-sm text-blue-600">
+										Redirecionado para: <span class="font-medium">{{ h.funcionarioRedirecionado.nome }}</span>
+									</div>
+								</div>
+							} @else if (h.situacao === 'REDIRECIONADA') {
+								<div class="bg-blue-50 border-l-4 border-blue-400 p-3 rounded-r">
+									<div class="text-sm font-semibold text-blue-700 mb-1">Redirecionamento</div>
+									<div class="text-sm text-blue-600">Solicitação foi redirecionada</div>
 								</div>
 							}
 						</div>

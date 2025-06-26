@@ -122,8 +122,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 			this.formOrcamento.reset();
 			this.toggleModal();
 
-			// recarrega pagina para atualizar lista
-			window.location.reload();
+			this.listarSolicitacoesAbertas();
 		});
 	}
 
@@ -167,7 +166,6 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 		const min = this.dataMin ? new Date(this.dataMin) : undefined;
 		const max = this.dataMax ? new Date(this.dataMax) : undefined;
 
-		// Corrige as datas para ajustar o fuso horario
 		const minCorrigido = min ? new Date(min.getTime() + min.getTimezoneOffset() * 60000) : undefined;
 		const maxCorrigido = max ? new Date(max.getTime() + max.getTimezoneOffset() * 60000) : undefined;
 
