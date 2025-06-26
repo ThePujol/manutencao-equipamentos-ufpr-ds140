@@ -77,6 +77,7 @@ export class PaginaFuncionariosComponent implements OnInit {
 		if (funcionario) {
 			this.funcionarioSelecionado = funcionario;
 			this.formfuncionario.patchValue(funcionario);
+			this.formfuncionario.get('senha')?.patchValue(null);
 		} else {
 			this.funcionarioSelecionado = undefined;
 			this.formfuncionario.reset();
