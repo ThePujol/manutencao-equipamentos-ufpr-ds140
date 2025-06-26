@@ -1,5 +1,5 @@
 <div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
-	<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 items-center">
+	<div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 items-center">
 		<div class="flex justify-between items-center mb-8">
 			<h2 class="text-xl font-semibold">Histórico da Solicitação</h2>
 			<button
@@ -11,15 +11,40 @@
 		</div>
 
 		@if (historico.length > 0) {
-			<ul class="flex flex-col gap-1 overflow-scroll max-h-[560px]">
+			<ul class="flex flex-col gap-3 overflow-scroll max-h-[560px]">
 				@for (h of historico; track $index) {
-					<li class="mb-3 rounded-md border border-black/20 p-3">
-						<div class="flex justify-between items-center">
-							<span class="font-bold text-primary">{{ h.situacao }}</span>
+					<li class="mb-3 rounded-md border border-black/20 p-4">
+						<div class="flex justify-between items-center mb-2">
+							<span class="font-bold text-primary text-lg">{{ h.situacao }}</span>
 							<span class="text-xs text-black/60">{{ h.dataHora | date: 'dd/MM/yyyy HH:mm' }}</span>
 						</div>
+
 						@if (h.observacao) {
-							<div class="text-black/60 text-sm mt-1">{{ h.observacao }}</div>
+							<div class="text-black/70 text-sm mb-2 bg-gray-50 p-2 rounded">
+								<div class="font-bold mb-1">Observações:</div>
+								<div>{{ h.observacao }}</div>
+							</div>
+						}
+
+						@if (h.orientacoes) {
+							<div class="text-black/70 text-sm mb-2 bg-green-50 p-2 rounded">
+								<div class="font-bold mb-1">Orientações para Cliente:</div>
+								<div>{{ h.orientacoes }}</div>
+							</div>
+						}
+
+						@if (h.orcamento && h.orcamento > 0) {
+							<div class="text-black/70 text-sm mb-2 bg-purple-50 p-2 rounded">
+								<div class="font-bold mb-1">Orçamento:</div>
+								<div>R$ {{ h.orcamento | number: '1.2-2' }}</div>
+							</div>
+						}
+
+						@if (h.funcionarioResponsavel && !h.funcionarioRedirecionado) {
+							<div class="text-black/60 text-xs mt-2">
+								<div class="font-bold mb-1">Responsável:</div>
+								<div>{{ h.funcionarioResponsavel.nome }}</div>
+							</div>
 						}
 					</li>
 				}

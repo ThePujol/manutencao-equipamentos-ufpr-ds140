@@ -48,12 +48,58 @@ public class SolicitacaoService {
             SolicitacaoStatusHistorico historico = new SolicitacaoStatusHistorico();
             historico.setSolicitacao(solicitacao);
             historico.setSituacao(solicitacao.getSituacao());
-            // Usa o horário do sistema local
             historico.setDataHora(LocalDateTime.now(ZoneId.systemDefault()));
-            historico.setObservacao("Alteração de status");
+
+            String observacao = criarObservacaoPersonalizada(solicitacao, antiga);
+            historico.setObservacao(observacao);
+
             historicoService.registrarHistorico(historico);
         }
         solicitacaoDao.update(solicitacao);
+    }
+
+    private String criarObservacaoPersonalizada(Solicitacao nova, Solicitacao antiga) {
+        switch (nova.getSituacao()) {
+            case REJEITADA:
+                if (nova.getMotivoRejeicao() != null && !nova.getMotivoRejeicao().isEmpty()) {
+                    return "Solicitação rejeitada. Motivo: " + nova.getMotivoRejeicao();
+                }
+                return "Solicitação rejeitada";
+
+            case REDIRECIONADA:
+                String observacao = "Solicitação redirecionada";
+                if (antiga.getFuncionario() != null && nova.getFuncionario() != null) {
+                    observacao += " de " + antiga.getFuncionario().getNome() + " para "
+                            + nova.getFuncionario().getNome();
+                } else if (nova.getFuncionario() != null) {
+                    observacao += " para " + nova.getFuncionario().getNome();
+                }
+                return observacao;
+
+            case ORÇADA:
+                if (nova.getOrcamento() != null) {
+                    return "Orçamento criado no valor de R$ " + String.format("%.2f", nova.getOrcamento());
+                }
+                return "Orçamento criado";
+
+            case ARRUMADA:
+                if (nova.getDescricaoManutencao() != null && !nova.getDescricaoManutencao().isEmpty()) {
+                    return "Manutenção concluída. Solução: " + nova.getDescricaoManutencao();
+                }
+                return "Manutenção concluída";
+
+            case APROVADA:
+                return "Orçamento aprovado pelo cliente";
+
+            case PAGA:
+                return "Pagamento realizado";
+
+            case FINALIZADA:
+                return "Solicitação finalizada";
+
+            default:
+                return "Status alterado para " + nova.getSituacao().toString().toLowerCase();
+        }
     }
 
     public void delete(Long id) {

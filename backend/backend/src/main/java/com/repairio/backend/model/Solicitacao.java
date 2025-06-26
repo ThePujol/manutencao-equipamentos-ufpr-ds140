@@ -37,7 +37,7 @@ public class Solicitacao {
     private String orientacoes;
     private Date dataFinalizacao;
     private String motivoRejeicao;
-    private Date dataSolicitacaoAbertura; // Não persistente, apenas para exibição
+    private Date dataSolicitacaoAbertura;
 
     public Date getDataSolicitacaoAbertura() {
         return dataSolicitacaoAbertura;
