@@ -2,7 +2,10 @@
 	<div class="flex flex-col gap-8">
 		<div class="pointer-events-none select-none">
 			<p class="font-bold text-primary flex items-center gap-2">
-				<img src="logo.png" alt="Logo" width="30px" height="30px" /> repair.io
+				<a routerLink="/home" class="pointer-events-auto cursor-pointer hover:opacity-80 transition-opacity">
+					<img src="logo.png" alt="Logo" width="30px" height="30px" />
+				</a>
+				repair.io
 			</p>
 			<h1 class="font-semibold text-4xl">Cadastre-se.</h1>
 			<p class="font-light text-black/50">Crie uma conta na melhor plataforma de manutenções.</p>
@@ -151,14 +154,13 @@
 
 					<p class="text-black/50 text-xs">
 						Ao criar uma conta, você concorda com os
-						<a routerLink="/termos-servico" target="blank" class="text-primary hover:underline cursor-pointer"
+						<a routerLink="/termos-servico" target="blank" class="text-indigo-600 hover:underline cursor-pointer"
 							>Termos de Serviço.</a
 						>
 						Você também receberá novidades pelo seu email.
 					</p>
 				</div>
 			</form>
-
 			<p class="text-sm text-center mt-10">
 				Já possui uma conta?
 				<a routerLink="/login" class="text-indigo-600 hover:underline">Faça o login</a>
