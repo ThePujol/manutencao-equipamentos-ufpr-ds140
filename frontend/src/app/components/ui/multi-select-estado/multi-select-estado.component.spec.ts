@@ -24,7 +24,9 @@ describe('MultiSelectEstadoComponent', () => {
     const estados = [Situacao.ABERTA, Situacao.PAGA];
     spyOn(component.estadosChange, 'emit');
     component.selecionados = estados;
-    component.onSelectionChange();
+    fixture.detectChanges();
+    const select: HTMLSelectElement = fixture.nativeElement.querySelector('select');
+    select.dispatchEvent(new Event('change'));
     expect(component.estadosChange.emit).toHaveBeenCalledWith(estados);
   });
 });
