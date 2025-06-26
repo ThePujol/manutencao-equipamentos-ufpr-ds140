@@ -49,7 +49,6 @@ export class DropdownComponent {
 
 	toggleDropdown(event?: MouseEvent) {
 		if (event) event.stopPropagation();
-		console.log('A');
 		this.dropdown = !this.dropdown;
 	}
 }

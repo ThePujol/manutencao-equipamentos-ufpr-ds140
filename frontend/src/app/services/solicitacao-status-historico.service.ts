@@ -15,7 +15,7 @@ export interface SolicitacaoStatusHistorico {
 		id: number;
 		nome: string;
 	};
-	// Additional fields from Solicitacao for specific situations
+
 	motivoRejeicao?: string;
 	orientacoes?: string;
 	descricaoManutencao?: string;

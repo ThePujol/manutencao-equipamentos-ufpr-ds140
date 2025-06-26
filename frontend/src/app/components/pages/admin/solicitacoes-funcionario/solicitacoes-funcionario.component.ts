@@ -254,7 +254,6 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 	visualizarHistorico(solicitacao: Solicitacao) {
 		this.historicoService.listarHistorico(solicitacao.id).subscribe((h) => {
-			console.log('s');
 			this.historico = h;
 			this.mostrarModalHistorico = true;
 		});
