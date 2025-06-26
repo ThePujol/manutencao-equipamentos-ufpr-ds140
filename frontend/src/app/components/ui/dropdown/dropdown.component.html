@@ -24,7 +24,7 @@
 					<button
 						class="cursor-pointer disabled:cursor-not-allowed"
 						(click)="redirecionarManutencao(solicitacao)"
-						[disabled]="solicitacao.situacao === situacoes.finalizada"
+						[disabled]="solicitacao.situacao === situacoes.finalizada || solicitacao.situacao === situacoes.paga || solicitacao.situacao === situacoes.arrumada"
 					>
 						Redirecionar solicitação
 					</button>
