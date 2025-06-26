@@ -1,16 +1,41 @@
-<label
-        for="estados"
-        class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30"
-        >Situações</label>
-<select
-        id="estados"
-        name="estados"
-        multiple
-        class="focus:outline-primary focus:outline-2 outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
-        [(ngModel)]="selecionados"
-        (change)="onSelectionChange()"
->
-    <option *ngFor="let estado of estados" [ngValue]="estado">
-      {{ estado }}
-    </option>
-</select>
+<!-- Root sem label estático -->
+<div class="relative w-full">
+	<!-- Bloco que imita o input -->
+	<div
+		tabindex="0"
+		(click)="toggleDropdown()"
+		(blur)="closeDropdown()"
+		class="flex items-center justify-between px-3 py-2 border border-gray-300 rounded-md focus:outline-primary focus:outline-2 bg-white cursor-pointer"
+	>
+		<span>{{ selecionadosLabel }}</span>
+		<svg class="w-4 h-4 ml-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+		</svg>
+	</div>
+
+	<!-- dropdown de checkboxes -->
+	<div
+		*ngIf="showDropdown"
+		class="absolute top-full left-0 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-auto"
+	>
+		<label class="flex items-center px-3 py-2">
+			<input type="checkbox" (change)="selectNone()" [checked]="selecionados.length === 0" class="mr-2" />
+			<span class="text-sm text-gray-900">Nenhum</span>
+		</label>
+		<label class="flex items-center px-3 py-2">
+			<input type="checkbox" (change)="selectAll()" [checked]="selecionados.length === estados.length" class="mr-2" />
+			<span class="text-sm text-gray-900">Todas</span>
+		</label>
+
+		<label *ngFor="let estado of estados" class="flex items-center px-3 py-2 hover:bg-gray-50">
+			<input
+				type="checkbox"
+				[value]="estado"
+				(change)="onCheckboxChange($event)"
+				[checked]="isSelected(estado)"
+				class="mr-2"
+			/>
+			<span class="text-sm text-gray-900">{{ estado | titlecase }}</span>
+		</label>
+	</div>
+</div>
