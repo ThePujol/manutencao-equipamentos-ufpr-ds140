@@ -2,7 +2,8 @@
 
 @theme {
 	--color-primary: #4931a9;
-	--color-orange: #F28C28;
+	--color-orange: #f28c28;
+	--color-purple: #ad11ad;
 }
 
 html,
@@ -13,15 +14,6 @@ body {
 
 body.no-scroll {
 	overflow: hidden;
-}
-
-/* Cursor pointer global para botões */
-button,
-.cursor-pointer,
-[type='button'],
-[type='submit'],
-a[routerLink] {
-	cursor: pointer;
 }
 
 /* Garantir que imagens tenham fundo transparente quando necessário */

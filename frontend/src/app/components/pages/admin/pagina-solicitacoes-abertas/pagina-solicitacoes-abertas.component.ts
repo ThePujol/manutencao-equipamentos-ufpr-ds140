@@ -121,11 +121,10 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe(() => {
 			this.formOrcamento.reset();
 			this.toggleModal();
-		});
 
-		// Atualiza lista de solicitacoes
-		this.listarSolicitacoesAbertas();
-		window.location.reload();
+			// recarrega pagina para atualizar lista
+			window.location.reload();
+		});
 	}
 
 	ngOnInit() {

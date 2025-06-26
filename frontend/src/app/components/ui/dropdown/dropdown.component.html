@@ -24,9 +24,19 @@
 					<button
 						class="cursor-pointer disabled:cursor-not-allowed"
 						(click)="redirecionarManutencao(solicitacao)"
-						[disabled]="solicitacao.situacao === situacoes.finalizada || solicitacao.situacao === situacoes.paga || solicitacao.situacao === situacoes.arrumada"
+						[disabled]="
+							solicitacao.situacao === situacoes.finalizada ||
+							solicitacao.situacao === situacoes.paga ||
+							solicitacao.situacao === situacoes.arrumada
+						"
 					>
 						Redirecionar solicitação
+					</button>
+				</li>
+
+				<li class="hover:bg-gray-950/10 px-5 py-1">
+					<button class="cursor-pointer disabled:cursor-not-allowed" (click)="visualizarHistorico(solicitacao)">
+						Visualizar histórico
 					</button>
 				</li>
 

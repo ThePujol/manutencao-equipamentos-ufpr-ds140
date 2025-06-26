@@ -17,6 +17,7 @@ export class DropdownComponent implements OnChanges {
 	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
+	@Output() historicoClicked = new EventEmitter<Solicitacao>();
 	dropdown = false;
 
 	situacoes = {
@@ -53,6 +54,7 @@ export class DropdownComponent implements OnChanges {
 	}
 
 	efetuarManutencao(solicitacao: Solicitacao) {
+		console.log('a');
 		this.efetuarManutencaoClicked.emit(solicitacao);
 	}
 
@@ -62,6 +64,10 @@ export class DropdownComponent implements OnChanges {
 
 	finalizarManutencao(solicitacao: Solicitacao) {
 		this.finalizarClicked.emit(solicitacao);
+	}
+
+	visualizarHistorico(solicitacao: Solicitacao) {
+		this.historicoClicked.emit(solicitacao);
 	}
 
 	toggleDropdown(event?: MouseEvent) {

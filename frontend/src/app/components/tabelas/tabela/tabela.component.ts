@@ -47,6 +47,7 @@ export class TabelaComponent {
 	@Output() orcamentoClicked = new EventEmitter<Solicitacao>();
 	@Output() editarClicked = new EventEmitter<any>();
 	@Output() excluirClicked = new EventEmitter<any>();
+	@Output() historicoClicked = new EventEmitter<Solicitacao>();
 
 	situacoes = {
 		aberta: Situacao.ABERTA,
@@ -109,5 +110,9 @@ export class TabelaComponent {
 	fecharModal() {
 		this.modalExcluir = false;
 		this.itemSelecionado = null;
+	}
+
+	exibirHistorico(solicitacao: Solicitacao) {
+		this.historicoClicked.emit(solicitacao);
 	}
 }

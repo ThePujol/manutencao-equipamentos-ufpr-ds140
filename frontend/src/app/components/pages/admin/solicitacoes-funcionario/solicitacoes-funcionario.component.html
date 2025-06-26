@@ -48,6 +48,7 @@
 					(efetuarManutencaoClicked)="toggleModalManutencao($event)"
 					(redirecionarManutencaoClicked)="toggleModalRedirecionar($event)"
 					(finalizarClicked)="finalizarSolicitacao($event)"
+					(historicoClicked)="visualizarHistorico($event)"
 				/>
 			</div>
 			<!-- Controles de Paginação -->
@@ -151,6 +152,11 @@
 					</form>
 				</div>
 			</div>
+		}
+
+		<!-- Modal histórico -->
+		@if (mostrarModalHistorico) {
+			<app-modal-historico [historico]="historico" (fecharModal)="fecharHistorico()" />
 		}
 
 		<!-- Modal Redirecionar Manutenção -->

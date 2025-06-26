@@ -23,6 +23,7 @@ import { InputPesquisarComponent } from '../../../ui/input-pesquisar/input-pesqu
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SelectEstadoComponent } from '../../../ui/select-estado/select-estado.component';
 import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cliente.component';
+import { ModalHistoricoComponent } from '../../../ui/modal-historico/modal-historico.component';
 
 @Component({
 	selector: 'app-pagina-solicitacoes',
@@ -35,8 +36,8 @@ import { SidebarClienteComponent } from '../../../ui/sidebar-cliente/sidebar-cli
 		SelectEstadoComponent,
 		FormsModule,
 		CommonModule,
-		DatePipe,
 		NgIcon,
+		ModalHistoricoComponent,
 	],
 	viewProviders: [provideIcons({ matChevronLeftOutline, matChevronRightOutline })],
 	templateUrl: './pagina-solicitacoes.component.html',

@@ -1,3 +1,7 @@
+import {
+	SolicitacaoHistoricoService,
+	SolicitacaoStatusHistorico,
+} from './../../../../services/solicitacao-status-historico.service';
 import { map } from 'rxjs';
 
 import { CommonModule, DatePipe } from '@angular/common';
@@ -30,6 +34,7 @@ import { InputTextComponent } from '../../../ui/input-text/input-text.component'
 import { MensagemComponent } from '../../../ui/mensagem/mensagem.component';
 import { SelectEstadoComponent } from '../../../ui/select-estado/select-estado.component';
 import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sidebar-funcionario.component';
+import { ModalHistoricoComponent } from '../../../ui/modal-historico/modal-historico.component';
 
 @Component({
 	selector: 'app-solicitacoes-funcionario',
@@ -48,6 +53,7 @@ import { SidebarFuncionarioComponent } from '../../../ui/sidebar-funcionario/sid
 		FormsModule,
 		CommonModule,
 		NgIcon,
+		ModalHistoricoComponent,
 	],
 	viewProviders: [provideIcons({ matChevronLeftOutline, matChevronRightOutline })],
 	templateUrl: './solicitacoes-funcionario.component.html',
@@ -62,7 +68,9 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 	modalEfetuarManutencao = false;
 	modalRedirecionarManutencao = false;
 	showMessage = false;
+	mostrarModalHistorico = false;
 	mensagem = '';
+	historico: SolicitacaoStatusHistorico[] = [];
 
 	estado = 'todos';
 	query = '';
@@ -108,7 +116,8 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		private solicitacaoService: SolicitacaoService,
 		private authService: AuthService,
 		private funcionarioService: FuncionarioService,
-		private fBuilder: FormBuilder
+		private fBuilder: FormBuilder,
+		private historicoService: SolicitacaoHistoricoService
 	) {
 		this.formManutencao = this.fBuilder.group({
 			descricaoManutencao: ['', Validators.required],
@@ -241,6 +250,19 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => {
 			console.log(res);
 		});
+	}
+
+	visualizarHistorico(solicitacao: Solicitacao) {
+		this.historicoService.listarHistorico(solicitacao.id).subscribe((h) => {
+			console.log('s');
+			this.historico = h;
+			this.mostrarModalHistorico = true;
+		});
+	}
+
+	fecharHistorico() {
+		this.mostrarModalHistorico = false;
+		this.historico = [];
 	}
 
 	pesquisarSolicitacao(query: string) {
