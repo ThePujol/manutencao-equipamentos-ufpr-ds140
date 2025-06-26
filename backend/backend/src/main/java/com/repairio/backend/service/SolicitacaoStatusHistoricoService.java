@@ -1,10 +1,13 @@
 package com.repairio.backend.service;
 
 import com.repairio.backend.dao.SolicitacaoStatusHistoricoDao;
+import com.repairio.backend.dto.SolicitacaoStatusHistoricoDTO;
+import com.repairio.backend.model.Solicitacao;
 import com.repairio.backend.model.SolicitacaoStatusHistorico;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SolicitacaoStatusHistoricoService {
@@ -21,5 +24,92 @@ public class SolicitacaoStatusHistoricoService {
 
     public List<SolicitacaoStatusHistorico> listarPorSolicitacao(Long solicitacaoId) {
         return historicoDao.findBySolicitacao(solicitacaoId);
+    }
+
+    public List<SolicitacaoStatusHistoricoDTO> listarHistoricoParaFrontend(Long solicitacaoId) {
+        List<SolicitacaoStatusHistorico> historicos = historicoDao.findBySolicitacao(solicitacaoId);
+
+        return historicos.stream()
+                .map(this::converterParaDTO)
+                .collect(Collectors.toList());
+    }
+
+    private SolicitacaoStatusHistoricoDTO converterParaDTO(SolicitacaoStatusHistorico historico) {
+        SolicitacaoStatusHistoricoDTO dto = new SolicitacaoStatusHistoricoDTO();
+        Solicitacao solicitacao = historico.getSolicitacao();
+
+        dto.setId(historico.getId());
+        dto.setSituacao(historico.getSituacao());
+        dto.setDataHora(historico.getDataHora());
+
+        if (solicitacao != null) {
+            switch (historico.getSituacao()) {
+                case ORÇADA:
+                    dto.setOrcamento(solicitacao.getOrcamento());
+                    dto.setObservacao(historico.getObservacao());
+                    break;
+
+                case REJEITADA:
+                    dto.setMotivoRejeicao(solicitacao.getMotivoRejeicao());
+                    // Para REJEITADA, não incluir o motivo na observação
+                    if (historico.getObservacao() != null &&
+                            !historico.getObservacao().contains("Motivo: ")) {
+                        dto.setObservacao(historico.getObservacao());
+                    }
+                    break;
+
+                case FINALIZADA:
+                    dto.setOrientacoes(solicitacao.getOrientacoes());
+                    dto.setDescricaoManutencao(solicitacao.getDescricaoManutencao());
+                    dto.setObservacao(historico.getObservacao());
+                    break;
+
+                case REDIRECIONADA:
+                    // Para redirecionamento, extrair informações da observação
+                    extrairInformacoesRedirecionamento(dto, historico, solicitacao);
+                    break;
+
+                default:
+                    dto.setObservacao(historico.getObservacao());
+                    break;
+            }
+        } else {
+            dto.setObservacao(historico.getObservacao());
+        }
+
+        return dto;
+    }
+
+    private void extrairInformacoesRedirecionamento(SolicitacaoStatusHistoricoDTO dto,
+            SolicitacaoStatusHistorico historico,
+            Solicitacao solicitacao) {
+        String observacao = historico.getObservacao();
+
+        if (observacao != null && observacao.contains(" de ") && observacao.contains(" para ")) {
+            // Formato: "Solicitação redirecionada de [Nome Antigo] para [Nome Novo]"
+            int deIndex = observacao.indexOf(" de ");
+            int paraIndex = observacao.indexOf(" para ");
+
+            if (deIndex > 0 && paraIndex > deIndex) {
+                String nomeAntigo = observacao.substring(deIndex + 4, paraIndex).trim();
+                String nomeNovo = observacao.substring(paraIndex + 6).trim();
+
+                // Criar funcionários temporários com os nomes extraídos
+                com.repairio.backend.model.Funcionario funcionarioAntigo = new com.repairio.backend.model.Funcionario();
+                funcionarioAntigo.setNome(nomeAntigo);
+
+                com.repairio.backend.model.Funcionario funcionarioNovo = new com.repairio.backend.model.Funcionario();
+                funcionarioNovo.setNome(nomeNovo);
+
+                dto.setFuncionarioResponsavel(funcionarioAntigo);
+                dto.setFuncionarioRedirecionado(funcionarioNovo);
+            }
+        } else {
+            // Fallback: usar o funcionário atual da solicitação como destino
+            dto.setFuncionarioRedirecionado(solicitacao.getFuncionario());
+        }
+
+        // Não incluir a observação de redirecionamento, pois já temos os campos
+        // específicos
     }
 }

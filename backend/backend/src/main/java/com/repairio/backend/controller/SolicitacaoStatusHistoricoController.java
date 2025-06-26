@@ -1,6 +1,6 @@
 package com.repairio.backend.controller;
 
-import com.repairio.backend.model.SolicitacaoStatusHistorico;
+import com.repairio.backend.dto.SolicitacaoStatusHistoricoDTO;
 import com.repairio.backend.service.SolicitacaoStatusHistoricoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +18,12 @@ public class SolicitacaoStatusHistoricoController {
         this.historicoService = historicoService;
     }
 
+    /**
+     * Retorna histórico com dados enriquecidos para o frontend
+     */
     @GetMapping
-    public ResponseEntity<List<SolicitacaoStatusHistorico>> listarHistorico(@PathVariable Long solicitacaoId) {
-        List<SolicitacaoStatusHistorico> historico = historicoService.listarPorSolicitacao(solicitacaoId);
+    public ResponseEntity<List<SolicitacaoStatusHistoricoDTO>> listarHistorico(@PathVariable Long solicitacaoId) {
+        List<SolicitacaoStatusHistoricoDTO> historico = historicoService.listarHistoricoParaFrontend(solicitacaoId);
         return ResponseEntity.ok(historico);
     }
 }

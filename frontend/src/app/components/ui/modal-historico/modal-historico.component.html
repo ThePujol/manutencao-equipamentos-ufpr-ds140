@@ -11,46 +11,83 @@
 		</div>
 
 		@if (historico.length > 0) {
-			<ul class="flex flex-col gap-3 overflow-scroll max-h-[560px]">
+			<div class="space-y-4 overflow-y-auto max-h-[560px] pr-2">
 				@for (h of historico; track $index) {
-					<li class="mb-3 rounded-md border border-black/20 p-4">
-						<div class="flex justify-between items-center mb-2">
-							<span class="font-bold text-primary text-lg">{{ h.situacao }}</span>
-							<span class="text-xs text-black/60">{{ h.dataHora | date: 'dd/MM/yyyy HH:mm' }}</span>
+					<div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5">
+						<!-- Cabeçalho do Status -->
+						<div class="flex justify-between items-start mb-4 pb-3 border-b border-gray-100">
+							<div class="flex items-center gap-3">
+								<div class="px-3 py-1 rounded-full text-sm font-semibold bg-primary text-white">
+									{{ h.situacao }}
+								</div>
+								@if (h.funcionarioResponsavel && !h.funcionarioRedirecionado) {
+									<span class="text-sm text-gray-600">
+										por <span class="font-medium">{{ h.funcionarioResponsavel.nome }}</span>
+									</span>
+								}
+							</div>
+							<span class="text-sm text-gray-500 font-mono">
+								{{ h.dataHora | date: 'dd/MM/yyyy HH:mm' }}
+							</span>
 						</div>
 
-						@if (h.observacao) {
-							<div class="text-black/70 text-sm mb-2 bg-gray-50 p-2 rounded">
-								<div class="font-bold mb-1">Observações:</div>
-								<div>{{ h.observacao }}</div>
-							</div>
-						}
+						<!-- Conteúdo Principal -->
+						<div class="space-y-3">
+							@if (h.observacao) {
+								<div class="bg-gray-50 border-l-4 border-gray-400 p-3 rounded-r">
+									<div class="text-sm font-semibold text-gray-700 mb-1">Observações</div>
+									<div class="text-sm text-gray-600 leading-relaxed">{{ h.observacao }}</div>
+								</div>
+							}
 
-						@if (h.orientacoes) {
-							<div class="text-black/70 text-sm mb-2 bg-green-50 p-2 rounded">
-								<div class="font-bold mb-1">Orientações para Cliente:</div>
-								<div>{{ h.orientacoes }}</div>
-							</div>
-						}
+							@if (h.orientacoes) {
+								<div class="bg-green-50 border-l-4 border-green-400 p-3 rounded-r">
+									<div class="text-sm font-semibold text-green-700 mb-1">Orientações para Cliente</div>
+									<div class="text-sm text-green-600 leading-relaxed">{{ h.orientacoes }}</div>
+								</div>
+							}
 
-						@if (h.orcamento && h.orcamento > 0) {
-							<div class="text-black/70 text-sm mb-2 bg-purple-50 p-2 rounded">
-								<div class="font-bold mb-1">Orçamento:</div>
-								<div>R$ {{ h.orcamento | number: '1.2-2' }}</div>
-							</div>
-						}
+							@if (h.motivoRejeicao) {
+								<div class="bg-red-50 border-l-4 border-red-400 p-3 rounded-r">
+									<div class="text-sm font-semibold text-red-700 mb-1">Motivo da Rejeição</div>
+									<div class="text-sm text-red-600 leading-relaxed">{{ h.motivoRejeicao }}</div>
+								</div>
+							}
 
-						@if (h.funcionarioResponsavel && !h.funcionarioRedirecionado) {
-							<div class="text-black/60 text-xs mt-2">
-								<div class="font-bold mb-1">Responsável:</div>
-								<div>{{ h.funcionarioResponsavel.nome }}</div>
-							</div>
-						}
-					</li>
+							@if (h.descricaoManutencao) {
+								<div class="bg-blue-50 border-l-4 border-blue-400 p-3 rounded-r">
+									<div class="text-sm font-semibold text-blue-700 mb-1">Descrição da Manutenção</div>
+									<div class="text-sm text-blue-600 leading-relaxed">{{ h.descricaoManutencao }}</div>
+								</div>
+							}
+
+							@if (h.orcamento && h.orcamento > 0) {
+								<div class="bg-purple-50 border-l-4 border-purple-400 p-3 rounded-r">
+									<div class="text-sm font-semibold text-purple-700 mb-1">Orçamento</div>
+									<div class="text-lg font-bold text-purple-600">R$ {{ h.orcamento | number: '1.2-2' }}</div>
+								</div>
+							}
+
+							@if (h.funcionarioResponsavel && h.funcionarioRedirecionado) {
+								<div class="bg-blue-50 border-l-4 border-blue-400 p-3 rounded-r">
+									<div class="text-sm font-semibold text-blue-700 mb-1">Redirecionamento</div>
+									<div class="text-sm text-blue-600">
+										<span class="font-medium">{{ h.funcionarioResponsavel.nome }}</span>
+										<span class="mx-2">→</span>
+										<span class="font-medium">{{ h.funcionarioRedirecionado.nome }}</span>
+									</div>
+								</div>
+							}
+						</div>
+					</div>
 				}
-			</ul>
+			</div>
 		} @else {
-			<p class="text-gray-500">Nenhum histórico encontrado.</p>
+			<div class="text-center py-12">
+				<div class="text-gray-400 text-4xl mb-4">📋</div>
+				<p class="text-gray-500 text-lg">Nenhum histórico encontrado</p>
+				<p class="text-gray-400 text-sm mt-2">Esta solicitação ainda não possui registros de histórico.</p>
+			</div>
 		}
 	</div>
 </div>
