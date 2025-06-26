@@ -17,11 +17,12 @@ public class CategoriaDao {
     }
 
     public List<Categoria> findAll() {
-        return jdbcTemplate.query("SELECT * FROM categoria",
+        return jdbcTemplate.query("SELECT * FROM categoria WHERE ativo = true",
                 (rs, rowNum) -> {
                     Categoria c = new Categoria();
                     c.setId(rs.getLong("id"));
                     c.setDescricao(rs.getString("descricao"));
+                    c.setAtivo(rs.getBoolean("ativo"));
                     return c;
                 });
     }
@@ -32,21 +33,22 @@ public class CategoriaDao {
                     Categoria c = new Categoria();
                     c.setId(rs.getLong("id"));
                     c.setDescricao(rs.getString("descricao"));
+                    c.setAtivo(rs.getBoolean("ativo"));
                     return c;
                 }, id);
     }
 
     public void save(Categoria categoria) {
-        jdbcTemplate.update("INSERT INTO categoria (descricao) VALUES (?)",
-                categoria.getDescricao());
+        jdbcTemplate.update("INSERT INTO categoria (descricao, ativo) VALUES (?, ?)",
+                categoria.getDescricao(), categoria.getAtivo());
     }
 
     public void update(Categoria categoria) {
-        jdbcTemplate.update("UPDATE categoria SET descricao = ? WHERE id = ?",
-                categoria.getDescricao(), categoria.getId());
+        jdbcTemplate.update("UPDATE categoria SET descricao = ?, ativo = ? WHERE id = ?",
+                categoria.getDescricao(), categoria.getAtivo(), categoria.getId());
     }
 
     public void delete(Long id) {
-        jdbcTemplate.update("DELETE FROM categoria WHERE id = ?", id);
+        jdbcTemplate.update("UPDATE categoria SET ativo = false WHERE id = ?", id);
     }
 }

@@ -28,4 +28,6 @@ public class Funcionario {
 
     @NotNull(message = "Data de nascimento é obrigatória")
     private LocalDate dataNasc;
+
+    private Boolean ativo = true;
 }

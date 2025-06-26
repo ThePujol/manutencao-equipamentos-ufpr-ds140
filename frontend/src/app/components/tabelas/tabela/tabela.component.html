@@ -28,7 +28,7 @@
 						<td class="w-52 text-muted">
 							<ng-container
 								*ngIf="
-									item[columnName.fieldName];
+									item[columnName.fieldName] && item[columnName.fieldName];
 									instanceof: Date && !isNaN(item[columnName.fieldName].getTime());
 									else: semData
 								"
@@ -49,7 +49,7 @@
 				}
 
 				@if (tabelaFuncionario) {
-					<td>
+					<td class="flex w-52 gap-3 justify-end items-center">
 						<app-dropdown
 							[solicitacao]="item"
 							[dropdownAbertoId]="dropdownAbertoId"

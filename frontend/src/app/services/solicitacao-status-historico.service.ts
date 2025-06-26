@@ -7,6 +7,19 @@ export interface SolicitacaoStatusHistorico {
 	situacao: string;
 	dataHora: string;
 	observacao: string;
+	funcionarioResponsavel?: {
+		id: number;
+		nome: string;
+	};
+	funcionarioRedirecionado?: {
+		id: number;
+		nome: string;
+	};
+	// Additional fields from Solicitacao for specific situations
+	motivoRejeicao?: string;
+	orientacoes?: string;
+	descricaoManutencao?: string;
+	orcamento?: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -16,6 +29,9 @@ export class SolicitacaoHistoricoService {
 	constructor(private http: HttpClient) {}
 
 	listarHistorico(solicitacaoId: number): Observable<SolicitacaoStatusHistorico[]> {
-		return this.http.get<SolicitacaoStatusHistorico[]>(`${this.apiUrl}/${solicitacaoId}/historico`);
+		console.log('Serviço: Fazendo chamada para histórico da solicitação:', solicitacaoId);
+		const url = `${this.apiUrl}/${solicitacaoId}/historico`;
+		console.log('Serviço: URL da requisição:', url);
+		return this.http.get<SolicitacaoStatusHistorico[]>(url);
 	}
 }

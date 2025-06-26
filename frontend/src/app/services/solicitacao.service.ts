@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Solicitacao } from '../shared/models/solicitacao.model';
+import { SolicitacaoStatusHistorico } from './solicitacao-status-historico.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -41,5 +42,9 @@ export class SolicitacaoService {
 
 	removerSolicitacao(id: number): Observable<void> {
 		return this.http.delete<void>(`${this.apiUrl}/${id}`);
+	}
+
+	obterHistorico(id: number): Observable<SolicitacaoStatusHistorico[]> {
+		return this.http.get<SolicitacaoStatusHistorico[]>(`${this.apiUrl}/${id}/historico`);
 	}
 }
