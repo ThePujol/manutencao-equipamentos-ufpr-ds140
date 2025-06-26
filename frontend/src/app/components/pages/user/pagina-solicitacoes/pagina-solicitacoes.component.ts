@@ -157,7 +157,7 @@ export class PaginaSolicitacoesComponent implements OnInit {
 		this.showMessage = true;
 		this.mensagem = 'Serviço resgatado!';
 
-		solicitacao.situacao = Situacao.ORÇADA;
+		solicitacao.situacao = Situacao.APROVADA;
 		solicitacao.motivoRejeicao = undefined;
 		this.solicitacaoService.atualizarSolicitacao(solicitacao).subscribe((res) => console.log(res));
 

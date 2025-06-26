@@ -19,7 +19,7 @@ export class RejeitadaCardComponent {
 	) {}
 
 	resgatarServico() {
-		this.solicitacao.situacao = Situacao.ORÇADA;
+		this.solicitacao.situacao = Situacao.APROVADA;
 		this.solicitacao.motivoRejeicao = undefined;
 		this.orcamentoActions.resgatarServicoFn?.(this.solicitacao);
 	}
