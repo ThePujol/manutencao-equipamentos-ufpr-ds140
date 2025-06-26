@@ -1,8 +1,16 @@
-<mat-form-field appearance="fill" class="w-56">
-  <mat-label>Situações</mat-label>
-  <mat-select [(ngModel)]="selecionados" multiple (selectionChange)="onSelectionChange()">
-    <mat-option *ngFor="let estado of estados" [value]="estado">
+<label
+        for="estados"
+        class="px-2.5 py-[6px] rounded-md rounded-r-none text-sm text-gray-900/60 font-medium bg-gray-900/15 outline-1 outline-gray-900/30"
+        >Situações</label>
+<select
+        id="estados"
+        name="estados"
+        multiple
+        class="focus:outline-primary focus:outline-2 outline-1 outline-gray-900/15 px-2.5 py-[5px] text-sm rounded-md rounded-l-none w-fit"
+        [(ngModel)]="selecionados"
+        (change)="onSelectionChange()"
+>
+    <option *ngFor="let estado of estados" [ngValue]="estado">
       {{ estado }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+    </option>
+</select>
