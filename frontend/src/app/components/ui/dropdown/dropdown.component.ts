@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ElementRef, HostListener, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowDropDownOutline } from '@ng-icons/material-icons/outline';
 
@@ -10,7 +10,7 @@ import { Situacao, Solicitacao } from '../../../shared/models/solicitacao.model'
 	viewProviders: [provideIcons({ matArrowDropDownOutline })],
 	templateUrl: './dropdown.component.html',
 })
-export class DropdownComponent implements OnChanges {
+export class DropdownComponent {
 	@Input() solicitacao!: Solicitacao;
 	@Input() dropdownAbertoId: number | null = null;
 	@Output() dropdownAbertoIdChange = new EventEmitter<number | null>();
@@ -18,7 +18,7 @@ export class DropdownComponent implements OnChanges {
 	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
 	@Output() historicoClicked = new EventEmitter<Solicitacao>();
-	dropdown = false;
+	showDropdown = false;
 
 	situacoes = {
 		aberta: Situacao.ABERTA,
@@ -31,30 +31,20 @@ export class DropdownComponent implements OnChanges {
 		finalizada: Situacao.FINALIZADA,
 	};
 
-	constructor(private elementRef: ElementRef) {}
+	get dropdown(): boolean {
+		return this.dropdownAbertoId === this.solicitacao.id;
+	}
 
-	@HostListener('document:click', ['$event'])
-	onDocumentClick(event: MouseEvent) {
-		if (this.dropdown && !this.elementRef.nativeElement.contains(event.target)) {
-			this.fecharDropdown();
+	abrirDropdown(event: Event) {
+		event.stopPropagation();
+		if (this.dropdown) {
+			this.dropdownAbertoIdChange.emit(null);
+		} else {
+			this.dropdownAbertoIdChange.emit(this.solicitacao.id);
 		}
 	}
 
-	abrirDropdown(event?: MouseEvent) {
-		if (event) event.stopPropagation();
-		this.dropdownAbertoIdChange.emit(this.solicitacao.id);
-	}
-
-	fecharDropdown() {
-		this.dropdownAbertoIdChange.emit(null);
-	}
-
-	ngOnChanges() {
-		this.dropdown = this.dropdownAbertoId === this.solicitacao.id;
-	}
-
 	efetuarManutencao(solicitacao: Solicitacao) {
-		console.log('a');
 		this.efetuarManutencaoClicked.emit(solicitacao);
 	}
 
@@ -72,6 +62,6 @@ export class DropdownComponent implements OnChanges {
 
 	toggleDropdown(event?: MouseEvent) {
 		if (event) event.stopPropagation();
-		this.dropdown = !this.dropdown;
+		this.showDropdown = !this.dropdown;
 	}
 }

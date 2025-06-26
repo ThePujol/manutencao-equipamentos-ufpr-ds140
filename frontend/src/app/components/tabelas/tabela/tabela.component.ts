@@ -44,6 +44,7 @@ export class TabelaComponent {
 	@Output() efetuarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() redirecionarManutencaoClicked = new EventEmitter<Solicitacao>();
 	@Output() finalizarClicked = new EventEmitter<Solicitacao>();
+	@Output() verHistoricoClicked = new EventEmitter<Solicitacao>();
 	@Output() orcamentoClicked = new EventEmitter<Solicitacao>();
 	@Output() editarClicked = new EventEmitter<any>();
 	@Output() excluirClicked = new EventEmitter<any>();
@@ -75,6 +76,10 @@ export class TabelaComponent {
 
 	finalizarManutencao(solicitacao: Solicitacao) {
 		this.finalizarClicked.emit(solicitacao);
+	}
+
+	verHistorico(solicitacao: Solicitacao) {
+		this.verHistoricoClicked.emit(solicitacao);
 	}
 
 	emitirOrcamento(solicitacao: Solicitacao) {

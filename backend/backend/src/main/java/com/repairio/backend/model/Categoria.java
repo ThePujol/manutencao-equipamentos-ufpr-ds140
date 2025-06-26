@@ -13,4 +13,6 @@ public class Categoria {
     @NotBlank(message = "Descrição é obrigatória")
     @Size(max = 100, message = "Descrição deve ter no máximo 100 caracteres")
     private String descricao;
+
+    private Boolean ativo = true;
 }

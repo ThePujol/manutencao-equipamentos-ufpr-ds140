@@ -4,6 +4,7 @@ export class Funcionario {
 		public email: string,
 		public nome: string,
 		public senha: string,
-		public dataNasc: Date
+		public dataNasc: Date,
+		public ativo = true
 	) {}
 }
