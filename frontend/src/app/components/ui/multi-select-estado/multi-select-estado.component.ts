@@ -15,7 +15,16 @@ import { Situacao } from '../../../shared/models/solicitacao.model';
 export class MultiSelectEstadoComponent {
     @Output() estadosChange = new EventEmitter<Situacao[]>();
 
-    estados = Object.values(Situacao);
+    estados = [
+        Situacao.ABERTA,
+        Situacao.ORÇADA,
+        Situacao.REJEITADA,
+        Situacao.REDIRECIONADA,
+        Situacao.APROVADA,
+        Situacao.ARRUMADA,
+        Situacao.PAGA,
+        Situacao.FINALIZADA,
+    ];
     selecionados: Situacao[] = [Situacao.FINALIZADA];
 
     onSelectionChange() {
