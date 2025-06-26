@@ -227,6 +227,7 @@ export class SolicitacoesFuncionarioComponent implements OnInit {
 
 		// Atualizar lista de solicitacoes
 		this.listarSolicitacoesPorFuncionario();
+		window.location.reload();
 
 		// Intervalo para a mensagem desaparecer
 		setTimeout(() => {

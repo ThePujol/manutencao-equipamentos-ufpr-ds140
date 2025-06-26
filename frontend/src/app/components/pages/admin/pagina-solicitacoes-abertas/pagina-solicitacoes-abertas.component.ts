@@ -125,6 +125,7 @@ export class PaginaSolicitacoesAbertasComponent implements OnInit {
 
 		// Atualiza lista de solicitacoes
 		this.listarSolicitacoesAbertas();
+		window.location.reload();
 	}
 
 	ngOnInit() {
