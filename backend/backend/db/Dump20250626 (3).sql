@@ -138,7 +138,7 @@ CREATE TABLE `solicitacao` (
   CONSTRAINT `fk_solicitacao_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`),
   CONSTRAINT `fk_solicitacao_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `pessoa` (`id`),
   CONSTRAINT `fk_solicitacao_funcionario` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,7 @@ CREATE TABLE `solicitacao` (
 
 LOCK TABLES `solicitacao` WRITE;
 /*!40000 ALTER TABLE `solicitacao` DISABLE KEYS */;
-INSERT INTO `solicitacao` VALUES (1,'Notebook Lenovo','Não liga','ABERTA',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,3,NULL),(2,'Desktop','Sujo','ABERTA',NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,4,NULL),(3,'Teclado Logitech','Ghosting','ABERTA',NULL,NULL,NULL,NULL,NULL,NULL,NULL,5,2,NULL),(4,'Mouse Corsair','Sensor não funciona','ABERTA',NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,5,NULL);
+INSERT INTO `solicitacao` VALUES (1,'Notebook Lenovo','Não liga','ABERTA',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,3,NULL),(2,'Desktop','Sujo','ABERTA',NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,4,NULL),(3,'Teclado Logitech','Ghosting','ABERTA',NULL,NULL,NULL,NULL,NULL,NULL,NULL,5,2,NULL),(4,'Mouse Corsair','Sensor não funciona','ABERTA',NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,5,NULL),(5,'Impressora HP LaserJet','Papel atolado constantemente','ORÇADA',150.00,'2025-04-01 09:00:00',NULL,NULL,NULL,NULL,NULL,3,2,1),(6,'Notebook Dell XPS','Tela quebrada','REJEITADA',800.00,'2025-04-02 10:00:00',NULL,NULL,NULL,NULL,'Cliente não aprovou orçamento',1,3,2),(7,'Desktop Gamer','Travamentos frequentes','REDIRECIONADA',200.00,'2025-04-03 14:00:00',NULL,NULL,NULL,NULL,'Encaminhado a técnico especializado',2,5,1),(8,'Teclado Mecânico','Teclas não funcionam','APROVADA',90.00,'2025-04-04 11:00:00','Substituição de switches',NULL,NULL,NULL,NULL,5,4,2),(9,'Mouse Logitech G502','Botão duplo clicando','ARRUMADA',45.00,'2025-04-05 12:00:00','Reparo no micro switch','2025-04-06 16:00:00',NULL,NULL,NULL,4,6,1),(10,'Impressora Epson','Impressão borrada','PAGA',120.00,'2025-04-07 13:00:00','Troca de cartucho e limpeza','2025-04-08 10:30:00',NULL,NULL,NULL,3,2,2),(11,'Notebook Asus','Bateria não carrega','FINALIZADA',300.00,'2025-04-09 08:00:00','Troca de carregador e bateria','2025-04-10 09:00:00','Evitar uso de carregadores paralelos','2025-04-11 14:00:00',NULL,1,3,1),(12,'Desktop Positivo','Sistema operacional corrompido','FINALIZADA',200.00,'2025-04-12 10:00:00','Formatação e reinstalação do sistema','2025-04-13 15:00:00','Fazer backup regularmente','2025-04-14 17:00:00',NULL,2,4,2),(13,'Mouse Microsoft','Scroll não funciona','ARRUMADA',60.00,'2025-04-15 11:00:00','Reparo no encoder do scroll','2025-04-16 10:00:00',NULL,NULL,NULL,4,5,1),(14,'Teclado Apple','Não conecta via Bluetooth','PAGA',100.00,'2025-04-17 13:00:00','Reparo no módulo Bluetooth','2025-04-18 14:00:00',NULL,NULL,NULL,5,6,2),(15,'Impressora Brother','Erro de papel inexistente','REJEITADA',250.00,'2025-04-19 09:00:00',NULL,NULL,NULL,NULL,'Cliente optou por substituição do equipamento',3,2,1),(16,'Notebook Acer','Superaquecendo','APROVADA',180.00,'2025-04-20 08:30:00','Limpeza interna e troca de pasta térmica',NULL,NULL,NULL,NULL,1,3,2),(17,'Desktop HP','Sem imagem','REDIRECIONADA',160.00,'2025-04-21 12:00:00',NULL,NULL,NULL,NULL,'Encaminhado ao setor de eletrônica',2,4,1),(18,'Teclado Redragon','LEDs apagados','ARRUMADA',70.00,'2025-04-22 09:30:00','Troca do circuito de iluminação','2025-04-23 16:00:00',NULL,NULL,NULL,5,5,2),(19,'Mouse Razer','Desliga sozinho','FINALIZADA',110.00,'2025-04-24 10:30:00','Solda em conector USB','2025-04-25 11:00:00','Evitar dobrar o cabo frequentemente','2025-04-26 13:00:00',NULL,4,6,1),(20,'Notebook Samsung','Sistema lento','PAGA',250.00,'2025-04-27 14:00:00','Upgrade de SSD e memória RAM','2025-04-28 10:00:00',NULL,NULL,NULL,1,2,2);
 /*!40000 ALTER TABLE `solicitacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +167,7 @@ CREATE TABLE `solicitacao_status_historico` (
   PRIMARY KEY (`id`),
   KEY `solicitacao_id` (`solicitacao_id`),
   CONSTRAINT `solicitacao_status_historico_ibfk_1` FOREIGN KEY (`solicitacao_id`) REFERENCES `solicitacao` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +176,7 @@ CREATE TABLE `solicitacao_status_historico` (
 
 LOCK TABLES `solicitacao_status_historico` WRITE;
 /*!40000 ALTER TABLE `solicitacao_status_historico` DISABLE KEYS */;
-INSERT INTO `solicitacao_status_historico` VALUES (1,1,'ABERTA','2025-03-27 17:28:12','Solicitação criada'),(2,2,'ABERTA','2025-03-28 18:39:43','Solicitação criada'),(3,3,'ABERTA','2025-03-29 12:21:23','Solicitação criada'),(4,4,'ABERTA','2025-03-30 11:23:11','Solicitação criada');
+INSERT INTO `solicitacao_status_historico` VALUES (1,1,'ABERTA','2025-03-27 17:28:12','Solicitação criada'),(2,2,'ABERTA','2025-03-28 18:39:43','Solicitação criada'),(3,3,'ABERTA','2025-03-29 12:21:23','Solicitação criada'),(4,4,'ABERTA','2025-03-30 11:23:11','Solicitação criada'),(45,5,'ABERTA','2025-04-01 08:30:00','Solicitação criada'),(46,5,'ORÇADA','2025-04-01 09:00:00','Orçamento enviado'),(47,6,'ABERTA','2025-04-02 09:30:00','Solicitação criada'),(48,6,'ORÇADA','2025-04-02 10:00:00','Orçamento enviado'),(49,6,'REJEITADA','2025-04-02 11:00:00','Cliente rejeitou'),(50,7,'ABERTA','2025-04-03 13:00:00','Solicitação criada'),(51,7,'ORÇADA','2025-04-03 14:00:00','Orçamento enviado'),(52,7,'REDIRECIONADA','2025-04-03 15:00:00','Redirecionado a técnico'),(53,8,'ABERTA','2025-04-04 10:00:00','Solicitação criada'),(54,8,'ORÇADA','2025-04-04 11:00:00','Orçamento enviado'),(55,8,'APROVADA','2025-04-04 12:00:00','Cliente aprovou'),(56,9,'ABERTA','2025-04-05 11:00:00','Solicitação criada'),(57,9,'ORÇADA','2025-04-05 12:00:00','Orçamento enviado'),(58,9,'ARRUMADA','2025-04-06 16:00:00','Serviço concluído'),(59,10,'ABERTA','2025-04-07 12:00:00','Solicitação criada'),(60,10,'ORÇADA','2025-04-07 13:00:00','Orçamento enviado'),(61,10,'ARRUMADA','2025-04-08 10:30:00','Manutenção feita'),(62,10,'PAGA','2025-04-08 14:00:00','Pagamento confirmado'),(63,11,'ABERTA','2025-04-09 08:00:00','Solicitação criada'),(64,11,'FINALIZADA','2025-04-11 14:00:00','Serviço finalizado'),(65,12,'ABERTA','2025-04-12 10:00:00','Solicitação criada'),(66,12,'FINALIZADA','2025-04-14 17:00:00','Serviço finalizado'),(67,13,'ABERTA','2025-04-15 11:00:00','Solicitação criada'),(68,13,'ARRUMADA','2025-04-16 10:00:00','Reparo feito'),(69,14,'ABERTA','2025-04-17 13:00:00','Solicitação criada'),(70,14,'ARRUMADA','2025-04-18 14:00:00','Serviço feito'),(71,14,'PAGA','2025-04-18 17:00:00','Pagamento realizado'),(72,15,'ABERTA','2025-04-19 09:00:00','Solicitação criada'),(73,15,'REJEITADA','2025-04-19 10:00:00','Cliente desistiu'),(74,16,'ABERTA','2025-04-20 08:00:00','Solicitação criada'),(75,16,'ORÇADA','2025-04-20 08:30:00','Orçamento enviado'),(76,16,'APROVADA','2025-04-20 09:00:00','Cliente aprovou'),(77,17,'ABERTA','2025-04-21 12:00:00','Solicitação criada'),(78,17,'REDIRECIONADA','2025-04-21 14:00:00','Encaminhada a eletrônica'),(79,18,'ABERTA','2025-04-22 09:30:00','Solicitação criada'),(80,18,'ARRUMADA','2025-04-23 16:00:00','Serviço concluído'),(81,19,'ABERTA','2025-04-24 10:30:00','Solicitação criada'),(82,19,'FINALIZADA','2025-04-26 13:00:00','Concluído com sucesso'),(83,20,'ABERTA','2025-04-27 14:00:00','Solicitação criada'),(84,20,'PAGA','2025-04-28 12:00:00','Cliente pagou');
 /*!40000 ALTER TABLE `solicitacao_status_historico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -189,4 +189,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-26 21:39:24
+-- Dump completed on 2025-06-26 22:24:04
