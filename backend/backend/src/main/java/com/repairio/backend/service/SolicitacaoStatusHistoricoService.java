@@ -42,6 +42,9 @@ public class SolicitacaoStatusHistoricoService {
         dto.setSituacao(historico.getSituacao());
         dto.setDataHora(historico.getDataHora());
 
+        if (solicitacao != null && solicitacao.getFuncionario() != null) {
+            dto.setFuncionarioResponsavel(solicitacao.getFuncionario());
+        }
         if (solicitacao != null) {
             switch (historico.getSituacao()) {
                 case ORÇADA:
